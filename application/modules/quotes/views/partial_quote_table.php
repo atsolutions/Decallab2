@@ -1,3 +1,26 @@
+<script>
+
+function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             console.log(i)
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+             }
+         }
+     }
+ }
+ 
+ </script>
+
+
 <div class="table-responsive">
     <table class="table table-striped">
 
@@ -12,6 +35,7 @@
 			<th><?php echo 'Sent To' ?></th>
 			<th><?php echo 'Designer' ?></th>
             <th style="text-align: right; padding-right: 25px;"><?php echo lang('amount'); ?></th>
+			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]"> Check all </th>
             <th><?php echo lang('options'); ?></th>
         </tr>
         </thead>
@@ -104,6 +128,10 @@
                 <td style="text-align: right; padding-right: 25px;">
                     <?php echo format_currency($quote->quote_total); ?>
                 </td>
+				<td>
+                    <input type="checkbox" name="checked" value="<?php echo $quote->quote_id ?>"><br>
+                </td>
+				
                 <td>
                     <div class="options btn-group">
                         <a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"

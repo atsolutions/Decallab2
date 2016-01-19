@@ -238,6 +238,16 @@
             <?php } ?>
 
             <ul class="nav navbar-nav navbar-right">
+			<li>
+                       <a href="README.md" 
+                       data-original-title="<?php echo lang('Version'); ?>"
+                       data-placement="bottom">
+                        <i class="fa fa-info"></i>&nbsp;<span
+                            class="hidden-sm"><?php echo 'Version 1.0.0'; ?></span>
+                    </a>
+                </li>
+			
+			
                 <li>
                     <a href="http://docs.invoiceplane.com/" target="_blank"
                        class="tip icon" data-original-title="<?php echo lang('documentation'); ?>"

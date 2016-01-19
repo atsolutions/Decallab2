@@ -16,12 +16,8 @@
         <div>
             <b><?php echo $invoice->client_name; ?></b>
         </div>
-        <?php if ($invoice->client_vat_id) {
-            echo '<div>' . lang('vat_id_short') . ': ' . $invoice->client_vat_id . '</div>';
-        }
-        if ($invoice->client_tax_code) {
-            echo '<div>' . lang('tax_code_short') . ': ' . $invoice->client_tax_code . '</div>';
-        }
+        <?php 
+
         if ($invoice->client_address_1) {
             echo '<div>' . $invoice->client_address_1 . '</div>';
         }
@@ -42,8 +38,16 @@
         if ($invoice->client_country) {
             echo '<div>' . get_country_name(lang('cldr'), $invoice->client_country) . '</div>';
         }
-
+if ($invoice->client_vat_id) {
+            echo '<div>' . lang('vat_id_short') . ': ' . $invoice->client_vat_id . '</div>';
+        }
+		echo '<br/>';
+		echo '<div>' . 'Bank: ', $invoice->client_custom_banka . '</div>';
+		echo '<div>' . 'SWIFT: ', $invoice->client_custom_swift . '</div>';
+		echo '<div>' . 'Account: ', $invoice->client_custom_bank_account . '</div>';
         echo '<br/>';
+
+
 
         if ($invoice->client_phone) {
             echo '<div>' . lang('phone_abbr') . ': ' . $invoice->client_phone . '</div>';
@@ -52,12 +56,8 @@
     </div>
     <div id="company">
         <div><b><?php echo $invoice->user_company; ?></b></div>
-        <?php if ($invoice->user_vat_id) {
-            echo '<div>' . lang('vat_id_short') . ': ' . $invoice->user_vat_id . '</div>';
-        }
-        if ($invoice->user_tax_code) {
-            echo '<div>' . lang('tax_code_short') . ': ' . $invoice->user_tax_code . '</div>';
-        }
+        <?php 
+
         if ($invoice->user_address_1) {
             echo '<div>' . $invoice->user_address_1 . '</div>';
         }
@@ -77,8 +77,16 @@
         if ($invoice->user_country) {
             echo '<div>' . get_country_name(lang('cldr'), $invoice->user_country) . '</div>';
         }
+		if ($invoice->user_vat_id) {
+            echo '<div>' . lang('vat_id_short') . ': ' . $invoice->user_vat_id . '</div>';
+        }
+		echo '<b>';
+		echo '<br/>';
+		echo '<div>' . '<b>' . 'Bank: ', $invoice->user_custom_banka . '</div>';
+		echo '<div>' . '<b>' . 'SWIFT: ', $invoice->user_custom_swift . '</div>';
+		echo '<div>' . '<b>' . 'Account: ', $invoice->user_custom_bank_account . '</div>';
+echo '</b>';
 
-        echo '<br/>';
 
         if ($invoice->user_phone) {
             echo '<div>' . lang('phone_abbr') . ': ' . $invoice->user_phone . '</div>';
