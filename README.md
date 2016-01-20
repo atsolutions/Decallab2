@@ -1,5 +1,19 @@
 <!---->
 
+<p>[Version 1.0.2]</p>
+<p>[Date: 20.01.2016]</p>
+BUGFIXES:
+<ol>
+  <li>Bank account and Payment method added to guest url invoice</li>
+
+</ol>
+
+IMPROVEMENTS:
+<ol>
+</ol>
+
+<!---->
+
 <p>[Version 1.0.1]</p>
 <p>[Date: 19.01.2016]</p>
 BUGFIXES:

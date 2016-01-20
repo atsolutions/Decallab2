@@ -109,6 +109,14 @@
                                 <?php if ($invoice->user_zip) { echo $invoice->user_zip . '<br>'; } ?>
                                 <?php if ($invoice->user_phone) { ?><?php echo lang('phone_abbr'); ?>: <?php echo $invoice->user_phone; ?><br><?php } ?>
                                 <?php if ($invoice->user_fax) { ?><?php echo lang('fax_abbr'); ?>: <?php echo $invoice->user_fax; ?><?php } ?>
+								
+		<?php 
+		echo '<b>';
+		echo '<br/>';
+		echo '<div>' . '<b>' . 'Bank: ', $invoice->user_custom_banka . '</div>';
+		echo '<div>' . '<b>' . 'SWIFT: ', $invoice->user_custom_swift . '</div>';
+		echo '<div>' . '<b>' . 'Account: ', $invoice->user_custom_bank_account . '</div>';
+echo '</b>'; ?>
                             </p>
                         </td>
                         <td class="alignr"><h2><?php echo lang('invoice'); ?> <?php echo $invoice->invoice_number; ?></h2></td>
@@ -128,6 +136,7 @@
                                 <?php if ($invoice->client_state) { echo $invoice->client_state . ' '; } ?>
                                 <?php if ($invoice->client_zip) { echo $invoice->client_zip . '<br>'; } ?>
                                 <?php if ($invoice->client_phone) { ?><?php echo lang('phone_abbr'); ?>: <?php echo $invoice->client_phone; ?><br><?php } ?>
+								<?php echo "Payment method: "; echo $payment_method->payment_method_name;?>
                             </p>
                         </td>
                         <td style="width:30%;"></td>
