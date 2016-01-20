@@ -41,7 +41,7 @@ document.getElementById("demo").innerHTML = Checked;
 
 function downloadfiles(){
 	var origin = document.location.origin
-	var url = origin.concat("/DevelopDecallab/quotes/generate_pdf/")
+	var url = origin.concat("/Decallab/quotes/generate_pdf/")
 	for (var i = 0; i < Checked.length; i++) {
 		var url2 = url.concat(Checked[i])
 		window.open(url2, "_blank")
@@ -50,14 +50,18 @@ function downloadfiles(){
 
 function deletequote(){
 	var origin = document.location.origin
-	var url = origin.concat("/DevelopDecallab/quotes/delete/")
-	for (var i = 0; i < Checked.length; i++) {
-		var url2 = url.concat(Checked[i])
-		$.get(url2)
-		window.close();
-		location.reload();
+	var url = origin.concat("/Decallab/quotes/delete/")
+	var check = window.confirm("YOU ARE GOING TO DELETE SELECTED QUOTES. ARE YOU SURE?")
+	if(check ==true){
+		for (var i = 0; i < Checked.length; i++) {
+			var url2 = url.concat(Checked[i])
+			$.get(url2)
+			window.close();
+			location.reload();
+		}
 	}
-}
+	}
+
 
 </script>
 
