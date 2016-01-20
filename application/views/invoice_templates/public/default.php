@@ -19,9 +19,10 @@
         } ?> - <?php echo lang('invoice'); ?> <?php echo $invoice->invoice_number; ?></title>
 
         <meta name="viewport" content="width=device-width,initial-scale=1">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/templates.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/custom.css">
+		
 
         <style>
             body {
@@ -111,12 +112,13 @@
                                 <?php if ($invoice->user_fax) { ?><?php echo lang('fax_abbr'); ?>: <?php echo $invoice->user_fax; ?><?php } ?>
 								
 		<?php 
-		echo '<b>';
+
 		echo '<br/>';
-		echo '<div>' . '<b>' . 'Bank: ', $invoice->user_custom_banka . '</div>';
-		echo '<div>' . '<b>' . 'SWIFT: ', $invoice->user_custom_swift . '</div>';
-		echo '<div>' . '<b>' . 'Account: ', $invoice->user_custom_bank_account . '</div>';
-echo '</b>'; ?>
+		echo '<div>' . '<b>Payment method: </b>'; echo $payment_method->payment_method_name . '</div>';
+		echo '<div>' . '<b> Bank: </b>', $invoice->user_custom_banka . '</div>';
+		echo '<div>' . '<b> SWIFT: </b>', $invoice->user_custom_swift . '</div>';
+		echo '<div>' . '<b> Account: </b>', $invoice->user_custom_bank_account . '</div>';
+ ?>
                             </p>
                         </td>
                         <td class="alignr"><h2><?php echo lang('invoice'); ?> <?php echo $invoice->invoice_number; ?></h2></td>
@@ -136,7 +138,7 @@ echo '</b>'; ?>
                                 <?php if ($invoice->client_state) { echo $invoice->client_state . ' '; } ?>
                                 <?php if ($invoice->client_zip) { echo $invoice->client_zip . '<br>'; } ?>
                                 <?php if ($invoice->client_phone) { ?><?php echo lang('phone_abbr'); ?>: <?php echo $invoice->client_phone; ?><br><?php } ?>
-								<?php echo "Payment method: "; echo $payment_method->payment_method_name;?>
+								
                             </p>
                         </td>
                         <td style="width:30%;"></td>
