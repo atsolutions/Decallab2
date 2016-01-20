@@ -1,11 +1,14 @@
 <script>
-
+var Checked = new Array()
+var clickedonPDF = document.getElementById("PDF");
+clickedonPDF.onclick = downloadfiles()
 function checkAll(ele) {
      var checkboxes = document.getElementsByTagName('input');
      if (ele.checked) {
          for (var i = 0; i < checkboxes.length; i++) {
              if (checkboxes[i].type == 'checkbox') {
                  checkboxes[i].checked = true;
+				 add(checkboxes[i])
              }
          }
      } else {
@@ -13,12 +16,50 @@ function checkAll(ele) {
              console.log(i)
              if (checkboxes[i].type == 'checkbox') {
                  checkboxes[i].checked = false;
+				 add(checkboxes[i])
              }
          }
      }
  }
  
- </script>
+
+ 
+ function add(ele){
+	 if(ele.checked){
+		 if(ele.id != 0){
+		 Checked.push(ele.id)
+		 }
+	 }else{
+		 var index = Checked.indexOf(ele.id)
+		 if(index >-1){
+		 Checked.splice(index,1)
+		 }
+	 }
+document.getElementById("demo").innerHTML = Checked;
+ }
+ 
+
+function downloadfiles(){
+	var origin = document.location.origin
+	var url = origin.concat("/DevelopDecallab/quotes/generate_pdf/")
+	for (var i = 0; i < Checked.length; i++) {
+		var url2 = url.concat(Checked[i])
+		window.open(url2, "_blank")
+	}
+}
+
+function deletequote(){
+	var origin = document.location.origin
+	var url = origin.concat("/DevelopDecallab/quotes/delete/")
+	for (var i = 0; i < Checked.length; i++) {
+		var url2 = url.concat(Checked[i])
+		$.get(url2)
+		window.close();
+		location.reload();
+	}
+}
+
+</script>
 
 
 <div class="table-responsive">
@@ -35,11 +76,33 @@ function checkAll(ele) {
 			<th><?php echo 'Sent To' ?></th>
 			<th><?php echo 'Designer' ?></th>
             <th style="text-align: right; padding-right: 25px;"><?php echo lang('amount'); ?></th>
-			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]"> Check all </th>
+			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]" id="0"> Check all 
+<div class="options btn-group">
+                        <a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-cog"></i> <?php echo lang('options'); ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" id="PDF" onclick="downloadfiles();">
+                                    <i class="fa fa-print fa-margin"></i> Download selected PDF's
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   onclick="deletequote();">
+                                    <i class="fa fa-trash-o fa-margin"></i> <?php echo lang('delete'); ?>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+ </th>
             <th><?php echo lang('options'); ?></th>
         </tr>
         </thead>
-
+<p id="demo"> DEMO: </p>
         <tbody>
         <?php foreach ($quotes as $quote) { ?>
             <tr>
@@ -129,7 +192,7 @@ function checkAll(ele) {
                     <?php echo format_currency($quote->quote_total); ?>
                 </td>
 				<td>
-                    <input type="checkbox" name="checked" value="<?php echo $quote->quote_id ?>"><br>
+                    <input type="checkbox" onchange="add(this)"name="checked" id="<?php echo $quote->quote_id ?>"><br>
                 </td>
 				
                 <td>

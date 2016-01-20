@@ -170,6 +170,18 @@ class Quotes extends Admin_Controller
 
         generate_quote_pdf($quote_id, $stream, $quote_template);
     }
+	
+	    public function generate_multiple($quote_array, $stream = TRUE, $quote_template = NULL)
+    {
+        /*$this->load->helper('pdf');
+
+        if ($this->mdl_settings->setting('mark_quotes_sent_pdf') == 1) {
+            $this->mdl_quotes->mark_sent($quote_id);
+        }
+
+        generate_quote_pdf($quote_id, $stream, $quote_template);*/
+    }
+	
 
     public function delete_quote_tax($quote_id, $quote_tax_rate_id)
     {
