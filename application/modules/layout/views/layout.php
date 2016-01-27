@@ -40,7 +40,7 @@
     <script src="<?php echo base_url(); ?>assets/default/js/libs/jquery-ui-1.11.2.custom.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/default/js/libs/bootstrap-typeahead.js"></script>
     <script src="<?php echo base_url(); ?>assets/default/js/libs/select2.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/default/js/libs/dropzone.js"></script>
+    <script src="<?php echo base_url(); ?>assets/default/js/libs/dropzone.js?version=1"></script>
 
     <script type="text/javascript">
         Dropzone.autoDiscover = false;
