@@ -312,6 +312,9 @@
             thumbnailElement = _ref[_i];
             thumbnailElement.alt = file.name;
             thumbnailElement.src = dataUrl;
+			file.previewElement.addEventListener("click", function() {
+				window.open(dataUrl ,"_blank")
+			});
           }
           return setTimeout(((function(_this) {
             return function() {

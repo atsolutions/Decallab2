@@ -324,6 +324,7 @@
                 </div>
 
             </div>
+			<div class="dropzone">
             <div class="col-xs-12 col-sm-8">
 
                 <div class="form-group">
@@ -355,7 +356,8 @@
                         <div id="template" class="file-row">
                             <!-- This is used as the file preview template -->
                             <div>
-                                <span class="preview"><img data-dz-thumbnail/></span>
+
+										<span class="preview"><img data-dz-thumbnail/></span>
                             </div>
                             <div>
                                 <p class="name" data-dz-name></p>
@@ -383,6 +385,7 @@
                 <!-- stop dropzone -->
 
             </div>
+			</div>
         </div>
 
         <?php if ($custom_fields): ?>
@@ -405,6 +408,8 @@
             </p>
         <?php } ?>
 </div>
+
+
 <script>
     // Get the template HTML and remove it from the document
     var previewNode = document.querySelector("#template");
@@ -425,9 +430,10 @@
             thisDropzone = this;
             $.getJSON("<?php echo site_url('upload/upload_file/' . $quote->client_id. '/'.$quote->quote_url_key) ?>", function (data) {
                 $.each(data, function (index, val) {
-                    var mockFile = {fullname: val.fullname, size: val.size, name: val.name};
+                    var mockFile = {fullname: val.fullname, size: val.size, name: val.name };
                     thisDropzone.options.addedfile.call(thisDropzone, mockFile);
                     if (val.fullname.match(/\.(jpg|jpeg|png|gif)$/)) {
+						
                         thisDropzone.options.thumbnail.call(thisDropzone, mockFile,
                             '<?php echo base_url(); ?>uploads/customer_files/' + val.fullname);
                     } else {
@@ -443,7 +449,11 @@
 
     myDropzone.on("addedfile", function (file) {
         myDropzone.emit("thumbnail", file, '<?php echo base_url(); ?>assets/default/img/favicon.png');
+
     });
+
+
+
 
     // Update the total progress bar
     myDropzone.on("totaluploadprogress", function (progress) {

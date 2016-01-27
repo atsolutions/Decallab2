@@ -1,5 +1,29 @@
 <!---->
 
+<p>[Version 1.0.3]</p>
+<p>[Date: 27.01.2016]</p>
+BUGFIXES:
+<ol>
+  <li></li>
+
+</ol>
+
+IMPROVEMENTS:
+<ol>
+Possible to click on thumbnails in quote view mode
+</ol>
+<ol>
+Guests can add new files to quote
+</ol>
+<ol>
+Designers can delete and add files to quote.
+</ol>
+
+<!---->
+
+
+<!---->
+
 <p>[Version 1.0.2]</p>
 <p>[Date: 20.01.2016]</p>
 BUGFIXES:
