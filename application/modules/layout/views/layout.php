@@ -26,7 +26,7 @@
 
     <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/default/img/favicon.png">
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/style.css?version=1">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/custom.css">
 
     <?php if ($this->mdl_settings->setting('monospace_amounts') == 1) { ?>
