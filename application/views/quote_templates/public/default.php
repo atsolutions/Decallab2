@@ -182,6 +182,9 @@ div.ex1 {
 $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 
 		if(isset($_POST['approve'])){ //check if form was submitted
+		
+		
+		
 			if(isset($_FILES['files'])){
 				$errors= array();
 				foreach($_FILES['files']['tmp_name'] as $key => $tmp_name ){
@@ -190,9 +193,7 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 					$file_tmp =$_FILES['files']['tmp_name'][$key];
 					$file_type=$_FILES['files']['type'][$key];
 					echo $file_name;
-					if($file_size > 2097152){
-						$errors[]='File size must be less than 2 MB';
-					}		
+						
 					//$query="INSERT into upload_data (`USER_ID`,`FILE_NAME`,`FILE_SIZE`,`FILE_TYPE`) VALUES('$user_id','$file_name','$file_size','$file_type'); ";
 					
 					
@@ -233,9 +234,7 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 					$this->db->where('quote_id', $quote->quote_id);
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
-			echo '<script language="javascript">';
-			echo 'alert("Yout comments have been sent to Decallab team. Thank you!")';
-			echo '</script>';
+			
 					
 			redirect('guest/view/approve_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 			
@@ -250,9 +249,7 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 					$file_type=$_FILES['files']['type'][$key];
 					echo $file_name;
 
-					if($file_size > 2097152){
-						$errors[]='File size must be less than 2 MB';
-					}		
+							
 					
 					if(empty($errors)==true){
 						if(is_dir($desired_dir)==false){
@@ -293,7 +290,7 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 					$this->db->update('ip_quotes');
 					//redirect for file upload
 			echo '<script language="javascript">';
-			echo 'alert("Yout comments have been sent to Decallab team. Thank you!")';
+			echo 'window.alert("Yout comments have been sent to Decallab team. Thank you!")';
 			echo '</script>';
 			redirect('guest/view/reject_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 		}
@@ -311,7 +308,7 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 							<div class="pull-right">
 								<label class="control-label"><?php echo lang('attachments'); ?></label>
 								<!-- The fileinput-button span is used to style the file input field as button -->
-								<span class="btn btn-default btn-file"><span>Choose file</span><input id="btn btn-sucess" type="file" name="files[]" multiple="multiple"></span>
+								<span class="btn btn-default btn-file"><span>Choose files...</span><input id="btn btn-sucess" type="file" name="files[]" multiple="multiple"></span>
 								<button type="submit" name ="approve"class="btn btn-success">Approve this quote</button>
 								<button type="submit" name="correct" class="btn btn-danger">Send corrections</button>
 
@@ -319,6 +316,7 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 							
 					
 	            <?php } elseif ($quote->quote_status_id == 4) { ?>
+				<script>
 	            <a href="#" class="btn btn-success" style="text-decoration: none"><?php echo lang('quote_approved'); ?></a>
 	            <?php } elseif ($quote->quote_status_id == 5) { ?>
 	            <a href="#" class="btn btn-danger" style="text-decoration: none"><?php echo lang('quote_rejected'); ?></a>

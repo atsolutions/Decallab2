@@ -316,19 +316,20 @@
 
             <hr/>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-4">
+      <div class="row">
+            <div class="col-xs-12 col-sm-4">
 
-                    <label><?php echo lang('quote_terms'); ?></label>
-                    <textarea id="quote_terms" name="quote_terms" class="form-control" rows="3"
-                        <?php if ($quote->is_read_only == 1) {
-                            echo 'disabled="disabled"';
-                        } ?>
-                        ><?php echo $quote->quote_terms; ?></textarea>
-
+                <div class="form-group">
+                    <label class="control-label"><?php echo lang('notes'); ?></label>
+                    <textarea name="notes" id="notes" rows="15"
+                              class="input-sm form-control" style="font-size: 14pt"><?php echo $quote->notes; ?></textarea>
                 </div>
-                <div class="col-xs-12 col-sm-8">
 
+            </div>
+			<div class="dropzone">
+            <div class="col-xs-12 col-sm-8">
+
+                <div class="form-group">
                     <label class="control-label"><?php echo lang('attachments'); ?></label>
                     <br/>
                     <!-- The fileinput-button span is used to style the file input field as button -->
@@ -336,7 +337,7 @@
                         <i class="fa fa-plus"></i>
                         <span><?php echo lang('add_files'); ?></span>
                     </span>
-
+                </div>
                     <!-- dropzone -->
                     <div class="row">
                         <div id="actions" class="col-xs-12 col-sm-12">
@@ -391,7 +392,24 @@
                     </div>
                 </div>
             </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
             <?php if ($custom_fields): ?>
                 <h4 class="no-margin"><?php echo lang('custom_fields'); ?></h4>
             <?php endif; ?>
