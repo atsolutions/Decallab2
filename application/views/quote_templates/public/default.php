@@ -143,7 +143,7 @@ div.ex1 {
 			
 			
 			
-        </style>
+</style>
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -153,9 +153,9 @@ div.ex1 {
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/templates.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/custom.css">
 
-    </head>
+</head>
 	
-    <body>
+<body>
 	
 <div id ="uploaded_images">
 <?php $string = 'uploads/customer_files/' . $quote->quote_url_key . '*.{[jJ][pP][gG],[pP][nN][gG],[gG][iI][fF]}';  ?>
@@ -177,14 +177,27 @@ div.ex1 {
 
 <div id="menu-container">
 
+<script language="javascript">
+function approved() {
+window.alert("You have approved this design. Thank you!");
+}
+function rejected() {
+window.alert("You have rejected this design. Comments have been sent to Decallab team They are working on it. Thank you!");
+}
+
+</script>
+
+
+
 <?php
 
 $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
+     
 
 		if(isset($_POST['approve'])){ //check if form was submitted
+
 		
-		
-		
+
 			if(isset($_FILES['files'])){
 				$errors= array();
 				foreach($_FILES['files']['tmp_name'] as $key => $tmp_name ){
@@ -234,8 +247,7 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 					$this->db->where('quote_id', $quote->quote_id);
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
-			
-					
+				
 			redirect('guest/view/approve_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 			
 			
@@ -289,12 +301,12 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
 					//redirect for file upload
-			echo '<script language="javascript">';
-			echo 'window.alert("Yout comments have been sent to Decallab team. Thank you!")';
-			echo '</script>';
+			
+
 			redirect('guest/view/reject_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 		}
 ?>
+
 
 
 			<div class="pull-right">
@@ -309,16 +321,16 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 								<label class="control-label"><?php echo lang('attachments'); ?></label>
 								<!-- The fileinput-button span is used to style the file input field as button -->
 								<span class="btn btn-default btn-file"><span>Choose files...</span><input id="btn btn-sucess" type="file" name="files[]" multiple="multiple"></span>
-								<button type="submit" name ="approve"class="btn btn-success">Approve this quote</button>
-								<button type="submit" name="correct" class="btn btn-danger">Send corrections</button>
+								<button onclick="approved()" type="submit" name ="approve"class="btn btn-success">Approve this quote</button>
+								<button onclick="rejected()"type="submit" name="correct" class="btn btn-danger">Send corrections</button>
 
 							</div>
 							
 					
 	            <?php } elseif ($quote->quote_status_id == 4) { ?>
-				<script>
+				
 	            <a href="#" class="btn btn-success" style="text-decoration: none"><?php echo lang('quote_approved'); ?></a>
-	            <?php } elseif ($quote->quote_status_id == 5) { ?>
+				<?php } elseif ($quote->quote_status_id == 5) { ?>
 	            <a href="#" class="btn btn-danger" style="text-decoration: none"><?php echo lang('quote_rejected'); ?></a>
 	            <?php } ?>
 				

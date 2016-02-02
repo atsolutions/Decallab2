@@ -131,9 +131,7 @@ if($quote->quote_status_id ==7 or $quote->quote_status_id ==5 or $quote->quote_s
 		$quote = $this->mdl_quotes->guest_visible()->where('quote_url_key', $quote_url_key)->get();
         $this->mdl_quotes->approve_quote_by_key($quote_url_key, $quote_id);
         //email_quote_status($this->mdl_quotes->where('ip_quotes.quote_url_key', $quote_url_key)->get()->row()->quote_id, "approved");
-			echo '<script language="javascript">';
-			echo 'window.alert("Yout comments have been sent to Decallab team. Thank you!")';
-			echo '</script>';
+		
         redirect('guest/view/quote/' . $quote_url_key);
     }
 

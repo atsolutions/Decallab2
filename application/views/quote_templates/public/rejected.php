@@ -87,7 +87,7 @@
 		
 <h1> REJECTED </h1>
 <?php if (!empty($_POST)): ?>
-    Thank you your comment, <?php echo htmlspecialchars($_POST["comment"]); ?> Has been received!<br>
+	Thank you your comment, <?php echo htmlspecialchars($_POST["comment"]); ?> Has been received!<br>
 	<p><?php echo site_url('guest/view/submitted/' . $_POST["comment"]); ?>"</p>
     
 <?php else: ?>
