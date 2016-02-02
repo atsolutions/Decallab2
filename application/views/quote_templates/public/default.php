@@ -32,6 +32,16 @@ $(document).on('change', '.btn-file :file', function() {
         name = input.val().replace(/\\/g, '/').replace(/.*\//, '');
     input.trigger('fileselect', [numFiles, label]);
 });
+
+
+$(document).ready(function(){
+$("input[type='files[]']").on("change", function(){
+$("#fileform").submit();
+});
+});
+
+
+
 </script>
 
 <head>
@@ -52,7 +62,7 @@ $(document).on('change', '.btn-file :file', function() {
     <script src="<?php echo base_url(); ?>assets/default/js/libs/jquery-ui-1.11.2.custom.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/default/js/libs/bootstrap-typeahead.js"></script>
     <script src="<?php echo base_url(); ?>assets/default/js/libs/select2.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/default/js/libs/dropzone.js"></script>
+
 
 	
 
@@ -168,18 +178,109 @@ div.ex1 {
 <div id="menu-container">
 
 <?php
-  
+
+$desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
+echo $desired_dir;
 		if(isset($_POST['approve'])){ //check if form was submitted
+			if(isset($_FILES['files'])){
+				$errors= array();
+				foreach($_FILES['files']['tmp_name'] as $key => $tmp_name ){
+					$file_name = $quote->quote_url_key . "_" . $_FILES['files']['name'][$key];
+					$file_size =$_FILES['files']['size'][$key];
+					$file_tmp =$_FILES['files']['tmp_name'][$key];
+					$file_type=$_FILES['files']['type'][$key];
+					echo $file_name;
+					if($file_size > 2097152){
+						$errors[]='File size must be less than 2 MB';
+					}		
+					//$query="INSERT into upload_data (`USER_ID`,`FILE_NAME`,`FILE_SIZE`,`FILE_TYPE`) VALUES('$user_id','$file_name','$file_size','$file_type'); ";
+					
+					
+					if(empty($errors)==true){
+						if(is_dir($desired_dir)==false){
+							mkdir("$desired_dir", 0700);		// Create directory if it does not exist
+						}
+						if(is_dir("$desired_dir/".$file_name)==false){
+							move_uploaded_file($file_tmp,"$desired_dir/".$file_name);
+						}else{									// rename the file if another one exist
+							$new_dir="$desired_dir/".$file_name.time();
+							 rename($file_tmp,$new_dir) ;				
+						}
+						$data = array(
+					'client_id' => $quote->client_id,
+					'url_key' => $quote->quote_url_key,
+					'file_name_original' => $_FILES['files']['name'][$key],
+					'file_name_new' => $file_name
+					);
+					$this->db->get('ip_uploads');
+					$this->db->insert('ip_uploads', $data);
+						
+					// mysql_query($query);			
+					}else{
+							print_r($errors);
+					}
+				}
+				/*if(empty($error)){
+					echo "Success";
+				}*/
+
+			}
+			
 			$comment = $_POST['my_text']; //get input text
 			echo 'You have approved it!' . $comment;
-
+			print_r($_POST);
 					$this->db->get('ip_quotes');
 					$this->db->where('quote_id', $quote->quote_id);
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
 			redirect('guest/view/approve_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 			
+			
 		}elseif (isset($_POST['correct'])){
+			if(isset($_FILES['files'])){
+				$errors= array();
+				foreach($_FILES['files']['tmp_name'] as $key => $tmp_name ){
+					$file_name = $quote->quote_url_key . "_" . $_FILES['files']['name'][$key];
+					$file_size =$_FILES['files']['size'][$key];
+					$file_tmp =$_FILES['files']['tmp_name'][$key];
+					$file_type=$_FILES['files']['type'][$key];
+					echo $file_name;
+
+					if($file_size > 2097152){
+						$errors[]='File size must be less than 2 MB';
+					}		
+					
+					if(empty($errors)==true){
+						if(is_dir($desired_dir)==false){
+							mkdir("$desired_dir", 0700);		// Create directory if it does not exist
+						}
+						if(is_dir("$desired_dir/".$file_name)==false){
+							move_uploaded_file($file_tmp,"$desired_dir/".$file_name);
+						}else{									// rename the file if another one exist
+							$new_dir="$desired_dir/".$file_name.time();
+							 rename($file_tmp,$new_dir) ;				
+						}
+					$data = array(
+					'client_id' => $quote->client_id,
+					'url_key' => $quote->quote_url_key,
+					'file_name_original' => $_FILES['files']['name'][$key],
+					'file_name_new' => $file_name
+					);
+					$this->db->get('ip_uploads');
+					$this->db->insert('ip_uploads', $data);
+						
+					//$query="INSERT into ip_uploads(`client_id`,`url_key`,`file_name_original`,`file_name_new`) VALUES('$quote->client_id','$quote->quote_url_key','$_FILES['files']['name'][$key]','$file_name'); ";
+					//mysql_query($query);			
+					}else{
+							print_r($errors);
+					}
+				}
+				/*if(empty($error)){
+					echo "Success";
+				}*/
+
+				}
+			
 			$comment = $_POST['my_text']; //get input text
 			echo 'You have rejected it ' . $comment;
 					$this->db->get('ip_quotes');
@@ -190,7 +291,8 @@ div.ex1 {
 			redirect('guest/view/reject_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 		}
 ?>
- 
+
+
 			<div class="pull-right">
 	            <?php if (in_array($quote->quote_status_id, array(2,3))) { ?>
 				
@@ -202,16 +304,12 @@ div.ex1 {
 							<div class="pull-right">
 								<label class="control-label"><?php echo lang('attachments'); ?></label>
 								<!-- The fileinput-button span is used to style the file input field as button -->
-								<span class="btn btn-default fileinput-button">
-									<i class="fa fa-plus"></i>
-									<span><?php echo lang('add_files'); ?></span>
-								</span>
+								<span class="btn btn-default btn-file"><span>Choose file</span><input id="btn btn-sucess" type="file" name="files[]" multiple="multiple"></span>
 								<button type="submit" name ="approve"class="btn btn-success">Approve this quote</button>
 								<button type="submit" name="correct" class="btn btn-danger">Send corrections</button>
 
 							</div>
 							
-						</form>
 					
 	            <?php } elseif ($quote->quote_status_id == 4) { ?>
 	            <a href="#" class="btn btn-success" style="text-decoration: none"><?php echo lang('quote_approved'); ?></a>
@@ -221,7 +319,6 @@ div.ex1 {
 				
 			</div>
 
-            
 
             <?php if ($flash_message) { ?>
             <div class="alert flash-message">
@@ -229,46 +326,8 @@ div.ex1 {
             </div>
             <?php } ?>
 
-<div class="dropzone">
-            <div class="col-xs-12 col-sm-8">
 
 
-                <!-- dropzone -->
-                <div id="actions" class="col-xs-12 col-sm-12 row">
-                    <div class="col-lg-7">
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- The global file processing state -->
-                    <span class="fileupload-process">
-                        <div id="total-progress" class="progress progress-striped active" role="progressbar"
-                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                            <div class="progress-bar progress-bar-success" style="width:0%;"
-                                 data-dz-uploadprogress></div>
-                        </div>
-                    </span>
-                    </div>
-
-                    <div class="table table-striped" class="files" id="previews">
-
-                        <div id="template" class="file-row">
-                            <!-- This is used as the file preview template -->
-
-                            <div>
-                                <p class="name" data-dz-name></p>
-                                <strong class="error text-danger" data-dz-errormessage></strong>
-                            </div>
-                            
-                            <div>
-                               
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- stop dropzone -->
-
-            </div>
-			</div>
 			
 			
 </div>
@@ -408,71 +467,3 @@ div.ex1 {
 
 
 
-<script>
-    // Get the template HTML and remove it from the document
-    var previewNode = document.querySelector("#template");
-    previewNode.id = "";
-    var previewTemplate = previewNode.parentNode.innerHTML;
-    previewNode.parentNode.removeChild(previewNode);
-    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-        url: "<?php echo site_url('upload/upload_file/' . $quote->client_id. '/'.$quote->quote_url_key) ?>", // Set the url
-        thumbnailWidth: 80,
-        thumbnailHeight: 80,
-        parallelUploads: 20,
-        uploadMultiple: false,
-        previewTemplate: previewTemplate,
-        autoQueue: true, // Make sure the files aren't queued until manually added
-        previewsContainer: "#previews", // Define the container to display the previews
-        clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
-        init: function () {
-            thisDropzone = this;
-            $.getJSON("<?php echo site_url('upload/upload_file/' . $quote->client_id. '/'.$quote->quote_url_key) ?>", function (data) {
-                $.each(data, function (index, val) {
-                    var mockFile = {fullname: val.fullname, size: val.size, name: val.name };
-                    thisDropzone.options.addedfile.call(thisDropzone, mockFile);
-                    if (val.fullname.match(/\.(jpg|jpeg|png|gif)$/)) {
-						
-                        thisDropzone.options.thumbnail.call(thisDropzone, mockFile,
-                            '<?php echo base_url(); ?>uploads/customer_files/' + val.fullname);
-                    } else {
-                        thisDropzone.options.thumbnail.call(thisDropzone, mockFile,
-                            '<?php echo base_url(); ?>assets/default/img/favicon.png');
-                    }
-                    thisDropzone.emit("complete", mockFile);
-                    thisDropzone.emit("success", mockFile);
-                });
-            });
-        }
-    });
-
-    myDropzone.on("addedfile", function (file) {
-        myDropzone.emit("thumbnail", file, '<?php echo base_url(); ?>assets/default/img/favicon.png');
-
-    });
-
-
-
-
-    // Update the total progress bar
-    myDropzone.on("totaluploadprogress", function (progress) {
-        document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
-    });
-
-    myDropzone.on("sending", function (file) {
-        // Show the total progress bar when upload starts
-        document.querySelector("#total-progress").style.opacity = "1";
-    });
-
-    // Hide the total progress bar when nothing's uploading anymore
-    myDropzone.on("queuecomplete", function (progress) {
-        document.querySelector("#total-progress").style.opacity = "0";
-    });
-
-    myDropzone.on("removedfile", function (file) {
-        $.ajax({
-            url: "<?php echo site_url('upload/delete_file/'.$quote->quote_url_key) ?>",
-            type: "POST",
-            data: {'name': file.name}
-        });
-    });
-</script>

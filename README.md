@@ -1,5 +1,24 @@
 <!---->
 
+<p>[Version 1.0.4]</p>
+<p>[Date: 02.02.2016]</p>
+BUGFIXES:
+<ol>
+  <li>Clients can now upload files</li>
+
+</ol>
+
+IMPROVEMENTS:
+<ol>
+Possible to download file in quote view
+</ol>
+
+
+<!---->
+
+
+<!---->
+
 <p>[Version 1.0.3]</p>
 <p>[Date: 27.01.2016]</p>
 BUGFIXES:

@@ -28,7 +28,7 @@ class Mdl_Users extends Response_Model
         return array(
             '1' => lang('administrator'),
             '2' => lang('guest_read_only'),
-			'3' => 'Test type'
+			'3' => 'Designer'
         );
     }
 

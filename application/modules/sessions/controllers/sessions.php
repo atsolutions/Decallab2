@@ -26,7 +26,7 @@ class Sessions extends Base_Controller
     public function login()
     {
         $view_data = array(
-            'login_logo' => $this->mdl_settings->setting('login_logo')
+            'login_logo' => $this->mdl_settings->setting('login_logo'),
         );
 
         if ($this->input->post('btn_login')) {
@@ -34,7 +34,7 @@ class Sessions extends Base_Controller
             $this->db->where('user_email', $this->input->post('email'));
             $query = $this->db->get('ip_users');
             $user = $query->row();
-
+			$view_data['user']=$user;
             // Check if the user exists
             if (empty($user)) {
                 $this->session->set_flashdata('alert_error', lang('loginalert_user_not_found'));
@@ -44,12 +44,16 @@ class Sessions extends Base_Controller
                 if ($user->user_active == 0) {
                     $this->session->set_flashdata('alert_error', lang('loginalert_user_inactive'));
                 } else {
-
+						
                     if ($this->authenticate($this->input->post('email'), $this->input->post('password'))) {
                         if ($this->session->userdata('user_type') == 1) {
-                            redirect('dashboard');
+                         
+						   redirect('dashboard');
                         } elseif ($this->session->userdata('user_type') == 2) {
                             redirect('guest');
+                        }elseif ($this->session->userdata('user_type') == 3) {
+							
+							redirect('dashboard');
                         }
                     } else {
                         $this->session->set_flashdata('alert_error', lang('loginalert_credentials_incorrect'));
