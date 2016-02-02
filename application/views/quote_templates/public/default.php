@@ -180,7 +180,7 @@ div.ex1 {
 <?php
 
 $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
-echo $desired_dir;
+
 		if(isset($_POST['approve'])){ //check if form was submitted
 			if(isset($_FILES['files'])){
 				$errors= array();
@@ -233,6 +233,10 @@ echo $desired_dir;
 					$this->db->where('quote_id', $quote->quote_id);
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
+			echo '<script language="javascript">';
+			echo 'alert("Yout comments have been sent to Decallab team. Thank you!")';
+			echo '</script>';
+					
 			redirect('guest/view/approve_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 			
 			
@@ -288,6 +292,9 @@ echo $desired_dir;
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
 					//redirect for file upload
+			echo '<script language="javascript">';
+			echo 'alert("Yout comments have been sent to Decallab team. Thank you!")';
+			echo '</script>';
 			redirect('guest/view/reject_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 		}
 ?>
