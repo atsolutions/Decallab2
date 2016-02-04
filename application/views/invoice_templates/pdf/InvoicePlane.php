@@ -181,7 +181,7 @@ echo '</b>';
         <?php foreach ($invoice_tax_rates as $invoice_tax_rate) : ?>
             <tr>
                 <td colspan="5" class="text-right">
-                    <?php echo $invoice_tax_rate->invoice_tax_rate_name . ' (' . $invoice_tax_rate->invoice_tax_rate_percent . '%)'; ?>
+                    <?php echo "VAT" . ' (' . $invoice_tax_rate->invoice_tax_rate_percent . '%)'; ?>
                 </td>
                 <td class="text-right">
                     <?php echo format_currency($invoice_tax_rate->invoice_tax_rate_amount); ?>
@@ -215,7 +215,12 @@ echo '</b>';
         </tr>
         </tbody>
     </table>
-
+<?php if ($invoice_tax_rate->invoice_tax_rate_name == 'VAT Europe'){
+				echo 'VAT: Article 138 (1) of the EU VAT Directive (2006/112/EC)';
+			}elseif ($invoice_tax_rate->invoice_tax_rate_name == 'VAT Export'){
+				echo 'VAT: Article 146 (1) (a) of the EU VAT Directive (2006/112/EC)';
+			}
+?>
 </main>
 
 <footer>
@@ -223,6 +228,7 @@ echo '</b>';
         <div class="notes">
             <b><?php echo lang('terms'); ?></b><br/>
             <?php echo nl2br($invoice->invoice_terms); ?>
+			
         </div>
     <?php endif; ?>
 </footer>

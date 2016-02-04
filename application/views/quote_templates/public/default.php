@@ -185,6 +185,11 @@ function rejected() {
 window.alert("You have rejected this design. Comments have been sent to Decallab team They are working on it. Thank you!");
 }
 
+function getfiles(el){
+	document.getElementById("files").innerHTML = el.name;
+	
+}
+
 </script>
 
 
@@ -320,12 +325,13 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 							<div class="pull-right">
 								<label class="control-label"><?php echo lang('attachments'); ?></label>
 								<!-- The fileinput-button span is used to style the file input field as button -->
-								<span class="btn btn-default btn-file"><span>Choose files...</span><input id="btn btn-sucess" type="file" name="files[]" multiple="multiple"></span>
+								<span  class="btn btn-default btn-file"><span>Choose files...</span><input onclick="getfiles(this)" id="btn btn-sucess" type="file" name="files[]" multiple="multiple"></span>
 								<button onclick="approved()" type="submit" name ="approve"class="btn btn-success">Approve this quote</button>
 								<button onclick="rejected()"type="submit" name="correct" class="btn btn-danger">Send corrections</button>
 
 							</div>
-							
+							<p> Files selected: </p>
+							<p id="files">
 					
 	            <?php } elseif ($quote->quote_status_id == 4) { ?>
 				

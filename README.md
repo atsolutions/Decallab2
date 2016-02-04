@@ -1,5 +1,23 @@
 <!---->
 
+<p>[Version 1.0.5]</p>
+<p>[Date: 02.02.2016]</p>
+BUGFIXES:
+<ol>
+  <li>No confirmation for quote attachment deletion</li>
+
+</ol>
+
+IMPROVEMENTS:
+<ol>
+VAT atsauces
+</ol>
+
+
+<!---->
+
+<!---->
+
 <p>[Version 1.0.4]</p>
 <p>[Date: 02.02.2016]</p>
 BUGFIXES:

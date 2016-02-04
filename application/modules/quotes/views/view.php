@@ -449,7 +449,7 @@
         thumbnailHeight: 80,
         parallelUploads: 20,
         uploadMultiple: false,
-        dictRemoveFileConfirmation: '<?php echo lang('delete_attachment_warning'); ?>' ,
+        //dictRemoveFileConfirmation: '<?php echo lang('delete_attachment_warning'); ?>' ,
         previewTemplate: previewTemplate,
         autoQueue: true, // Make sure the files aren't queued until manually added
         previewsContainer: "#previews", // Define the container to display the previews

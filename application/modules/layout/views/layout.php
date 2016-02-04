@@ -243,7 +243,7 @@
                        data-original-title="<?php echo lang('Version'); ?>"
                        data-placement="bottom">
                         <i class="fa fa-info"></i>&nbsp;<span
-                            class="hidden-sm"><?php echo 'Version 1.0.4'; ?></span>
+                            class="hidden-sm"><?php echo 'Version 1.0.5'; ?></span>
                     </a>
                 </li>
 			
