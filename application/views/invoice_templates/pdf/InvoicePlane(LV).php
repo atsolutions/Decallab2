@@ -191,7 +191,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
         <?php foreach ($invoice_tax_rates as $invoice_tax_rate) : ?>
             <tr>
                 <td colspan="5" class="text-right">
-                    <?php echo $invoice_tax_rate->invoice_tax_rate_name . ' (' . $invoice_tax_rate->invoice_tax_rate_percent . '%)'; ?>
+                    <?php echo 'PVN' . ' (' . $invoice_tax_rate->invoice_tax_rate_percent . '%)'; ?>
                 </td>
                 <td class="text-right">
                     <?php echo format_currency($invoice_tax_rate->invoice_tax_rate_amount); ?>
