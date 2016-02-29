@@ -210,6 +210,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
         
         </tbody>
     </table>
+<?php echo 'Rēķins ir sagatavots elektroniski un ir derīgs bez paraksta saskaņā ar grāmatvedības likuma 7.1.1 pantu. Rēķinu sastādīja: ' . $invoice->user_name; ?>
 
 </main>
 

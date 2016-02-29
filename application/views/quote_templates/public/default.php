@@ -318,8 +318,10 @@ $desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
 	            <?php if (in_array($quote->quote_status_id, array(2,3))) { ?>
 				
 						<form action="" method="post" name= "comments" enctype="multipart/form-data">
-							<textarea style="width:900px;" rows="4;" onKeyPress=check_length(this.form); onKeyDown=check_length(this.form); 
-							name=my_text>Enter your corrections/comments here ... Attach files if neccesary</textarea>
+							<textarea style="width:900px; border:solid 5px black" rows="4;" onKeyPress=check_length(this.form); onKeyDown=check_length(this.form); 
+							name=my_text 
+							placeholder="Enter your corrections/comments here ... Attach files if neccesary.
+Lūdzu rakstiet savus komentārus šeit un apstipriniet (nospiediet approve this quote) vai noraidiet dizainu (Send Corrections). Pievienojiet papildus failus (Attach files) ja nepieciešams"></textarea>
 							<input size=1 value=2000 name=text_num> Characters Left
 							
 							<div class="pull-right">
