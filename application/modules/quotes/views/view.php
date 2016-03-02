@@ -461,7 +461,7 @@
                     var mockFile = {fullname: val.fullname, size: val.size, name: val.name};
                     thisDropzone.options.addedfile.call(thisDropzone, mockFile);
                     createDownloadButton(mockFile, '<?php echo base_url(); ?>uploads/customer_files/' + val.fullname);
-                    if (val.fullname.match(/\.(jpg|jpeg|png|gif)$/)) {
+                    if (val.fullname.match(/\.(jpg|jpeg|png|gif|JPG|GIF|PNG|JPEG)$/)) {
                         thisDropzone.options.thumbnail.call(thisDropzone, mockFile,
                             '<?php echo base_url(); ?>uploads/customer_files/' + val.fullname);
                     } else {
