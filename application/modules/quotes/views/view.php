@@ -116,7 +116,12 @@
 <?php echo $modal_add_quote_tax; ?>
 
 <div id="headerbar">
-    <h1><?php echo lang('quote'); ?> #<?php echo $quote->quote_number; ?></h1>
+    <h1><?php echo lang('quote'); ?> #<?php echo $quote->quote_number; ?></h1> &emsp;
+	
+<h1>
+	<?php echo '<a href=" ' . site_url('invoices/view/') . '/' . $quote->invoice_id . ' ">' . 'Invoice#' . $quote->invoice_id . ' </a>';
+	?>
+</h1>
 <?php 
 //print_r($items);
 

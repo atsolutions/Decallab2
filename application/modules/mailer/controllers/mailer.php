@@ -149,7 +149,7 @@ class Mailer extends Admin_Controller
         }
         $cc = $this->input->post('cc');
         $bcc = $this->input->post('bcc');
-        $attachment_files = $this->mdl_uploads->get_quote_uploads($quote_id);
+        //$attachment_files = $this->mdl_uploads->get_quote_uploads($quote_id);
 
 
         if (email_quote($quote_id, $pdf_template, $from, $to, $subject, $body, $cc, $bcc, $attachment_files)) {
