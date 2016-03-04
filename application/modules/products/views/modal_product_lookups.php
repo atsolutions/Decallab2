@@ -156,7 +156,10 @@
                                 <?php echo nl2br($product->product_description); ?>
                             </td>
                             <td class="text-right">
-                                <?php echo format_currency($product->product_price); ?>
+                                <?php 
+								if($this->session->userdata('user_subtype')!=1){
+								echo format_currency($product->product_price);}
+								?>
                             </td>
                         </tr>
                         <!-- Todo

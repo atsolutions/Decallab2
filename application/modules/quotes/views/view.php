@@ -1,3 +1,5 @@
+
+
 <script type="text/javascript">
 
     $(function () {
@@ -9,6 +11,7 @@
         $('.btn_add_row').click(function () {
             $('#new_row').clone().appendTo('#item_table').removeAttr('id').addClass('item').show();
         });
+
 
         $('#quote_change_client').click(function () {
             $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_change_client'); ?>", {
@@ -114,7 +117,10 @@
 
 <div id="headerbar">
     <h1><?php echo lang('quote'); ?> #<?php echo $quote->quote_number; ?></h1>
+<?php 
+//print_r($items);
 
+?>
     <div class="pull-right btn-group">
 
         <div class="options btn-group pull-left">
@@ -312,7 +318,12 @@
 
             </div>
 
-            <?php $this->layout->load_view('quotes/partial_item_table'); ?>
+            <?php 
+			if($this->session->userdata('user_subtype')!=1){
+			$this->layout->load_view('quotes/partial_item_table');
+			}else{
+				$this->layout->load_view('quotes/partial_item_table_designer');
+			}			?>
 
             <hr/>
 

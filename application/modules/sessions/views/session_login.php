@@ -40,13 +40,7 @@
         <?php } else { ?>
             <h1><?php echo lang('login'); ?></h1>
         <?php } ?>
-<?php if ($user){
-	print_r($user);
-	echo'lietotajs ir';
-}else{
-	print_r($user);
-	echo 'lietotajs nav';
-}?>
+
         <form class="form-horizontal" method="post"
               action="<?php echo site_url($this->uri->uri_string()); ?>">
 

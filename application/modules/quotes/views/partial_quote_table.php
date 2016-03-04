@@ -106,7 +106,6 @@ function deletequote(){
             <th><?php echo lang('options'); ?></th>
         </tr>
         </thead>
-<p id="demo"> DEMO: </p>
         <tbody>
         <?php foreach ($quotes as $quote) { ?>
             <tr>
@@ -193,7 +192,11 @@ function deletequote(){
 </td>
 				
                 <td style="text-align: right; padding-right: 25px;">
-                    <?php echo format_currency($quote->quote_total); ?>
+                    <?php 
+					if($this->session->userdata('user_subtype')!=1){
+							echo format_currency($quote->quote_total);
+					}
+					?>
                 </td>
 				<td>
                     <input type="checkbox" onchange="add(this)"name="checked" id="<?php echo $quote->quote_id ?>"><br>

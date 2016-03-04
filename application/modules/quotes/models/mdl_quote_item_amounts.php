@@ -42,6 +42,7 @@ class Mdl_Quote_Item_Amounts extends CI_Model
             'item_tax_total' => $item_tax_total,
             'item_discount' => $item_discount_total,
             'item_total' => $item_total,
+			
         );
 
         $this->db->where('item_id', $item_id);

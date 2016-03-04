@@ -1,6 +1,10 @@
 <div id="content">
     <?php echo $this->layout->load_view('layout/alerts'); ?>
 
+
+
+
+	
     <div class="row <?php if ($this->mdl_settings->setting('disable_quickactions') == 1) {
         echo 'hidden';
     } ?>">
@@ -71,7 +75,10 @@
                             </td>
                             <td class="amount">
                         <span class="<?php echo $total['class']; ?>">
-                            <?php echo format_currency($total['sum_total']); ?>
+                            <?php
+							if($this->session->userdata('user_subtype')!=1){
+							echo format_currency($total['sum_total']);
+							}							?>
                         </span>
                             </td>
 							
@@ -113,7 +120,9 @@
                             </td>
                             <td class="amount">
                         <span class="<?php echo $total['class']; ?>">
-                            <?php echo format_currency($total['sum_total']); ?>
+                            <?php 
+							if($this->session->userdata('user_subtype')!=1){
+							echo format_currency($total['sum_total']);} ?>
                         </span>
                             </td>
                         </tr>
@@ -135,7 +144,9 @@
                 <div class="panel panel-danger panel-heading">
                     <?php echo anchor('invoices/status/overdue', '<i class="fa fa-external-link"></i> ' . lang('overdue_invoices'), 'class="text-danger"'); ?>
                     <span class="pull-right text-danger">
-                        <?php echo format_currency($overdue_invoices_total); ?>
+                        <?php 
+						if($this->session->userdata('user_subtype')!=1){
+						echo format_currency($overdue_invoices_total); }?>
                     </span>
                 </div>
             <?php } ?>
@@ -182,7 +193,10 @@
                                     <?php echo anchor('clients/view/' . $quote->client_id, $quote->client_name); ?>
                                 </td>
                                 <td class="amount">
-                                    <?php echo format_currency($quote->quote_total); ?>
+                                    <?php 
+									if($this->session->userdata('user_subtype')!=1){
+									echo format_currency($quote->quote_total); 
+									}?>
                                 </td>
                                 <td style="text-align: center;">
                                     <a href="<?php echo site_url('quotes/generate_pdf/' . $quote->quote_id); ?>"
@@ -256,7 +270,9 @@
                                     <?php echo anchor('clients/view/' . $invoice->client_id, $invoice->client_name); ?>
                                 </td>
                                 <td class="amount">
-                                    <?php echo format_currency($invoice->invoice_balance * $invoice->invoice_sign); ?>
+                                    <?php 
+									if($this->session->userdata('user_subtype')!=1){
+									echo format_currency($invoice->invoice_balance * $invoice->invoice_sign);} ?>
                                 </td>
                                 <td style="text-align: center;">
                                     <a href="<?php echo site_url('invoices/generate_pdf/' . $invoice->invoice_id); ?>"

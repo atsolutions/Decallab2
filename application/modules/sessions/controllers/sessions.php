@@ -47,13 +47,14 @@ class Sessions extends Base_Controller
 						
                     if ($this->authenticate($this->input->post('email'), $this->input->post('password'))) {
                         if ($this->session->userdata('user_type') == 1) {
-                         
+                         echo "<script>alert(\"Designer user.\");</script>";
 						   redirect('dashboard');
                         } elseif ($this->session->userdata('user_type') == 2) {
                             redirect('guest');
                         }elseif ($this->session->userdata('user_type') == 3) {
 							
-							redirect('dashboard');
+							redirect('guest');
+							
                         }
                     } else {
                         $this->session->set_flashdata('alert_error', lang('loginalert_credentials_incorrect'));

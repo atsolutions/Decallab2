@@ -151,11 +151,17 @@ function deletequote(){
                 <td class="amount <?php if ($invoice->invoice_sign == '-1') {
                     echo 'text-danger';
                 }; ?>">
-                    <?php echo format_currency($invoice->invoice_total); ?>
+                    <?php 
+					if($this->session->userdata('user_subtype')!=1){
+						echo format_currency($invoice->invoice_total);
+					}?>
                 </td>
 
                 <td class="amount">
-                    <?php echo format_currency($invoice->invoice_balance); ?>
+                    <?php 
+					if($this->session->userdata('user_subtype')!=1){
+					echo format_currency($invoice->invoice_balance);
+					}					?>
                 </td>
 				
 								<td>

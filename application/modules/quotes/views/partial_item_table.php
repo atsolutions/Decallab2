@@ -39,6 +39,8 @@
                     <input type="text" name="item_price" class="input-sm form-control amount" value="">
                 </div>
             </td>
+			
+			
             <td class="td-amount ">
                 <div class="input-group">
                     <span class="input-group-addon"><?php echo lang('item_discount'); ?></span>
@@ -70,6 +72,8 @@
                     <textarea name="item_description" class="input-sm form-control"></textarea>
                 </div>
             </td>
+			<?php 
+			if($this->session->userdata('user_subtype')!=1){ ?>
             <td colspan="2" class="td-amount td-vert-middle">
                 <span><?php echo lang('subtotal'); ?></span><br/>
                 <span name="subtotal" class="amount"></span>
@@ -86,6 +90,7 @@
                 <span><?php echo lang('total'); ?></span><br/>
                 <span name="item_total" class="amount"></span>
             </td>
+			<?php } ?>
         </tr>
         </tbody>
 

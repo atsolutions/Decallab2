@@ -72,6 +72,7 @@ class Mdl_Sessions extends CI_Model
                     'user_name' => $user->user_name,
                     'user_email' =>  $user->user_email,
                     'user_company' => $user->user_company,
+					'user_subtype' =>$user->user_subtype,
                 );
 
                 $this->session->set_userdata($session_data);

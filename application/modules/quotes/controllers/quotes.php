@@ -113,10 +113,12 @@ class Quotes extends Admin_Controller
             show_404();
         }
 
+
         $this->layout->set(
             array(
                 'quote' => $quote,
-                'items' => $this->mdl_quote_items->where('quote_id', $quote_id)->get()->result(),
+                'items'=>$items,
+				'items' => $this->mdl_quote_items->where('quote_id', $quote_id)->get()->result(),
                 'quote_id' => $quote_id,
                 'tax_rates' => $this->mdl_tax_rates->get()->result(),
                 'quote_tax_rates' => $this->mdl_quote_tax_rates->where('quote_id', $quote_id)->get()->result(),

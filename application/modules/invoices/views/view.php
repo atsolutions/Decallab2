@@ -392,7 +392,13 @@ if ($this->config->item('disable_read_only') == TRUE) {
 
             </div>
 
-            <?php $this->layout->load_view('invoices/partial_item_table'); ?>
+            <?php 
+			if($this->session->userdata('user_subtype')!=1){
+			$this->layout->load_view('invoices/partial_item_table');
+			}else{
+			$this->layout->load_view('invoices/partial_item_table_designer');
+				
+			}?>
 
             <hr/>
 
