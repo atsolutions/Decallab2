@@ -196,7 +196,7 @@ function getfiles(el){
 
 <?php
 
-$desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
+$desired_dir= "/var/www/html/DevelopDecallab/uploads/customer_files/";
      
 
 		if(isset($_POST['approve'])){ //check if form was submitted

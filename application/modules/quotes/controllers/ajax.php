@@ -327,9 +327,10 @@ class Ajax extends Admin_Controller
 
                 $this->mdl_items->save($invoice_id, NULL, $db_array);
             }
-
+			//$this->mdl_invoices->set_notes($invoice_id, $this->input->post('quote_number'));
+			
             $quote_tax_rates = $this->mdl_quote_tax_rates->where('quote_id', $this->input->post('quote_id'))->get()->result();
-
+			
             foreach ($quote_tax_rates as $quote_tax_rate) {
                 $db_array = array(
                     'invoice_id' => $invoice_id,

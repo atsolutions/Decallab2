@@ -7,7 +7,8 @@
         $('#quote_to_invoice_confirm').click(function () {
             $.post("<?php echo site_url('quotes/ajax/quote_to_invoice'); ?>", {
                     quote_id: <?php echo $quote_id; ?>,
-                    client_name: $('#client_name').val(),
+					//quote_number: <?php echo $quote->quote_number; ?>,
+					client_name: $('#client_name').val(),
                     invoice_date_created: $('#invoice_date_created').val(),
                     invoice_group_id: $('#invoice_group_id').val(),
                     invoice_password: $('#invoice_password').val(),
@@ -16,6 +17,7 @@
                 function (data) {
                     var response = JSON.parse(data);
                     if (response.success == '1') {
+						<?php $this->mdl_quotes->mark_invoiced($quote_id); ?>
                         window.location = "<?php echo site_url('invoices/view'); ?>/" + response.invoice_id;
                     }
                     else {

@@ -60,6 +60,11 @@ class Mdl_Quotes extends Response_Model
                 'label' => lang('canceled'),
                 'class' => 'canceled',
                 'href' => 'quotes/status/canceled'
+            ),
+			'8' => array(
+                'label' => 'Invoiced',
+                'class' => 'canceled',
+                'href' => 'quotes/status/invoiced'
             )
 			
         );
@@ -323,6 +328,12 @@ class Mdl_Quotes extends Response_Model
         $this->filter_where('quote_status_id', 6);
         return $this;
     }
+	
+	public function is_invoiced()
+    {
+        $this->filter_where('quote_status_id', 8);
+        return $this;
+    }
 
     // Used by guest module; includes only sent and viewed
     public function is_open()
@@ -392,6 +403,24 @@ class Mdl_Quotes extends Response_Model
             }
         }
     }
+	
+	public function mark_invoiced($quote_id)
+    {
+        $this->db->select('quote_status_id');
+        $this->db->where('quote_id', $quote_id);
+
+        $quote = $this->db->get('ip_quotes');
+
+        if ($quote->num_rows()) {
+         
+                $this->db->where('quote_id', $quote_id);
+                $this->db->set('quote_status_id', 8);
+                $this->db->update('ip_quotes');
+            
+        }
+    }
+	
+	
 
     public function mark_sent($quote_id, $to, $client_phone)
     {

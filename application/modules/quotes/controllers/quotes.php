@@ -64,6 +64,9 @@ class Quotes extends Admin_Controller
             case 'canceled':
                 $this->mdl_quotes->is_canceled();
                 break;
+			case 'invoiced':
+				$this->mdl_quotes->is_invoiced();
+				break;
         }
 
         $this->mdl_quotes->paginate(site_url('quotes/status/' . $status), $page);
