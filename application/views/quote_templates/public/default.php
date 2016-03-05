@@ -320,7 +320,7 @@ $this->db->insert('ip_actions', $data);
 $data = array(
    'author' => $quote->client_name,
    'action' => 'has rejected quote ' . $quote->quote_number ,
-   'action_date' => date('Y-m-d H:i:s'),
+   'action_date' => date('Y-m-d'),
    'action_link' => site_url('quotes/view/') .'/'. $quote->quote_id,
    'type' => '2'
 );

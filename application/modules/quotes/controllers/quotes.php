@@ -76,6 +76,7 @@ class Quotes extends Admin_Controller
             array(
                 'quotes' => $quotes,
                 'status' => $status,
+				'userlist' => $this->db->get('ip_users')->result(),
                 'filter_display' => TRUE,
                 'filter_placeholder' => lang('filter_quotes'),
                 'filter_method' => 'filter_quotes',
@@ -96,6 +97,7 @@ class Quotes extends Admin_Controller
         $this->load->model('custom_fields/mdl_custom_fields');
         $this->load->model('custom_fields/mdl_quote_custom');
         $this->load->library('encrypt');
+	
 
         $quote_custom = $this->mdl_quote_custom->where('quote_id', $quote_id)->get();
 
@@ -123,6 +125,7 @@ class Quotes extends Admin_Controller
                 'items'=>$items,
 				'items' => $this->mdl_quote_items->where('quote_id', $quote_id)->get()->result(),
                 'quote_id' => $quote_id,
+				'userlist' => $this->db->get('ip_users')->result(),
                 'tax_rates' => $this->mdl_tax_rates->get()->result(),
                 'quote_tax_rates' => $this->mdl_quote_tax_rates->where('quote_id', $quote_id)->get()->result(),
                 'custom_fields' => $this->mdl_custom_fields->by_table('ip_quote_custom')->get()->result(),
@@ -131,7 +134,7 @@ class Quotes extends Admin_Controller
                     'currency_symbol_placement' => $this->mdl_settings->setting('currency_symbol_placement'),
                     'decimal_point' => $this->mdl_settings->setting('decimal_point')
                 ),
-                'quote_statuses' => $this->mdl_quotes->statuses()
+                'quote_statuses' => $this->mdl_quotes->statuses(),
             )
         );
 

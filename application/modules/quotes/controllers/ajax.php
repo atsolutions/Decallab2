@@ -71,6 +71,8 @@ class Ajax extends Admin_Controller
             } else {
                 $quote_discount_percent = $this->input->post('quote_discount_percent');
             }
+			
+			$quote_designer=$this->input->post('responsible_id');
 
             $db_array = array(
                 'quote_number' => $this->input->post('quote_number'),
@@ -81,6 +83,7 @@ class Ajax extends Admin_Controller
                 'notes' => $this->input->post('notes'),
                 'quote_discount_amount' => $quote_discount_amount,
                 'quote_discount_percent' => $quote_discount_percent,
+				'responsible_id'=> $quote_designer,
             );
 
             $this->mdl_quotes->save($quote_id, $db_array);

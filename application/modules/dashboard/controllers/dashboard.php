@@ -27,7 +27,8 @@ class Dashboard extends Admin_Controller
 		
         $quote_overview_period = $this->mdl_settings->setting('quote_overview_period');
         $invoice_overview_period = $this->mdl_settings->setting('invoice_overview_period');
-		
+		$this->db->where('action_date', date('Y-m-d'));
+		$query = $this->db->get('ip_actions')->result();
         $this->layout->set(
             array(
                 'invoice_status_totals' => $this->mdl_invoice_amounts->get_status_totals($invoice_overview_period),
@@ -39,7 +40,7 @@ class Dashboard extends Admin_Controller
                 'invoice_statuses' => $this->mdl_invoices->statuses(),
                 'quote_statuses' => $this->mdl_quotes->statuses(),
                 'overdue_invoices' => $this->mdl_invoices->is_overdue()->limit(20)->get()->result(),
-				'activities' => $this->db->get('ip_actions')->result()
+				'activities' => $query
             )
         );
 

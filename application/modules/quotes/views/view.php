@@ -50,6 +50,7 @@ span.tab{
                     quote_date_expires: $('#quote_date_expires').val(),
                     quote_status_id: $('#quote_status_id').val(),
                     quote_password: $('#quote_password').val(),
+					responsible_id: $('#quote_designer').val(),
                     items: JSON.stringify(items),
                     quote_discount_amount: $('#quote_discount_amount').val(),
                     quote_discount_percent: $('#quote_discount_percent').val(),
@@ -321,6 +322,21 @@ if($quote->invoice_id !=0){
                                         <input type="text" id="quote_password" class="form-control input-sm"
                                                value="<?php echo $quote->quote_password; ?>">
                                     </div>
+                                </div>
+								
+								<div class="quote-properties">
+                                    <label for="quote_status_id">
+                                        <?php echo 'Designer'; ?>
+                                    </label>
+                                    <select name="quote_status_id" id="quote_designer"
+                                            class="form-control input-sm">
+                                        <?php foreach ($userlist as $user) { ?>
+                                            <option value="<?php echo $user->user_id; ?>"
+                                                    <?php if ($user->user_id == $quote->responsible_id) { ?>selected="selected"<?php } ?>>
+                                                <?php echo $user->user_name; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
 
                                 
