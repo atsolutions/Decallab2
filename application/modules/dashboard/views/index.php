@@ -203,7 +203,7 @@ span.tab{
 </div>
 </div>
 		
-<?php if($false){ ?>
+
             <div id="panel-recent-quotes" class="panel panel-default">
 
                 <div class="panel-heading">
@@ -223,7 +223,8 @@ span.tab{
                         </thead>
                         <tbody>
                         <?php foreach ($quotes as $quote) { ?>
-                            <tr>
+                            <?php if($quote->responsible_id == $this->session->userdata('user_id')){ ?>
+							<tr>
                                 <td>
                                 <span class="label
                                 <?php echo $quote_statuses[$quote->quote_status_id]['class']; ?>">
@@ -252,6 +253,7 @@ span.tab{
                                     </a>
                                 </td>
                             </tr>
+							<?php } ?>
                         <?php } ?>
                         <tr>
                             <td colspan="6" class="text-right small">
@@ -263,7 +265,7 @@ span.tab{
                 </div>
             </div>
 			
-<?php } ?>
+
 
         </div>
         <div class="col-xs-12 col-md-6">
