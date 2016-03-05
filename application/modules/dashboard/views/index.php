@@ -1,43 +1,16 @@
+<style>
+span.tab{
+    padding: 0 2px; /* Or desired space*/
+}
+</style>
+
 <div id="content">
     <?php echo $this->layout->load_view('layout/alerts'); ?>
 
 
 
 
-	
-    <div class="row <?php if ($this->mdl_settings->setting('disable_quickactions') == 1) {
-        echo 'hidden';
-    } ?>">
-        <div class="col-xs-12">
-
-            <div id="panel-quick-actions" class="panel panel-default quick-actions">
-
-                <div class="panel-heading">
-                    <b><?php echo lang('quick_actions'); ?></b>
-                </div>
-
-                <div class="btn-group btn-group-justified no-margin">
-                    <a href="<?php echo site_url('clients/form'); ?>" class="btn btn-default">
-                        <i class="fa fa-user fa-margin"></i>
-                        <span class="hidden-xs"><?php echo lang('add_client'); ?></span>
-                    </a>
-                    <a href="javascript:void(0)" class="create-quote btn btn-default">
-                        <i class="fa fa-file fa-margin"></i>
-                        <span class="hidden-xs"><?php echo lang('create_quote'); ?></span>
-                    </a>
-                    <a href="javascript:void(0)" class="create-invoice btn btn-default">
-                        <i class="fa fa-file-text fa-margin"></i>
-                        <span class="hidden-xs"><?php echo lang('create_invoice'); ?></span>
-                    </a>
-                    <a href="<?php echo site_url('payments/form'); ?>" class="btn btn-default">
-                        <i class="fa fa-credit-card fa-margin"></i>
-                        <span class="hidden-xs"><?php echo lang('enter_payment'); ?></span>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
+   
 
     <div class="row">
         <div class="col-xs-12 col-md-6">
@@ -90,6 +63,41 @@
         </div>
         <div class="col-xs-12 col-md-6">
 
+		 <div class="row <?php if ($this->mdl_settings->setting('disable_quickactions') == 1) {
+        echo 'hidden';
+    } ?>">
+        <div class="col-xs-12">
+
+            <div id="panel-quick-actions" class="panel panel-default quick-actions">
+
+                <div class="panel-heading">
+                    <b><?php echo lang('quick_actions'); ?></b>
+                </div>
+
+                <div class="btn-group btn-group-justified no-margin">
+                    <a href="<?php echo site_url('clients/form'); ?>" class="btn btn-default">
+                        <i class="fa fa-user fa-margin"></i>
+                        <span class="hidden-xs"><?php echo lang('add_client'); ?></span>
+                    </a>
+                    <a href="javascript:void(0)" class="create-quote btn btn-default">
+                        <i class="fa fa-file fa-margin"></i>
+                        <span class="hidden-xs"><?php echo lang('create_quote'); ?></span>
+                    </a>
+                    <a href="javascript:void(0)" class="create-invoice btn btn-default">
+                        <i class="fa fa-file-text fa-margin"></i>
+                        <span class="hidden-xs"><?php echo lang('create_invoice'); ?></span>
+                    </a>
+                    <a href="<?php echo site_url('payments/form'); ?>" class="btn btn-default">
+                        <i class="fa fa-credit-card fa-margin"></i>
+                        <span class="hidden-xs"><?php echo lang('enter_payment'); ?></span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+		
+		
             <div id="panel-invoice-overview" class="panel panel-default overview">
 
                 <div class="panel-heading">
@@ -157,6 +165,45 @@
     <div class="row">
         <div class="col-xs-12 col-md-6">
 
+		<div class="row <?php if ($this->mdl_settings->setting('disable_quickactions') == 1) {
+        echo 'hidden';
+    } ?>">
+        <div class="col-xs-12">
+
+            <div id="panel-quick-actions" class="panel panel-default quick-actions">
+
+                <div class="panel-heading">
+                    <b><?php echo 'Recent activity' ?></b>
+                </div>
+
+		<div class="list-group">
+			<?php foreach($activities as $activity){ ?>
+	
+			<h4>
+			<a href="<?php echo $activity->action_link; ?>" class="list-group-item 
+			<?php if ($activity->type==1){
+				echo 'list-group-item-success';
+			}
+			else {
+				echo 'list-group-item-danger';
+			}
+			?>
+				">
+			<b><?php echo $activity->author;?> <span class="tab"></span></b>
+			<?php echo $activity->action; ?> <span class="tab"></span>
+			<?php echo $activity->action_date; ?>
+			</a>
+			</h4>
+		
+			<?php } ?>
+       </div>
+      
+	  
+</div>
+</div>
+</div>
+		
+<?php if($false){ ?>
             <div id="panel-recent-quotes" class="panel panel-default">
 
                 <div class="panel-heading">
@@ -215,10 +262,12 @@
                     </table>
                 </div>
             </div>
+			
+<?php } ?>
 
         </div>
         <div class="col-xs-12 col-md-6">
-
+<?php if($false){ ?>
             <div id="panel-recent-invoices" class="panel panel-default">
 
                 <div class="panel-heading">
@@ -292,6 +341,8 @@
 
                 </div>
             </div>
+			
+			<?php } ?>
 
         </div>
     </div>

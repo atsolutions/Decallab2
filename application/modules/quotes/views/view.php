@@ -1,5 +1,8 @@
-
-
+<style>
+span.tab{
+    padding: 0 10px; /* Or desired space*/
+}
+</style>
 <script type="text/javascript">
 
     $(function () {
@@ -115,11 +118,17 @@
 <?php echo $modal_delete_quote; ?>
 <?php echo $modal_add_quote_tax; ?>
 
+
+
 <div id="headerbar">
     <h1><?php echo lang('quote'); ?> #<?php echo $quote->quote_number; ?></h1> &emsp;
 	
 <h1>
-	<?php echo '<a href=" ' . site_url('invoices/view/') . '/' . $quote->invoice_id . ' ">' . 'Invoice#' . $quote->invoice_id . ' </a>';
+<span class="tab"></span>
+	<?php
+if($quote->invoice_id !=0){
+	echo '<a href=" ' . site_url('invoices/view/') . '/' . $quote->invoice_id . ' ">  INVOICE </a>';
+}
 	?>
 </h1>
 <?php 

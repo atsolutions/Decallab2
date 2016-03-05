@@ -196,7 +196,7 @@ function getfiles(el){
 
 <?php
 
-$desired_dir= "/var/www/html/DevelopDecallab/uploads/customer_files/";
+$desired_dir= "/var/www/html/Decallab/uploads/customer_files/";
      
 
 		if(isset($_POST['approve'])){ //check if form was submitted
@@ -252,6 +252,17 @@ $desired_dir= "/var/www/html/DevelopDecallab/uploads/customer_files/";
 					$this->db->where('quote_id', $quote->quote_id);
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
+					
+$data = array(
+   'author' => $quote->client_name,
+   'action' => 'has approved quote ' . $quote->quote_number ,
+   'action_date' => date('Y-m-d H:i:s'),
+   'action_link' => site_url('quotes/view/') .'/'. $quote->quote_id,
+   'type' => '1'
+);
+
+$this->db->insert('ip_actions', $data); 
+					
 				
 			redirect('guest/view/approve_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 			
@@ -306,7 +317,15 @@ $desired_dir= "/var/www/html/DevelopDecallab/uploads/customer_files/";
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
 					//redirect for file upload
-			
+$data = array(
+   'author' => $quote->client_name,
+   'action' => 'has rejected quote ' . $quote->quote_number ,
+   'action_date' => date('Y-m-d H:i:s'),
+   'action_link' => site_url('quotes/view/') .'/'. $quote->quote_id,
+   'type' => '2'
+);
+
+$this->db->insert('ip_actions', $data); 
 
 			redirect('guest/view/reject_quote/' . $quote->quote_url_key . '/' . $quote->quote_id);
 		}
