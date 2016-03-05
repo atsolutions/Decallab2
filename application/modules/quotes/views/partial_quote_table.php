@@ -173,15 +173,29 @@ function deletequote(){
 
 <td>
 <?php
-//print_r($userlist);
+
 if($quote->responsible_id != 0){
 	foreach ($userlist as $user){
 	if($user->user_id == $quote->responsible_id)
 	echo $user->user_name;
 	}
-}
-?>
+}else{
+        $this->load->model('custom_fields/mdl_custom_fields');
+        $this->load->model('custom_fields/mdl_quote_custom');
+        $quote_custom = $this->mdl_quote_custom->where('quote_id', $quote->quote_id)->get();
+        if ($quote_custom->num_rows()) {
+            $quote_custom = $quote_custom->row();
+            unset($quote_custom->quote_id, $quote_custom->quote_custom_id);
 
+            foreach ($quote_custom as $key => $val) {
+				if($key == 'quote_custom_designer'){
+				echo $val;
+				}
+				}
+            }
+        
+}
+ ?>
 </td>
 				
                 <td style="text-align: right; padding-right: 25px;">
