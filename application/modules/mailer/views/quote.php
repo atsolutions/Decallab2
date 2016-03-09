@@ -32,6 +32,7 @@
                 <i class="fa fa-times"></i>
                 <?php echo lang('cancel'); ?>
             </button>
+			
         </div>
     </div>
 
@@ -45,7 +46,7 @@
             </div>
             <div class="col-xs-12 col-sm-6">
                 <input type="text" name="to_email" id="to_email" class="form-control"
-                       value="<?php echo $quote->client_email; ?>">
+                       value="<?php echo $send_to; ?>">
             </div>
         </div>
 
@@ -72,7 +73,7 @@
             </div>
             <div class="col-xs-12 col-sm-6">
                 <input type="text" name="from_name" id="from_name" class="form-control"
-                       value="<?php echo $quote->user_name; ?>">
+                       value="<?php echo $from_name; ?>">
             </div>
         </div>
 
@@ -82,7 +83,7 @@
             </div>
             <div class="col-xs-12 col-sm-6">
                 <input type="text" name="from_email" id="from_email" class="form-control"
-                       value="<?php echo $quote->user_email; ?>">
+                       value="<?php echo $from_email; ?>">
             </div>
         </div>
 
@@ -91,7 +92,7 @@
                 <label for="cc" class="control-label"><?php echo lang('cc'); ?>: </label>
             </div>
             <div class="col-xs-12 col-sm-6">
-                <input type="text" name="cc" id="cc" value="" class="form-control">
+                <input type="text" name="cc" id="cc" value="<?php echo $cc ?>" class="form-control">
             </div>
         </div>
 

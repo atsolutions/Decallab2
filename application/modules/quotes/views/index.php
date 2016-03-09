@@ -18,10 +18,9 @@
 
     <div class="pull-right visible-lg">
         <ul class="nav nav-pills index-options">
+		<?php if($this->session->userdata('user_subtype')!=1){ ?>
             <li <?php if ($status == 'all') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('quotes/status/all'); ?>"><?php echo lang('all'); ?></a></li>
-            <li <?php if ($status == 'draft') { ?>class="active"<?php } ?>><a
-                    href="<?php echo site_url('quotes/status/draft'); ?>"><?php echo lang('draft'); ?></a></li>
             <li <?php if ($status == 'sent') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('quotes/status/sent'); ?>"><?php echo lang('sent'); ?></a></li>
             <li <?php if ($status == 'viewed') { ?>class="active"<?php } ?>><a
@@ -34,6 +33,13 @@
                     href="<?php echo site_url('quotes/status/canceled'); ?>"><?php echo lang('canceled'); ?></a></li>
 			<li <?php if ($status == 'designer') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('quotes/status/designer'); ?>"><?php echo 'Designer'; ?></a></li>
+			<li <?php if ($status == 'invoiced') { ?>class="active"<?php } ?>><a
+                    href="<?php echo site_url('quotes/status/invoiced'); ?>"><?php echo 'Invoiced'; ?></a></li>
+		<?php } ?>
+			<li <?php if ($status == 'draft') { ?>class="active"<?php } ?>><a
+                    href="<?php echo site_url('quotes/status/draft'); ?>"><?php echo lang('draft'); ?></a></li>
+			<li><a
+                    href="<?php echo site_url('quotes/status/myquotes'); ?>"><?php echo 'MyQuotes'; ?></a></li>
         </ul>
     </div>
 

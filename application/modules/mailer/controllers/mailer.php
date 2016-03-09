@@ -73,9 +73,25 @@ class Mailer extends Admin_Controller
         $this->load->model('upload/mdl_uploads');
         $this->load->model('email_templates/mdl_email_templates');
 		$this->load->model('custom_fields/mdl_quote_custom');
+		$this->load->model('users/mdl_users');
 
         $email_template_id = $this->mdl_settings->setting('email_quote_template');
-
+		$quote = $this->mdl_quotes->where('ip_quotes.quote_id', $quote_id)->get()->row();
+		$user = $this->mdl_users->where('ip_users.user_id', $quote->responsible_id)->get()->row();
+		$master = $this->mdl_users->where('ip_users.user_id', $quote->user_id)->get()->row();
+		if($quote->quote_status_id ==1){
+			$send_to = $user->user_email;
+			
+		} else{
+			$send_to = $quote->client_email;
+		}
+		if($quote->quote_status_id ==7){
+			$cc = $master->user_email;
+			
+		} 
+		$from_email = $this->session->userdata('user_email');
+		$from_name = $this->session->userdata('user_name');
+		
         if ($email_template_id) {
             $email_template = $this->mdl_email_templates->where('email_template_id', $email_template_id)->get();
 
@@ -83,6 +99,10 @@ class Mailer extends Admin_Controller
         } else {
             $this->layout->set('email_template', '{}');
         }
+		$this->layout->set('send_to', $send_to);
+		$this->layout->set('cc', $cc);
+		$this->layout->set('from_email', $from_email);
+		$this->layout->set('from_name', $from_name);
         $this->layout->set('selected_pdf_template', $this->mdl_settings->setting('pdf_quote_template'));
         $this->layout->set('selected_email_template', $email_template_id);
         $this->layout->set('email_templates', $this->mdl_email_templates->where('email_template_type', 'quote')->get()->result());

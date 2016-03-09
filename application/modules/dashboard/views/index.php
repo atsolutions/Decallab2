@@ -188,7 +188,7 @@ span.tab{
 				echo 'list-group-item-danger';
 			}
 			?>
-				">
+				" style="height: auto; padding: 1px 1px;">
 			<b><?php echo $activity->author;?> <span class="tab"></span></b>
 			<?php echo $activity->action; ?> <span class="tab"></span>
 			<?php echo $activity->action_date; ?>

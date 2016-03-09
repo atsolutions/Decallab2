@@ -28,7 +28,14 @@ class Quotes extends Admin_Controller
     public function index()
     {
         // Display all quotes by default
+		if($this->session->userdata('user_subtype')!=1){
         redirect('quotes/status/all');
+		}else{
+			redirect('quotes/status/draft');
+			
+		}
+		
+		
     }
 
     public function status($status = 'all', $page = 0)
@@ -67,6 +74,10 @@ class Quotes extends Admin_Controller
 			case 'invoiced':
 				$this->mdl_quotes->is_invoiced();
 				break;
+			case 'myquotes':
+				$this->mdl_quotes->is_my();
+				break;
+			
         }
 
         $this->mdl_quotes->paginate(site_url('quotes/status/' . $status), $page);

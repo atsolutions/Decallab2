@@ -334,6 +334,14 @@ class Mdl_Quotes extends Response_Model
         $this->filter_where('quote_status_id', 8);
         return $this;
     }
+	
+		public function is_my()
+    {
+        $this->filter_where('ip_quotes.responsible_id', $this->session->userdata('user_id'));
+        return $this;
+    }
+
+	
 
     // Used by guest module; includes only sent and viewed
     public function is_open()
