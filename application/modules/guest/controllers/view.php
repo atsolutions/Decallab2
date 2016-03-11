@@ -73,8 +73,9 @@ class View extends Base_Controller
     public function quote($quote_url_key)
     {
         $this->load->model('quotes/mdl_quotes');
-
-        $quote = $this->mdl_quotes->guest_visible()->where('quote_url_key', $quote_url_key)->get();
+		
+		
+		$quote = $this->mdl_quotes->guest_visible()->where('quote_url_key', $quote_url_key)->get();
 		
 		
 		if ($quote->num_rows() == 1) {
@@ -93,15 +94,32 @@ class View extends Base_Controller
                 'items' => $this->mdl_quote_items->where('quote_id', $quote->quote_id)->get()->result(),
                 'quote_tax_rates' => $this->mdl_quote_tax_rates->where('quote_id', $quote->quote_id)->get()->result(),
                 'quote_url_key' => $quote_url_key,
+	
                 'flash_message' => $this->session->flashdata('flash_message')
             );
 }
-if($quote->quote_status_id ==7 or $quote->quote_status_id ==5 or $quote->quote_status_id ==1){
-	 $this->load->view('quote_templates/public/designer.php', $data);
-}else {
-            $this->load->view('quote_templates/public/' . $this->mdl_settings->setting('public_quote_template') . '.php', $data);
-			
+switch($quote->quote_status_id){
+	case 2:
+	$this->load->view('quote_templates/public/Sent.php', $data);
+	break;
+	case 3:
+	$this->load->view('quote_templates/public/Sent.php', $data);
+	break;
+	case 4:
+	$this->load->view('quote_templates/public/Approved.php', $data);
+	break;
+	case 5:
+	$this->load->view('quote_templates/public/rejected.php', $data);
+	break;
+	case 7:
+	$this->load->view('quote_templates/public/designer.php', $data);
+	break;
+	case 8:
+	$this->load->view('quote_templates/public/Invoiced.php', $data);
+	break;
+	
 }
+
 }
 
 

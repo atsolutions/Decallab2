@@ -27,9 +27,8 @@
 
         <title><?php
         if ($this->mdl_settings->setting('custom_title') != '') {
-            echo $this->mdl_settings->setting('custom_title');
+        echo $this->mdl_settings->setting('custom_title');
         } else {
-            echo 'InvoicePlane';
         } ?> - <?php echo lang('quote'); ?> <?php echo $quote->quote_number; ?></title>
 
         <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -92,20 +91,17 @@
     <body>
 	<br>
 	<br>
-<?php $string = 'uploads/customer_files/' . $quote->quote_url_key . '*.{[jJ][pP][gG],[pP][nN][gG],[gG][iI][fF]}';  ?>
-			<?php
-			$files = array();
-			$files = glob($string, GLOB_BRACE);
-
- ?>
-
- <?php foreach ($files as $file) : ?>
- <a href = <?php echo site_url($file) ?> target="_blank">
- <img src = <?php echo site_url($file) ?> height="auto" width="900">
- </a>
-<br>
+<?php
+$string = 'uploads/customer_files/' . $quote->quote_url_key . '*.{[jJ][pP][gG],[pP][nN][gG],[gG][iI][fF]}'; 
+$files = array();
+$files = glob($string, GLOB_BRACE);
+foreach ($files as $file){ ?>
+<a href = <?php echo site_url($file) ?> target="_blank">
+<img src = <?php echo site_url($file) ?> height="auto" width="900">
+</a>
+ 
+<?php } ?>
 <header>
- <?php endforeach ?>
 <br>
 <b>
 <?php echo 'Notes:';?>
@@ -114,64 +110,22 @@
 <?php echo $quote->notes;?>
 <br>
 
-<div class="dropzone">
-            <div class="col-xs-12 col-sm-8">
+<p><b> Click on links to download attached files: </b></p>
 
-                <div class="form-group">
-                    <label class="control-label"><?php echo lang('attachments'); ?></label>
-                    <br/>
-                    <!-- The fileinput-button span is used to style the file input field as button -->
-                    <span class="btn btn-default fileinput-button">
-                        <i class="fa fa-plus"></i>
-                        <span><?php echo lang('add_files'); ?></span>
-                    </span>
-                </div>
-                <!-- dropzone -->
-                <div id="actions" class="col-xs-12 col-sm-12 row">
-                    <div class="col-lg-7">
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- The global file processing state -->
-                    <span class="fileupload-process">
-                        <div id="total-progress" class="progress progress-striped active" role="progressbar"
-                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                            <div class="progress-bar progress-bar-success" style="width:0%;"
-                                 data-dz-uploadprogress></div>
-                        </div>
-                    </span>
-                    </div>
+<?php
+$string = 'uploads/customer_files/' . $quote->quote_url_key . '*.*'; 
+		
+$files = array();
+$files = glob($string, GLOB_BRACE);
+foreach ($files as $file){ ?>
+<a href = "<?php echo site_url($file) ?>" download> <?php echo substr($file, 23)?> </a>
+<br>
+<?php } ?>
+</a>
 
-                    <div class="table table-striped" class="files" id="previews">
 
-                        <div id="template" class="file-row">
-                            <!-- This is used as the file preview template -->
-                           
-                            <div>
-							<div class= "pull-left">
-							<button data-dz-remove class="btn btn-danger btn-sm delete">
-                                    <i class="fa fa-trash-o"></i>
-                                    <span><?php echo lang('delete'); ?></span>
-                                </button>
-							</div>
-							<div class = "pull-right">
-                                <p class="name" data-dz-name></p>
-                                <strong class="error text-danger" data-dz-errormessage></strong>
-								</div>
-								
-								
-                            </div>
 
-                        </div>
-
-                    </div>
-                </div>
-                <!-- stop dropzone -->
-
-            </div>
-			</div>
-		<br>
-</header>
-        <div id="menu-container">
+<div id="menu-container">
 <div class="pull-right">
            <?php if ($quote->quote_status_id == 5) { ?>
 	            <a href="#" class="btn btn-danger" style="text-decoration: none"><?php echo lang('quote_rejected'); ?></a>
@@ -295,93 +249,10 @@
 
             
                 <footer>
-				<b>
-<?php echo 'Notes:';?>
-</b>
-<br>				
-<?php echo $quote->notes;?>
-<br>
-<b>
-<?php echo 'Client comments:';?> </b>
-<br>				
+
 </footer>
             </div>
 
         </div>
-
-
-			
-
-
-
     </body>
 </html>
-
-<script>
-    // Get the template HTML and remove it from the document
-    var previewNode = document.querySelector("#template");
-    previewNode.id = "";
-    var previewTemplate = previewNode.parentNode.innerHTML;
-    previewNode.parentNode.removeChild(previewNode);
-    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-        url: "<?php echo site_url('upload/upload_file/' . $quote->client_id. '/'.$quote->quote_url_key) ?>", // Set the url
-        thumbnailWidth: 80,
-        thumbnailHeight: 80,
-        parallelUploads: 20,
-        uploadMultiple: false,
-        previewTemplate: previewTemplate,
-        autoQueue: true, // Make sure the files aren't queued until manually added
-        previewsContainer: "#previews", // Define the container to display the previews
-        clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
-        init: function () {
-            thisDropzone = this;
-            $.getJSON("<?php echo site_url('upload/upload_file/' . $quote->client_id. '/'.$quote->quote_url_key) ?>", function (data) {
-                $.each(data, function (index, val) {
-                    var mockFile = {fullname: val.fullname, size: val.size, name: val.name };
-                    thisDropzone.options.addedfile.call(thisDropzone, mockFile);
-                    if (val.fullname.match(/\.(jpg|jpeg|png|gif)$/)) {
-						
-                        thisDropzone.options.thumbnail.call(thisDropzone, mockFile,
-                            '<?php echo base_url(); ?>uploads/customer_files/' + val.fullname);
-                    } else {
-                        thisDropzone.options.thumbnail.call(thisDropzone, mockFile,
-                            '<?php echo base_url(); ?>assets/default/img/favicon.png');
-                    }
-                    thisDropzone.emit("complete", mockFile);
-                    thisDropzone.emit("success", mockFile);
-                });
-            });
-        }
-    });
-
-    myDropzone.on("addedfile", function (file) {
-        myDropzone.emit("thumbnail", file, '<?php echo base_url(); ?>assets/default/img/favicon.png');
-
-    });
-
-
-
-
-    // Update the total progress bar
-    myDropzone.on("totaluploadprogress", function (progress) {
-        document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
-    });
-
-    myDropzone.on("sending", function (file) {
-        // Show the total progress bar when upload starts
-        document.querySelector("#total-progress").style.opacity = "1";
-    });
-
-    // Hide the total progress bar when nothing's uploading anymore
-    myDropzone.on("queuecomplete", function (progress) {
-        document.querySelector("#total-progress").style.opacity = "0";
-    });
-
-    myDropzone.on("removedfile", function (file) {
-        $.ajax({
-            url: "<?php echo site_url('upload/delete_file/'.$quote->quote_url_key) ?>",
-            type: "POST",
-            data: {'name': file.name}
-        });
-    });
-</script>

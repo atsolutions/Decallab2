@@ -352,7 +352,7 @@ class Mdl_Quotes extends Response_Model
 
     public function guest_visible()
     {
-        $this->filter_where_in('quote_status_id', array(1, 2, 3, 4, 5, 7));
+        $this->filter_where_in('quote_status_id', array(1, 2, 3, 4, 5,6, 7,8));
         return $this;
     }
 
