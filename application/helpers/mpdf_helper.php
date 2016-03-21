@@ -75,7 +75,7 @@ function pdf_create($html, $filename, $stream = TRUE, $password = NULL,$isInvoic
         $mpdf->Output('./uploads/temp/' . $filename . '.pdf', 'F');
 		ob_clean();
 
-$mpdf->Output($filename . '.pdf', 'D');
+
 
         // DELETE OLD TEMP FILES - Housekeeping
         // Delete any files in temp/ directory that are >1 hrs old
