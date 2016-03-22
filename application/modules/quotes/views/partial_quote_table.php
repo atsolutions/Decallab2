@@ -61,7 +61,13 @@ function deletequote(){
 		}
 	}
 	}
-
+function selectdesigner(element) {
+	var origin = document.location.origin
+	var url3 = origin.concat("/Decallab/quotes/status/all/");
+	var url4 = url3.concat(element.value);
+	document.getElementById("user").innerHTML = url4;
+    window.open(url4 ,"_self");
+}
 
 </script>
 
@@ -78,7 +84,16 @@ function deletequote(){
             <th><?php echo lang('client_name'); ?></th>
 			<th><?php echo 'Rider' ?></th>
 			<th><?php echo 'Sent To' ?></th>
-			<th><?php echo 'Designer' ?></th>
+			<th><select name="quote_status_id" id="quote_designer"
+                                            class="form-control input-sm" onchange="selectdesigner(this)">
+                                        <?php foreach ($userlist as $user) { ?>
+                                            <option value="<?php echo $user->user_id; ?>"
+                                                    <?php if ($user->user_id == $quote->responsible_id) { ?>selected="selected"<?php } ?>>
+                                                <?php echo $user->user_name; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select></th>
+									<div id="user"></div>
             <th style="text-align: right; padding-right: 25px;"><?php echo lang('amount'); ?></th>
 			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]" id="0"> Check all 
 <div class="options btn-group">

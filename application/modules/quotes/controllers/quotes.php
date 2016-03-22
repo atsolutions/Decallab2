@@ -38,7 +38,7 @@ class Quotes extends Admin_Controller
 		
     }
 
-    public function status($status = 'all', $page = 0)
+    public function status($status = 'all', $designer_id=0, $page = 0)
     {
 		$this->load->model('mdl_quote_items');
         $this->load->model('tax_rates/mdl_tax_rates');
@@ -47,7 +47,10 @@ class Quotes extends Admin_Controller
         $this->load->model('custom_fields/mdl_quote_custom');
         $this->load->library('encrypt');
 		
-
+if($designer_id !=0){
+	 $this->mdl_quotes->by_designer($designer_id);
+	
+}
         // Determine which group of quotes to load
         switch ($status) {
             case 'draft':

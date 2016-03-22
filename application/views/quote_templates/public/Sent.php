@@ -217,6 +217,7 @@ src: url('<?php echo base_url(); ?>assets/default/fonts/KeepCalm/KeepCalm-Medium
     <script src="<?php echo base_url(); ?>assets/default/js/libs/dropzone.js?version=1"></script>
 	<script src="<?php echo base_url(); ?>assets/default/js/libs/jquery.elevatezoom.js"></script>
 	<script src="<?php echo base_url(); ?>assets/default/js/libs/jquery.elevateZoom-3.0.8.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/default/js/libs/jquery-1.8.3.min.js"></script>
 
  </head>
 
@@ -255,7 +256,12 @@ $("#fileform").submit();
 });
 }); 
 
-$('#zoom').elevateZoom({ zoomType	: "inner", cursor: "crosshair" });
+$('#zoom').elevateZoom({ 
+	zoomType: "inner", 
+	cursor: "crosshair",
+	zoomWindowFadeIn: 500,
+	zoomWindowFadeOut: 750
+});
 
 </script> 
 

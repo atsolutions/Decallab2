@@ -340,7 +340,11 @@ class Mdl_Quotes extends Response_Model
         $this->filter_where('ip_quotes.responsible_id', $this->session->userdata('user_id'));
         return $this;
     }
-
+	public function by_designer($designer_id)
+    {
+        $this->filter_where('ip_quotes.responsible_id', $designer_id);
+        return $this;
+    }
 	
 
     // Used by guest module; includes only sent and viewed

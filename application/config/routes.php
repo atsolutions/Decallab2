@@ -19,6 +19,12 @@
 |
 |	http://codeigniter.com/user_guide/general/routing.html
 |
+*/
+
+$route['quotes/status/(:any)/(:num)'] = 'quotes/status/$1/$2';
+/*
+
+
 | -------------------------------------------------------------------------
 | RESERVED ROUTES
 | -------------------------------------------------------------------------
