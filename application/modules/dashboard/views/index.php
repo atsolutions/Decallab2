@@ -8,8 +8,14 @@ span.tab{
     <?php echo $this->layout->load_view('layout/alerts'); ?>
 
 
+<?php
 
-
+$this->load->model('custom_fields/mdl_custom_fields');
+        $this->load->model('custom_fields/mdl_user_custom');
+        $user_custom = $this->mdl_user_custom->where('user_id', $this->session->userdata('user_id'))->get()->row();
+        print_r($user_custom);
+        echo $user_custom->user_custom_email_server;
+          ?>
    
 
     <div class="row">

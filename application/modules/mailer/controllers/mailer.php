@@ -136,8 +136,12 @@ class Mailer extends Admin_Controller
         $cc = $this->input->post('cc');
         $bcc = $this->input->post('bcc');
         //$attachment_files = $this->mdl_uploads->get_invoice_uploads($invoice_id);
+        $this->load->model('custom_fields/mdl_custom_fields');
+        $this->load->model('custom_fields/mdl_user_custom');
+        $user_custom = $this->mdl_user_custom->where('user_id', $this->session->userdata('user_id'))->get()->row();
+        
 
-        if (email_invoice($invoice_id, $pdf_template, $from, $to, $subject, $body, $cc, $bcc, $attachment_files)) {
+        if (email_invoice($invoice_id, $pdf_template, $from, $to, $subject, $body, $user_custom->user_custom_email_server, $user_custom->user_custom_email_port, $user_custom->user_custom_email_user, $user_custom->user_custom_email_password, $cc, $bcc, $attachment_files)) {
             $this->mdl_invoices->mark_sent($invoice_id);
 
             $this->session->set_flashdata('alert_success', lang('email_successfully_sent'));
@@ -170,9 +174,12 @@ class Mailer extends Admin_Controller
         $cc = $this->input->post('cc');
         $bcc = $this->input->post('bcc');
         //$attachment_files = $this->mdl_uploads->get_quote_uploads($quote_id);
+	$this->load->model('custom_fields/mdl_custom_fields');
+        $this->load->model('custom_fields/mdl_user_custom');
+        $user_custom = $this->mdl_user_custom->where('user_id', $this->session->userdata('user_id'))->get()->row();
 
 
-        if (email_quote($quote_id, $pdf_template, $from, $to, $subject, $body, $cc, $bcc, $attachment_files)) {
+        if (email_quote($quote_id, $pdf_template, $from, $to, $subject, $body, $user_custom->user_custom_email_server, $user_custom->user_custom_email_port, $user_custom->user_custom_email_user, $user_custom->user_custom_email_password, $cc, $bcc, $attachment_files)) {
            $this->mdl_quotes->mark_sent($quote_id, $to, $client_phone);
 		  
 

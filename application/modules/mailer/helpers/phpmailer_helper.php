@@ -16,7 +16,7 @@ if (!defined('BASEPATH'))
  * 
  */
 
-function phpmail_send($from, $to, $subject, $message, $attachment_path = NULL, $cc = NULL, $bcc = NULL, $more_attachments = NULL)
+function phpmail_send($from, $to, $subject, $message, $email_server, $email_port, $email_user, $email_pass, $attachment_path = NULL, $cc = NULL, $bcc = NULL, $more_attachments = NULL)
 {
     require 'phpmailer/PHPMailerAutoload.php';
 
@@ -27,20 +27,30 @@ function phpmail_send($from, $to, $subject, $message, $attachment_path = NULL, $
     $mail = new PHPMailer();
     $mail->CharSet = 'UTF-8';
     $mail->isHTML();
+	
+
+
+		//$this->load->model('custom_fields/mdl_custom_fields');
+       // $this->load->model('custom_fields/mdl_user_custom');
+        //$user_custom = $CI->mdl_user_custom->where('user_id', $CI->session->userdata('user_id'))->get()->row();
+        //print_r($user_custom);
+        
+
+	
 
     switch ($CI->mdl_settings->setting('email_send_method')) {
         case 'smtp':
             $mail->IsSMTP();
 
             // Set the basic properties
-            $mail->Host = $CI->mdl_settings->setting('smtp_server_address');
-            $mail->Port = $CI->mdl_settings->setting('smtp_port');
+            $mail->Host = $email_server;
+            $mail->Port = $email_port;
 
             // Is SMTP authentication required?
             if ($CI->mdl_settings->setting('smtp_authentication')) {
                 $mail->SMTPAuth = TRUE;
-                $mail->Username = $CI->mdl_settings->setting('smtp_username');
-                $mail->Password = $CI->encrypt->decode($CI->mdl_settings->setting('smtp_password'));
+                $mail->Username = $email_user;
+                $mail->Password = $email_pass;
             }
 
             // Is a security method required?
