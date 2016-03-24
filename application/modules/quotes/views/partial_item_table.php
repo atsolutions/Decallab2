@@ -118,7 +118,7 @@
                 <td class="td-amount">
                     <div class="input-group">
                         <span class="input-group-addon"><?php echo lang('price'); ?></span>
-                        <input type="text" name="item_price" class="input-sm form-control amount"
+                        <input type="text" id="item_price" name="item_price" class="input-sm form-control amount"
                                value="<?php echo format_amount($item->item_price); ?>">
                     </div>
                 </td>

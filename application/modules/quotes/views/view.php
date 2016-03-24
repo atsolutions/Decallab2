@@ -113,6 +113,22 @@ span.tab{
         });
 
     });
+    
+ function calc()
+{
+  if (document.getElementById('include_VAT').checked) 
+  {
+    var products = document.getElementsByName("item_price");
+      for (var i =0; i<products.length;i++){
+     products[i].value = products[i].value/1.21;     
+    }
+   } else{
+      var products = document.getElementsByName("item_price");
+      for (var i =0; i<products.length;i++){
+     products[i].value = products[i].value*1.21;
+      }
+  }
+}
 
 </script>
 
@@ -324,7 +340,7 @@ if($quote->invoice_id !=0){
                                     </div>
                                 </div>
 								
-								<div class="quote-properties">
+				<div class="quote-properties">
                                     <label for="quote_status_id">
                                         <?php echo 'Designer'; ?>
                                     </label>
@@ -337,6 +353,11 @@ if($quote->invoice_id !=0){
                                             </option>
                                         <?php } ?>
                                     </select>
+                                </div>
+                                
+                                 <div class="quote-properties">
+                                    <input type="checkbox" name="include_VAT" id="include_VAT" onclick="calc();"> Price includes VAT<br>
+                                    <div id="demo"></div>
                                 </div>
 
                                 
