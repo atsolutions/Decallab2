@@ -47,7 +47,7 @@ document.getElementById('btn_quotes_to_invoices').dataset.quote_id = finaldata;
 
 function downloadfiles(){
 	var origin = document.location.origin
-	var url = origin.concat("/Decallab/quotes/generate_pdf/")
+	var url = origin.concat("/quotes/generate_pdf/")
 	for (var i = 0; i < Checked.length; i++) {
 		var url2 = url.concat(Checked[i])
 		window.open(url2, "_blank")
