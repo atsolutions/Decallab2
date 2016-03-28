@@ -123,7 +123,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
             </tr>
             <tr>
                 <td><?php echo 'Summa' . ': '; ?></td>
-                <td><?php echo format_currency($invoice->invoice_balance); ?></td>
+                <td><?php echo $invoice->invoice_balance . ' ' . $invoice->invoice_currency; ?></td>
             </tr>
             <?php if ($payment_method): ?>
                 <tr>
@@ -158,13 +158,13 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
                     <?php echo format_amount($item->item_quantity); ?>
                 </td>
                 <td class="text-right">
-                    <?php echo format_currency($item->item_price); ?>
+                    <?php echo $item->item_price . ' ' . $invoice->invoice_currency; ?>
                 </td>
  <td class="text-right">
-                    <?php echo format_currency($item->item_discount); ?>
+                    <?php echo $item->item_discount . ' ' . $invoice->invoice_currency; ?>
                 </td>
                 <td class="text-right">
-                    <?php echo format_currency($item->item_subtotal); ?>
+                    <?php echo $item->item_subtotal . ' ' . $invoice->invoice_currency; ?>
                 </td>
             </tr>
         <?php } ?>
@@ -174,7 +174,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
 
         <tr>
             <td colspan="5" class="text-right"><?php echo 'Kopā'; ?></td>
-            <td class="text-right"><?php echo format_currency($invoice->invoice_item_subtotal); ?></td>
+            <td class="text-right"><?php echo $invoice->invoice_item_subtotal . ' ' . $invoice->invoice_currency; ?></td>
         </tr>
 
         <?php if ($invoice->invoice_item_tax_total > 0) { ?>
@@ -183,7 +183,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
                     <?php echo lang('item_tax'); ?>
                 </td>
                 <td class="text-right">
-                    <?php echo format_currency($invoice->invoice_item_tax_total); ?>
+                    <?php echo $invoice->invoice_item_tax_total . ' ' . $invoice->invoice_currency; ?>
                 </td>
             </tr>
         <?php } ?>
@@ -194,7 +194,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
                     <?php echo 'PVN' . ' (' . $invoice_tax_rate->invoice_tax_rate_percent . '%)'; ?>
                 </td>
                 <td class="text-right">
-                    <?php echo format_currency($invoice_tax_rate->invoice_tax_rate_amount); ?>
+                    <?php echo $invoice_tax_rate->invoice_tax_rate_amount . ' ' . $invoice->invoice_currency; ?>
                 </td>
             </tr>
         <?php endforeach ?>
@@ -204,7 +204,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
                 <b><?php echo 'Summa ar PVN'; ?></b>
             </td>
             <td class="text-right">
-                <b><?php echo format_currency($invoice->invoice_total); ?></b>
+                <b><?php echo $invoice->invoice_total . ' ' . $invoice->invoice_currency; ?></b>
             </td>
         </tr>
         

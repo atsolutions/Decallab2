@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="NOINDEX,NOFOLLOW">
 
-    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/default/img/favicon.png">
+    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/default/img/favicon?v=2.png">
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/style.css?version=1">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/custom.css">
@@ -69,6 +69,11 @@
             $('#btn_quote_to_invoice').click(function () {
                 quote_id = $(this).data('quote-id');
                 $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_quote_to_invoice'); ?>/" + quote_id);
+            });
+            
+            $('#btn_quotes_to_invoices').click(function () {
+                quotes = $(this).data('quote_id');
+                $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_quotes_to_invoices'); ?>/" + quotes);
             });
 
             $('#btn_copy_invoice').click(function () {

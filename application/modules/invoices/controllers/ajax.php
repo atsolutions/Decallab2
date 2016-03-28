@@ -93,6 +93,7 @@ class Ajax extends Admin_Controller
                 'payment_method' => $this->input->post('payment_method'),
                 'invoice_discount_amount' => $invoice_discount_amount,
                 'invoice_discount_percent' => $invoice_discount_percent,
+                'invoice_currency'=>$this->input->post('invoice_currency'),
             );
 
             // check if status changed to sent, the feature is enabled and settings is set to sent

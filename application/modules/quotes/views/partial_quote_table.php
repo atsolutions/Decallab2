@@ -1,14 +1,14 @@
 <script>
-var Checked = new Array()
-var clickedonPDF = document.getElementById("PDF");
-clickedonPDF.onclick = downloadfiles()
+var Checked = new Array();
+
+
 function checkAll(ele) {
      var checkboxes = document.getElementsByTagName('input');
      if (ele.checked) {
          for (var i = 0; i < checkboxes.length; i++) {
              if (checkboxes[i].type == 'checkbox') {
                  checkboxes[i].checked = true;
-				 add(checkboxes[i])
+				 add(checkboxes[i]);
              }
          }
      } else {
@@ -16,7 +16,7 @@ function checkAll(ele) {
              console.log(i)
              if (checkboxes[i].type == 'checkbox') {
                  checkboxes[i].checked = false;
-				 add(checkboxes[i])
+				 add(checkboxes[i]);
              }
          }
      }
@@ -27,16 +27,22 @@ function checkAll(ele) {
  function add(ele){
 	 if(ele.checked){
 		 if(ele.id != 0){
-		 Checked.push(ele.id)
+		 Checked.push(ele.id);
 		 }
 	 }else{
-		 var index = Checked.indexOf(ele.id)
+		 var index = Checked.indexOf(ele.id);
 		 if(index >-1){
-		 Checked.splice(index,1)
+		 Checked.splice(index,1);
 		 }
 	 }
 document.getElementById("demo").innerHTML = Checked;
- }
+var dataset = Checked.toString();
+var finaldata = dataset.replace(new RegExp(",", "g"),'_');
+document.getElementById('btn_quotes_to_invoices').dataset.quote_id = finaldata;
+
+ 
+}
+
  
 
 function downloadfiles(){
@@ -69,12 +75,13 @@ function selectdesigner(element) {
     window.open(url4 ,"_self");
 }
 
+
 </script>
 
 
 <div class="table-responsive">
     <table class="table table-striped">
-
+        <div id="demo"></div>
         <thead>
         <tr>
             <th><?php echo lang('status'); ?></th>
@@ -112,6 +119,12 @@ function selectdesigner(element) {
                                     <i class="fa fa-trash-o fa-margin"></i> <?php echo lang('delete'); ?>
                                 </a>
                             </li>
+                            <li>
+                    <a href="#" id="btn_quotes_to_invoices" data-quote_id="">
+                        <i class="fa fa-refresh fa-margin"></i>
+                        <?php echo lang('quote_to_invoice'); ?>
+                    </a>
+                </li>
                         </ul>
                     </div>
 

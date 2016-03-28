@@ -51,6 +51,7 @@ span.tab{
                     quote_status_id: $('#quote_status_id').val(),
                     quote_password: $('#quote_password').val(),
 					responsible_id: $('#quote_designer').val(),
+                                        quote_currency: $('#quote_currency').val(),
                     items: JSON.stringify(items),
                     quote_discount_amount: $('#quote_discount_amount').val(),
                     quote_discount_percent: $('#quote_discount_percent').val(),
@@ -308,6 +309,32 @@ if($quote->invoice_id !=0){
 		                              </span>
                                     </div>
                                 </div>
+                                
+                                <div class="quote-properties">
+                                    <label for="quote_currency">
+                                        <?php echo 'Currency:'; ?>
+                                    </label>
+                                   
+                                    <select name="quote_currency" id="quote_currency"
+                                            class="form-control input-sm">
+                                             
+                                            <option value="EUR">
+                                                Current:  <?php echo $quote->quote_currency; ?>
+                                            </option>
+                                        
+                                        
+                                            <option value="EUR">
+                                                EUR
+                                            </option>
+                                            <option value="USD">
+                                                USD
+                                            </option>
+                                        
+                                            
+                                    </select>
+                                </div>
+                                
+                                
 
                             </div>
 
@@ -355,7 +382,8 @@ if($quote->invoice_id !=0){
                                     </select>
                                 </div>
                                 
-                                 <div class="quote-properties">
+                                 <div class="quote-properties" style="padding-top:20px;">
+                                     
                                     <input type="checkbox" name="include_VAT" id="include_VAT" onclick="calc();"> Price includes VAT<br>
                                     <div id="demo"></div>
                                 </div>

@@ -184,25 +184,25 @@
                 <td colspan="2" class="td-amount td-vert-middle">
                     <span><?php echo lang('subtotal'); ?></span><br/>
                     <span name="subtotal" class="amount">
-                        <?php echo format_currency($item->item_subtotal); ?>
+                        <?php echo $item->item_subtotal . ' ' . $invoice->invoice_currency; ?>
                     </span>
                 </td>
                 <td class="td-amount td-vert-middle">
                     <span><?php echo lang('discount'); ?></span><br/>
                     <span name="item_discount_total" class="amount">
-                        <?php echo format_currency($item->item_discount); ?>
+                        <?php echo $item->item_discount . ' ' . $invoice->invoice_currency; ?>
                     </span>
                 </td>
                 <td class="td-amount td-vert-middle">
                     <span><?php echo lang('tax'); ?></span><br/>
                     <span name="item_tax_total" class="amount">
-                        <?php echo format_currency($item->item_tax_total); ?>
+                        <?php echo $item->item_tax_total . ' ' . $invoice->invoice_currency; ?>
                     </span>
                 </td>
                 <td class="td-amount td-vert-middle">
                     <span><?php echo lang('total'); ?></span><br/>
                     <span name="item_total" class="amount">
-                        <?php echo format_currency($item->item_total); ?>
+                        <?php echo $item->item_total . ' ' . $invoice->invoice_currency; ?>
                     </span>
                 </td>
 
@@ -238,11 +238,11 @@
             <tr>
                 <td style="width: 40%;"><?php echo lang('subtotal'); ?></td>
                 <td style="width: 60%;"
-                    class="amount"><?php echo format_currency($invoice->invoice_item_subtotal); ?></td>
+                    class="amount"><?php echo $invoice->invoice_item_subtotal . ' ' . $invoice->invoice_currency; ?></td>
             </tr>
             <tr>
                 <td><?php echo lang('item_tax'); ?></td>
-                <td class="amount"><?php echo format_currency($invoice->invoice_item_tax_total); ?></td>
+                <td class="amount"><?php echo $invoice->invoice_item_tax_total . ' ' . $invoice->invoice_currency; ?></td>
             </tr>
             <tr>
                 <td><?php echo lang('invoice_tax'); ?></td>
@@ -254,11 +254,11 @@
                             echo ' ' . $invoice_tax_rate->invoice_tax_rate_name . ' ' . $invoice_tax_rate->invoice_tax_rate_percent; ?>
                                 %</span>&nbsp;
                             <span class="amount">
-                                <?php echo format_currency($invoice_tax_rate->invoice_tax_rate_amount); ?>
+                                <?php echo $invoice_tax_rate->invoice_tax_rate_amount . ' ' . $invoice->invoice_currency; ?>
                             </span>
                         <?php }
                     } else {
-                        echo format_currency('0');
+                        echo '0' . ' ' . $invoice->invoice_currency;
                     } ?>
                 </td>
             </tr>
@@ -293,15 +293,15 @@
             </tr>
             <tr>
                 <td><?php echo lang('total'); ?></td>
-                <td class="amount"><b><?php echo format_currency($invoice->invoice_total); ?></b></td>
+                <td class="amount"><b><?php echo $invoice->invoice_total . ' ' . $invoice->invoice_currency; ?></b></td>
             </tr>
             <tr>
                 <td><?php echo lang('paid'); ?></td>
-                <td class="amount"><b><?php echo format_currency($invoice->invoice_paid); ?></b></td>
+                <td class="amount"><b><?php echo $invoice->invoice_paid . ' ' . $invoice->invoice_currency; ?></b></td>
             </tr>
             <tr>
                 <td><b><?php echo lang('balance'); ?></b></td>
-                <td class="amount"><b><?php echo format_currency($invoice->invoice_balance); ?></b></td>
+                <td class="amount"><b><?php echo $invoice->invoice_balance . ' ' . $invoice->invoice_currency; ?></b></td>
             </tr>
         </table>
     </div>

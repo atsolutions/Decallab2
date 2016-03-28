@@ -165,25 +165,25 @@
                 <td colspan="2" class="td-amount td-vert-middle">
                     <span><?php echo lang('subtotal'); ?></span><br/>
                     <span name="subtotal" class="amount">
-                        <?php echo format_currency($item->item_subtotal); ?>
+                        <?php echo $item->item_subtotal . ' ' . $quote->quote_currency; ?>
                     </span>
                 </td>
                 <td class="td-amount td-vert-middle">
                     <span><?php echo lang('discount'); ?></span><br/>
                     <span name="item_discount_total" class="amount">
-                        <?php echo format_currency($item->item_discount); ?>
+                        <?php echo $item->item_discount . ' ' . $quote->quote_currency; ?>
                     </span>
                 </td>
                 <td class="td-amount td-vert-middle">
                     <span><?php echo lang('tax'); ?></span><br/>
                     <span name="item_tax_total" class="amount">
-                        <?php echo format_currency($item->item_tax_total); ?>
+                        <?php echo $item->item_tax_total . ' ' . $quote->quote_currency; ?>
                     </span>
                 </td>
                 <td class="td-amount td-vert-middle">
                     <span><?php echo lang('total'); ?></span><br/>
                     <span name="item_total" class="amount">
-                        <?php echo format_currency($item->item_total); ?>
+                        <?php echo $item->item_total . ' ' . $quote->quote_currency; ?>
                     </span>
                 </td>
             </tr>
@@ -211,11 +211,11 @@
         <table class="table table-condensed text-right">
             <tr>
                 <td style="width: 40%;"><?php echo lang('subtotal'); ?></td>
-                <td style="width: 60%;" class="amount"><?php echo format_currency($quote->quote_item_subtotal); ?></td>
+                <td style="width: 60%;" class="amount"><?php echo $quote->quote_item_subtotal . ' ' . $quote->quote_currency; ?></td>
             </tr>
             <tr>
                 <td><?php echo lang('item_tax'); ?></td>
-                <td class="amount"><?php echo format_currency($quote->quote_item_tax_total); ?></td>
+                <td class="amount"><?php echo $quote->quote_item_tax_total . ' ' . $quote->quote_currency; ?></td>
             </tr>
             <tr>
                 <td><?php echo lang('quote_tax'); ?></td>
@@ -227,11 +227,11 @@
                             echo ' ' . $quote_tax_rate->quote_tax_rate_name . ' ' . $quote_tax_rate->quote_tax_rate_percent; ?>
                                 %</span>&nbsp;
                             <span class="amount">
-                                <?php echo format_currency($quote_tax_rate->quote_tax_rate_amount); ?>
+                                <?php echo $quote_tax_rate->quote_tax_rate_amount . ' ' . $quote->quote_currency; ?>
                             </span>
                         <?php }
                     } else {
-                        echo format_currency('0');
+                        echo '0' . ' ' . $quote->quote_currency;
                     } ?>
                 </td>
             </tr>
@@ -245,7 +245,7 @@
                                    value="<?php echo($quote->quote_discount_amount != 0 ? $quote->quote_discount_amount : ''); ?>">
 
                             <div
-                                class="input-group-addon"><?php echo $this->mdl_settings->setting('currency_symbol'); ?></div>
+                                class="input-group-addon"><?php echo $quote->quote_currency; ?></div>
                         </div>
                     </div>
                     <div class="discount-field">

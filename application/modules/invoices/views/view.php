@@ -48,6 +48,7 @@
                     invoice_date_due: $('#invoice_date_due').val(),
                     invoice_status_id: $('#invoice_status_id').val(),
                     invoice_password: $('#invoice_password').val(),
+                    invoice_currency: $('#invoice_currency').val(),
                     items: JSON.stringify(items),
                     invoice_discount_amount: $('#invoice_discount_amount').val(),
                     invoice_discount_percent: $('#invoice_discount_percent').val(),
@@ -118,6 +119,23 @@
         });
         <?php endif; ?>
     });
+
+function calc()
+{
+  if (document.getElementById('include_VAT').checked) 
+  {
+    var products = document.getElementsByName("item_price");
+      for (var i =0; i<products.length;i++){
+     products[i].value = products[i].value/1.21;     
+    }
+   } else{
+      var products = document.getElementsByName("item_price");
+      for (var i =0; i<products.length;i++){
+     products[i].value = products[i].value*1.21;
+      }
+  }
+}
+
 
 </script>
 
@@ -332,6 +350,31 @@ if ($this->config->item('disable_read_only') == TRUE) {
 		                                </span>
                                     </div>
                                 </div>
+                                
+                                <div class="invoice-properties">
+                                    <label for="invoice_currency">
+                                        <?php echo 'Currency:'; ?>
+                                    </label>
+                                   
+                                    <select name="invoice_currency" id="invoice_currency"
+                                            class="form-control input-sm">
+                                             
+                                            <option value="EUR">
+                                                Current:  <?php echo $invoice->invoice_currency; ?>
+                                            </option>
+                                        
+                                        
+                                            <option value="EUR">
+                                                EUR
+                                            </option>
+                                            <option value="USD">
+                                                USD
+                                            </option>
+                                        
+                                            
+                                    </select>
+                                </div>
+                                
 
                             </div>
 
@@ -383,6 +426,11 @@ if ($this->config->item('disable_read_only') == TRUE) {
                                         <?php if ($invoice->is_read_only == 1) {
                                             echo 'disabled="disabled"';
                                         } ?>>
+                                </div>
+                                
+                                <div class="invoice-properties" style="padding-top:20px;">
+                                    <input type="checkbox" name="include_VAT" id="include_VAT" onclick="calc();"> Price includes VAT<br>
+                                    <div id="demo"></div>
                                 </div>
 
                             </div>

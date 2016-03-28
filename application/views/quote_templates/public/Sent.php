@@ -555,7 +555,7 @@ $string = 'uploads/customer_files/' . $quote->quote_url_key . '*.{[jJ][pP][gG],[
                                     <tr>
 									
                                         <td><?php echo lang('total'); ?></td>
-                                        <td style="text-align:right;"><?php echo format_currency($quote->quote_total); ?></td>
+                                        <td style="text-align:right;"><?php echo $quote->quote_total . ' ' . $quote->quote_currency; ?></td>
 										
                                     </tr>
                                 </tbody>
@@ -581,33 +581,33 @@ $string = 'uploads/customer_files/' . $quote->quote_url_key . '*.{[jJ][pP][gG],[
                                 <td><?php echo $item->item_name; ?></td>
                                 <td><?php echo nl2br($item->item_description); ?></td>
                                 <td><?php echo format_amount($item->item_quantity); ?></td>
-                                <td><?php echo format_currency($item->item_price); ?></td>
-                                <td><?php echo format_currency($item->item_subtotal); ?></td>
+                                <td><?php echo $item->item_price . ' ' . $quote->quote_currency; ?></td>
+                                <td><?php echo $item->item_subtotal . ' ' . $quote->quote_currency; ?></td>
                             </tr>
                         <?php endforeach ?>
                         <tr>
                             <td colspan="3"></td>
                              <td><?php echo lang('subtotal'); ?>:</td>
-                             <td><?php echo format_currency($quote->quote_item_subtotal); ?></td>
+                             <td><?php echo $quote->quote_item_subtotal . ' ' . $quote->quote_currency; ?></td>
                         </tr>
                         <?php if ($quote->quote_item_tax_total > 0) { ?>
                         <tr>
                                 <td class="no-bottom-border" colspan="3"></td>
                                <td><?php echo lang('item_tax'); ?></td> 
-                                <td><?php echo format_currency($quote->quote_item_tax_total); ?></td> 
+                                <td><?php echo $quote->quote_item_tax_total . ' ' . $quote->quote_currency; ?></td> 
                         </tr>
                         <?php } ?>
                         <?php foreach ($quote_tax_rates as $quote_tax_rate) : ?>
                             <tr>    
                                 <td class="no-bottom-border" colspan="3"></td>
                                 <td><?php echo $quote_tax_rate->quote_tax_rate_name . ' ' . $quote_tax_rate->quote_tax_rate_percent; ?>%</td>
-                                <td><?php echo format_currency($quote_tax_rate->quote_tax_rate_amount); ?></td>
+                                <td><?php echo $quote_tax_rate->quote_tax_rate_amount . ' ' . $quote->quote_currency; ?></td>
                             </tr>
                         <?php endforeach ?>
                         <tr>
                             <td class="no-bottom-border" colspan="3"></td>
                             <td><b><?php echo lang('total'); ?>:</b></td>
-                            <td><b><?php echo format_currency($quote->quote_total); ?></b></td> 
+                            <td><b><?php echo $quote->quote_total . ' ' . $quote->quote_currency; ?></b></td> 
                         </tr>
                     </tbody>
                 </table>

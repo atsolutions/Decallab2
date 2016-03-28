@@ -73,6 +73,7 @@ class Ajax extends Admin_Controller
             }
 			
 			$quote_designer=$this->input->post('responsible_id');
+                        $quote_currency=$this->input->post('quote_currency');
 
             $db_array = array(
                 'quote_number' => $this->input->post('quote_number'),
@@ -84,6 +85,7 @@ class Ajax extends Admin_Controller
                 'quote_discount_amount' => $quote_discount_amount,
                 'quote_discount_percent' => $quote_discount_percent,
 				'responsible_id'=> $quote_designer,
+                'quote_currency'=>$quote_currency,
             );
 
             $this->mdl_quotes->save($quote_id, $db_array);
@@ -294,6 +296,25 @@ class Ajax extends Admin_Controller
 
         $this->load->view('quotes/modal_quote_to_invoice', $data);
     }
+    
+    public function modal_quotes_to_invoices($dataset)
+    {
+        $this->load->model('invoice_groups/mdl_invoice_groups');
+        $this->load->model('quotes/mdl_quotes');
+//make a list of quote ids
+        
+        $quotes = '0';
+        $data = array(
+            'invoice_groups' => $this->mdl_invoice_groups->get()->result(),
+            'quote_id' => $quotes,
+            'selected_quotes' => $dataset
+            //'quote' => $this->mdl_quotes->where('ip_quotes.quote_id', $quote_id)->get()->row()
+        );
+
+        $this->load->view('quotes/modal_quotes_to_invoices', $data);
+    }
+    
+    
 
     public function quote_to_invoice()
     {
@@ -359,5 +380,72 @@ class Ajax extends Admin_Controller
 
         echo json_encode($response);
     }
+    
+    
+    public function quotes_to_invoices()
+    {
+        $this->load->model(
+            array(
+                'invoices/mdl_invoices',
+                'invoices/mdl_items',
+                'quotes/mdl_quotes',
+                'quotes/mdl_quote_items',
+                'invoices/mdl_invoice_tax_rates',
+                'quotes/mdl_quote_tax_rates'
+            )
+        );
+
+        if ($this->mdl_invoices->run_validation()) {
+            $invoice_id = $this->mdl_invoices->create(NULL, FALSE);
+
+            $this->db->where('quote_id', $this->input->post('quote_id'));
+            $this->db->set('invoice_id', $invoice_id);
+            $this->db->update('ip_quotes');
+
+            $quote_items = $this->mdl_quote_items->where('quote_id', $this->input->post('quote_id'))->get()->result();
+
+            foreach ($quote_items as $quote_item) {
+                $db_array = array(
+                    'invoice_id' => $invoice_id,
+                    'item_tax_rate_id' => $quote_item->item_tax_rate_id,
+                    'item_name' => $quote_item->item_name,
+                    'item_description' => $quote_item->item_description,
+                    'item_quantity' => $quote_item->item_quantity,
+                    'item_price' => $quote_item->item_price,
+                    'item_order' => $quote_item->item_order
+                );
+
+                $this->mdl_items->save($invoice_id, NULL, $db_array);
+            }
+			//$this->mdl_invoices->set_notes($invoice_id, $this->input->post('quote_number'));
+			
+            $quote_tax_rates = $this->mdl_quote_tax_rates->where('quote_id', $this->input->post('quote_id'))->get()->result();
+			
+            foreach ($quote_tax_rates as $quote_tax_rate) {
+                $db_array = array(
+                    'invoice_id' => $invoice_id,
+                    'tax_rate_id' => $quote_tax_rate->tax_rate_id,
+                    'include_item_tax' => $quote_tax_rate->include_item_tax,
+                    'invoice_tax_rate_amount' => $quote_tax_rate->quote_tax_rate_amount
+                );
+
+                $this->mdl_invoice_tax_rates->save($invoice_id, NULL, $db_array);
+            }
+
+            $response = array(
+                'success' => 1,
+                'invoice_id' => $invoice_id
+            );
+        } else {
+            $this->load->helper('json_error');
+            $response = array(
+                'success' => 0,
+                'validation_errors' => json_errors()
+            );
+        }
+
+        echo json_encode($response);
+    }
+    
 
 }

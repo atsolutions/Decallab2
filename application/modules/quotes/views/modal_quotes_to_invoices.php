@@ -8,7 +8,7 @@
             $.post("<?php echo site_url('quotes/ajax/quotes_to_invoices'); ?>", {
                     selected_quotes: <?php echo $selected_quotes; ?>,
 					//quote_number: <?php echo $quote->quote_number; ?>,
-					//client_name: $('#client_name').val(),
+					client_name: $('#client_name').val(),
                     invoice_date_created: $('#invoice_date_created').val(),
                     invoice_group_id: $('#invoice_group_id').val(),
                     invoice_password: $('#invoice_password').val(),
