@@ -72,7 +72,7 @@ class View extends Base_Controller
 
     public function quote($quote_url_key)
     {
-        header("Location: http://crm.decallab.eu/guest/view/quotes/" . $quote_url_key);
+        header("Location: http://crm.decallab.eu/guest/view/quote/" . $quote_url_key);
         $this->load->model('quotes/mdl_quotes');
 		
 		
