@@ -56,7 +56,7 @@ function downloadfiles(){
 
 function deletequote(){
 	var origin = document.location.origin
-	var url = origin.concat("/Decallab/quotes/delete/")
+	var url = origin.concat("/quotes/delete/")
 	var check = window.confirm("YOU ARE GOING TO DELETE SELECTED QUOTES. ARE YOU SURE?")
 	if(check ==true){
 		for (var i = 0; i < Checked.length; i++) {
@@ -69,7 +69,7 @@ function deletequote(){
 	}
 function selectdesigner(element) {
 	var origin = document.location.origin
-	var url3 = origin.concat("/Decallab/quotes/status/all/");
+	var url3 = origin.concat("/quotes/status/all/");
 	var url4 = url3.concat(element.value);
 	document.getElementById("user").innerHTML = url4;
     window.open(url4 ,"_self");
