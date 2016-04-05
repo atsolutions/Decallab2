@@ -160,7 +160,7 @@ switch($quote->quote_status_id){
         $this->load->helper('mailer');
 
         $this->mdl_quotes->reject_quote_by_key($quote_url_key, $quote_id);
-        email_quote_status($this->mdl_quotes->where('ip_quotes.quote_url_key', $quote_url_key)->get()->row()->quote_id, "rejected");
+        //email_quote_status($this->mdl_quotes->where('ip_quotes.quote_url_key', $quote_url_key)->get()->row()->quote_id, "rejected");
 
         redirect('guest/view/quote/' . $quote_url_key);
     }
