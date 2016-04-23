@@ -21,7 +21,7 @@
 |
 */
 
-$route['quotes/status/(:any)/(:num)'] = 'quotes/status/$1/$2';
+$route['quotes/status/(:any)/(:num)/(:num)'] = 'quotes/status/$1/$2/$3';
 /*
 
 

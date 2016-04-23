@@ -172,30 +172,79 @@ span.tab{
             <div id="panel-quick-actions" class="panel panel-default quick-actions">
 
                 <div class="panel-heading">
-                    <b><?php echo 'Recent activity' ?></b>
+					<table class="table table-striped"  style="background:none; margin: 0 0 0px; ">
+						<tr>
+							<th width="20%" style="text-align: center; border-top: 0px solid #ddd;background-color: #f4f4f4;">Client</th>
+							<th width="40%" style="text-align: center; border-top: 0px solid #ddd;background-color: #f4f4f4;">Status and Quote Number</th>
+							<th  style="text-align: right; border-top: 0px solid #ddd;background-color: #f4f4f4;">Date</th>
+							<th  style="text-align: center; border-top: 0px solid #ddd;background-color: #f4f4f4;">Author</th>
+						  </tr>
+					</table>
                 </div>
 
-		<div class="list-group">
+		
 			<?php foreach($activities as $activity){ ?>
 	
-			<h4>
-			<a href="<?php echo $activity->action_link; ?>" class="list-group-item 
-			<?php if ($activity->type==1){
-				echo 'list-group-item-success';
-			}
-			else {
-				echo 'list-group-item-danger';
-			}
-			?>
-				" style="height: auto; padding: 1px 1px;">
-			<b><?php echo $activity->author;?> <span class="tab"></span></b>
-			<?php echo $activity->action; ?> <span class="tab"></span>
-			<?php echo $activity->action_date; ?>
+			<h4 style="font-size: 15px;">
+			
+			
+			<a href="<?php echo $activity->action_link; ?>" >
+			<table class="table table-striped"  style="margin: 0 0 0px;">
+				<tbody>
+					<a href="<?php echo $activity->action_link; ?>">
+					
+					<tr class= "<?php 
+						if ($activity->type==1){
+							echo 'success';
+						}
+						else {
+							echo 'danger';
+						}
+					?>" style= "<?php 
+						if ($activity->type==1){
+							echo 'color:#1C9138;';
+						}
+						else {
+							echo 'color:#FF6470;';
+						}
+					?>">
+						<td width="25%">
+							<b><?php echo $activity->author;?></b>
+						</td>
+						<td width="40%">
+							<?php echo $activity->action; ?> 
+						</td>
+						<td>
+							<?php echo $activity->action_date; ?>
+						</td>
+						<td>
+							<?php 
+								$links = $activity->action_link; 
+								preg_match("/[^\/]+$/", $links, $matches);
+								$last_word = $matches[0];
+								
+								foreach ($quotelist as $quoteID){
+									if($quoteID->quote_id == $last_word)
+										$izstradatajaID = $quoteID->user_id;
+								}
+								
+								foreach ($userlist as $userID){
+									if($userID->user_id == $izstradatajaID)
+										echo $userID->user_name;
+								}
+								
+							?>
+
+						</td>
+					</tr>
+					</a>
+				</tbody>
+			</table>
 			</a>
 			</h4>
 		
 			<?php } ?>
-       </div>
+      
       
 	  
 </div>

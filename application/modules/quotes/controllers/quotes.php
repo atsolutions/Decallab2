@@ -38,7 +38,7 @@ class Quotes extends Admin_Controller
 		
     }
 
-    public function status($status = 'all', $designer_id=0, $page = 0)
+    public function status($status = 'all', $page = 0, $designer_id=0)
     {
 		$this->load->model('mdl_quote_items');
         $this->load->model('tax_rates/mdl_tax_rates');

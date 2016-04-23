@@ -318,11 +318,9 @@ if($quote->invoice_id !=0){
                                     <select name="quote_currency" id="quote_currency"
                                             class="form-control input-sm">
                                              
-                                            <option value="EUR">
+                                            <option value="<?php $quote->quote_currency; ?>">
                                                 Current:  <?php echo $quote->quote_currency; ?>
                                             </option>
-                                        
-                                        
                                             <option value="EUR">
                                                 EUR
                                             </option>

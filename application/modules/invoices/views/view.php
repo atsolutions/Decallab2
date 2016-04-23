@@ -359,7 +359,7 @@ if ($this->config->item('disable_read_only') == TRUE) {
                                     <select name="invoice_currency" id="invoice_currency"
                                             class="form-control input-sm">
                                              
-                                            <option value="EUR">
+                                            <option value="<?php $invoice->invoice_currency; ?>">
                                                 Current:  <?php echo $invoice->invoice_currency; ?>
                                             </option>
                                         
