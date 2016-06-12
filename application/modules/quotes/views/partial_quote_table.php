@@ -89,7 +89,6 @@ function selectdesigner(element) {
             <th><?php echo lang('created'); ?></th>
             <th><?php echo lang('due_date'); ?></th>
             <th><?php echo lang('client_name'); ?></th>
-			<th><?php echo 'ID' ?></th>
 			<th><?php echo 'Rider' ?></th>
 			<th><?php echo 'Sent To' ?></th>
 			<th><select name="quote_status_id" id="quote_designer"
@@ -162,31 +161,7 @@ function selectdesigner(element) {
 					
                 </td>
 
-<td>
-<?php
-if($quote->responsible_id != 0){
-	foreach ($userlist as $user){
-	if($user->user_id == $quote->responsible_id)
-	echo $user->user_id;
-	}
-}else{
-        $this->load->model('custom_fields/mdl_custom_fields');
-        $this->load->model('custom_fields/mdl_quote_custom');
-        $quote_custom = $this->mdl_quote_custom->where('quote_id', $quote->quote_id)->get();
-        if ($quote_custom->num_rows()) {
-            $quote_custom = $quote_custom->row();
-            unset($quote_custom->quote_id, $quote_custom->quote_custom_id);
 
-            foreach ($quote_custom as $key => $val) {
-				if($key == 'quote_custom_field_id'){
-				echo $val;
-				}
-				}
-            }
-}
-          
- ?>
-</td> 
 				
 <td>
 <?php
@@ -257,7 +232,7 @@ if($quote->responsible_id != 0){
                 <td style="text-align: right; padding-right: 25px;">
                     <?php 
 					if($this->session->userdata('user_subtype')!=1){
-							echo format_currency($quote->quote_total);
+							echo $quote->quote_total . $quote->quote_currency;
 					}
 					?>
                 </td>

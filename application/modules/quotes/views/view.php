@@ -30,6 +30,8 @@ span.tab{
         $('#btn_save_quote').click(function () {
             var items = [];
             var item_order = 1;
+			
+
             $('table tbody.item').each(function () {
                 var row = {};
                 $(this).find('input,select,textarea').each(function () {
@@ -51,8 +53,9 @@ span.tab{
                     quote_status_id: $('#quote_status_id').val(),
                     quote_password: $('#quote_password').val(),
 					responsible_id: $('#quote_designer').val(),
-                                        quote_currency: $('#quote_currency').val(),
+                    quote_currency: $('#quote_currency').val(),
                     items: JSON.stringify(items),
+					rider: $('#quote_custom_rider').val(),
                     quote_discount_amount: $('#quote_discount_amount').val(),
                     quote_discount_percent: $('#quote_discount_percent').val(),
                     notes: $('#notes').val(),

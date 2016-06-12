@@ -1,13 +1,13 @@
 <script type="text/javascript">
     $(function () {
         // Display the create quote modal
-        $('#modal_quote_to_invoice').modal('show');
+        $('#modal_quotes_to_invoice').modal('show');
 
         // Creates the invoice
         $('#quote_to_invoice_confirm').click(function () {
             $.post("<?php echo site_url('quotes/ajax/quotes_to_invoices'); ?>", {
                     selected_quotes: <?php echo $selected_quotes; ?>,
-					//quote_number: <?php echo $quote->quote_number; ?>,
+					quote_number: <?php echo $selected_quotes; ?>,
 					client_name: $('#client_name').val(),
                     invoice_date_created: $('#invoice_date_created').val(),
                     invoice_group_id: $('#invoice_group_id').val(),

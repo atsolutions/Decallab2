@@ -73,7 +73,7 @@
             
             $('#btn_quotes_to_invoices').click(function () {
                 quotes = $(this).data('quote_id');
-                $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_quotes_to_invoices'); ?>/" + quotes);
+                window.open("<?php echo site_url('quotes/quotes_to_invoice'); ?>/" + quotes,"_self");
             });
 
             $('#btn_copy_invoice').click(function () {
@@ -200,19 +200,6 @@
                     <ul class="dropdown-menu">
                         <li><?php echo anchor('payments/form', lang('enter_payment')); ?></li>
                         <li><?php echo anchor('payments/index', lang('view_payments')); ?></li>
-                    </ul>
-                </li>
-
-                <li class="dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-caret-down"></i> &nbsp;<span
-                            class="hidden-sm"><?php echo lang('tasks'); ?></span><i
-                            class="visible-sm-inline fa fa-check-square-o"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><?php echo anchor('tasks/form', lang('create_task')); ?></li>
-                        <li><?php echo anchor('tasks/index', lang('show_tasks')); ?></li>
-                        <li><?php echo anchor('projects/index', lang('projects')); ?></li>
                     </ul>
                 </li>
 

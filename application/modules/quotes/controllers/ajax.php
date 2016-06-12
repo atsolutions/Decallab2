@@ -32,71 +32,79 @@ class Ajax extends Admin_Controller
         $this->mdl_quotes->set_id($quote_id);
 
         if ($this->mdl_quotes->run_validation('validation_rules_save_quote')) {
-            $items = json_decode($this->input->post('items'));
+            if($this->input->post('rider') != ''){
+				$items = json_decode($this->input->post('items'));			
+				foreach ($items as $item) {
+					if ($item->item_name) {
+						$item->item_quantity = standardize_amount($item->item_quantity);
+						$item->item_price = standardize_amount($item->item_price);
+						$item->item_discount_amount = standardize_amount($item->item_discount_amount);
 
-            foreach ($items as $item) {
-                if ($item->item_name) {
-                    $item->item_quantity = standardize_amount($item->item_quantity);
-                    $item->item_price = standardize_amount($item->item_price);
-                    $item->item_discount_amount = standardize_amount($item->item_discount_amount);
+						$item_id = ($item->item_id) ?: NULL;
 
-                    $item_id = ($item->item_id) ?: NULL;
+						$save_item_as_lookup = (isset($item->save_item_as_lookup)) ? $item->save_item_as_lookup : 0;
 
-                    $save_item_as_lookup = (isset($item->save_item_as_lookup)) ? $item->save_item_as_lookup : 0;
+						unset($item->item_id, $item->save_item_as_lookup);
 
-                    unset($item->item_id, $item->save_item_as_lookup);
+						$this->mdl_quote_items->save($quote_id, $item_id, $item);
 
-                    $this->mdl_quote_items->save($quote_id, $item_id, $item);
+						if ($save_item_as_lookup) {
+							$db_array = array(
+								'item_name' => $item->item_name,
+								'item_description' => $item->item_description,
+								'item_price' => $item->item_price
+							);
 
-                    if ($save_item_as_lookup) {
-                        $db_array = array(
-                            'item_name' => $item->item_name,
-                            'item_description' => $item->item_description,
-                            'item_price' => $item->item_price
-                        );
+							$this->mdl_item_lookups->save(NULL, $db_array);
+						}
+					}
+				}
 
-                        $this->mdl_item_lookups->save(NULL, $db_array);
-                    }
-                }
-            }
+				if ($this->input->post('quote_discount_amount') === '') {
+					$quote_discount_amount = floatval(0);
+				} else {
+					$quote_discount_amount = $this->input->post('quote_discount_amount');
+				}
 
-            if ($this->input->post('quote_discount_amount') === '') {
-                $quote_discount_amount = floatval(0);
-            } else {
-                $quote_discount_amount = $this->input->post('quote_discount_amount');
-            }
+				if ($this->input->post('quote_discount_percent') === '') {
+					$quote_discount_percent = floatval(0);
+				} else {
+					$quote_discount_percent = $this->input->post('quote_discount_percent');
+				}
+				
+				$quote_designer=$this->input->post('responsible_id');
+				$quote_currency=$this->input->post('quote_currency');
 
-            if ($this->input->post('quote_discount_percent') === '') {
-                $quote_discount_percent = floatval(0);
-            } else {
-                $quote_discount_percent = $this->input->post('quote_discount_percent');
-            }
-			
-			$quote_designer=$this->input->post('responsible_id');
-                        $quote_currency=$this->input->post('quote_currency');
+				$db_array = array(
+					'quote_number' => $this->input->post('quote_number'),
+					'quote_date_created' => date_to_mysql($this->input->post('quote_date_created')),
+					'quote_date_expires' => date_to_mysql($this->input->post('quote_date_expires')),
+					'quote_status_id' => $this->input->post('quote_status_id'),
+					'quote_password' => $this->input->post('quote_password'),
+					'notes' => $this->input->post('notes'),
+					'quote_discount_amount' => $quote_discount_amount,
+					'quote_discount_percent' => $quote_discount_percent,
+					'responsible_id'=> $quote_designer,
+					'quote_currency'=>$quote_currency,
+				);
 
-            $db_array = array(
-                'quote_number' => $this->input->post('quote_number'),
-                'quote_date_created' => date_to_mysql($this->input->post('quote_date_created')),
-                'quote_date_expires' => date_to_mysql($this->input->post('quote_date_expires')),
-                'quote_status_id' => $this->input->post('quote_status_id'),
-                'quote_password' => $this->input->post('quote_password'),
-                'notes' => $this->input->post('notes'),
-                'quote_discount_amount' => $quote_discount_amount,
-                'quote_discount_percent' => $quote_discount_percent,
-				'responsible_id'=> $quote_designer,
-                'quote_currency'=>$quote_currency,
-            );
+		 $this->mdl_quotes->save($quote_id, $db_array);
 
-            $this->mdl_quotes->save($quote_id, $db_array);
+				 // Recalculate for discounts
+				$this->load->model('quotes/mdl_quote_amounts');
+				$this->mdl_quote_amounts->calculate($quote_id);
 
-            // Recalculate for discounts
-            $this->load->model('quotes/mdl_quote_amounts');
-            $this->mdl_quote_amounts->calculate($quote_id);
-
-            $response = array(
-                'success' => 1
-            );
+				$response = array(
+					'success' => 1
+				);
+				}else {
+				
+				$response = array(
+					'success' => 1
+				);
+;
+			}
+						
         } else {
             $this->load->helper('json_error');
             $response = array(

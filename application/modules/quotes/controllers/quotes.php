@@ -227,5 +227,41 @@ if($designer_id !=0){
             $this->mdl_quote_amounts->calculate($quote_id->quote_id);
         }
     }
+	
+	    public function quotes_to_invoice($quotes)
+    {
+$this->load->model('mdl_quote_items');
+$this->load->model('mdl_quotes');
+$quote_ids = explode("_", $quotes);
+$quote_list=array();
+$client_list=array();
+foreach($quote_ids as $quote_id){
+$this->db->where('quote_id',$quote_id);
+$this->db->from('ip_quotes');
+array_push($quote_list,$this->db->get()->row());
+}
+foreach($quote_list as $quote){
+$this->db->where('client_id',$quote->client_id);
+$this->db->from('ip_clients');
+array_push($client_list,$this->db->get()->row());
+}
+
+
+
+
+
+
+
+
+		$this->layout->set(
+			array(
+			'quote_list' => $quote_list,
+			'clientlist' => $client_list,
+			)
+		);
+        $this->layout->buffer('content', 'quotes/quotes_to_invoice');
+        $this->layout->render();
+    }
+	
 
 }
