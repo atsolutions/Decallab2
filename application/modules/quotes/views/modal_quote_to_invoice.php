@@ -11,6 +11,7 @@
 					client_name: $('#client_name').val(),
                     invoice_date_created: $('#invoice_date_created').val(),
                     invoice_group_id: $('#invoice_group_id').val(),
+					currency: '<?php echo $quote->quote_currency; ?>',
                     invoice_password: $('#invoice_password').val(),
                     user_id: $('#user_id').val()
                 },

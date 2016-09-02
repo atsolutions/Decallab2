@@ -32,8 +32,9 @@ class Ajax extends Admin_Controller
         $this->mdl_quotes->set_id($quote_id);
 
         if ($this->mdl_quotes->run_validation('validation_rules_save_quote')) {
-            if($this->input->post('rider') != ''){
-				$items = json_decode($this->input->post('items'));			
+				$items = json_decode($this->input->post('items'));
+if($this->input->post('rider')!=''){
+			
 				foreach ($items as $item) {
 					if ($item->item_name) {
 						$item->item_quantity = standardize_amount($item->item_quantity);
@@ -97,13 +98,13 @@ class Ajax extends Admin_Controller
 				$response = array(
 					'success' => 1
 				);
-				}else {
-				
-				$response = array(
-					'success' => 1
-				);
-;
-			}
+}else{
+	$response = array(
+	'success' =>1,
+	'validation_errors' => 'Enter riders name'
+	);
+}
+
 						
         } else {
             $this->load->helper('json_error');
@@ -360,7 +361,7 @@ class Ajax extends Admin_Controller
                 $this->mdl_items->save($invoice_id, NULL, $db_array);
             }
 			//$this->mdl_invoices->set_notes($invoice_id, $this->input->post('quote_number'));
-			
+			$this->mdl_invoices->set_currency($invoice_id, $this->input->post('currency'));
             $quote_tax_rates = $this->mdl_quote_tax_rates->where('quote_id', $this->input->post('quote_id'))->get()->result();
 			
             foreach ($quote_tax_rates as $quote_tax_rate) {

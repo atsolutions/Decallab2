@@ -261,7 +261,7 @@
             </tr>
             <tr>
                 <td><b><?php echo lang('total'); ?></b></td>
-                <td class="amount"><b><?php echo format_currency($quote->quote_total); ?></b></td>
+                <td class="amount"><b><?php echo $quote->quote_total . ' ' . $quote->quote_currency ; ?></b></td>
             </tr>
         </table>
     </div>

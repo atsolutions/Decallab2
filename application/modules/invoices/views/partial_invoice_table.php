@@ -153,14 +153,14 @@ function deletequote(){
                 }; ?>">
                     <?php 
 					if($this->session->userdata('user_subtype')!=1){
-						echo format_currency($invoice->invoice_total);
+						echo $invoice->invoice_total . ' ' . $invoice->invoice_currency;
 					}?>
                 </td>
 
                 <td class="amount">
                     <?php 
 					if($this->session->userdata('user_subtype')!=1){
-					echo format_currency($invoice->invoice_balance);
+					echo $invoice->invoice_balance . ' ' . $invoice->invoice_currency;
 					}					?>
                 </td>
 				

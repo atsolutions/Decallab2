@@ -32,6 +32,7 @@ span.tab{
             var item_order = 1;
 			
 
+
             $('table tbody.item').each(function () {
                 var row = {};
                 $(this).find('input,select,textarea').each(function () {
@@ -73,6 +74,7 @@ span.tab{
                         }
                     }
                 });
+
         });
 
         $('#btn_generate_pdf').click(function () {
@@ -321,7 +323,7 @@ if($quote->invoice_id !=0){
                                     <select name="quote_currency" id="quote_currency"
                                             class="form-control input-sm">
                                              
-                                            <option value="<?php $quote->quote_currency; ?>">
+                                            <option value="<?php echo $quote->quote_currency; ?>">
                                                 Current:  <?php echo $quote->quote_currency; ?>
                                             </option>
                                             <option value="EUR">

@@ -417,6 +417,23 @@ class Mdl_Invoices extends Response_Model
         }
     }
 	
+	public function set_currency($invoice_id, $currency)
+    {
+        $this->db->select('invoice_currency');
+        $this->db->where('invoice_id', $invoice_id);
+
+        $invoice = $this->db->get('ip_invoices');
+
+        if ($invoice->num_rows()) {
+                $this->db->where('invoice_id', $invoice_id);
+                $this->db->set('invoice_currency', $currency);
+                $this->db->update('ip_invoices');
+
+		}
+    }
+	
+	
+	
 	public function set_notes($invoice_id, $text)
     {
         $this->db->select('invoice_terms');
