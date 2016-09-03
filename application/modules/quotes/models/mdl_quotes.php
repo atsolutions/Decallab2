@@ -61,6 +61,11 @@ class Mdl_Quotes extends Response_Model
                 'class' => 'canceled',
                 'href' => 'quotes/status/canceled'
             ),
+			'9' => array(
+                'label' => 'Shipped',
+                'class' => 'canceled',
+                'href' => 'quotes/status/shipped'
+            ),
 			'8' => array(
                 'label' => 'Invoiced',
                 'class' => 'canceled',
@@ -329,6 +334,12 @@ class Mdl_Quotes extends Response_Model
         return $this;
     }
 	
+	public function is_shipped()
+    {
+        $this->filter_where('quote_status_id', 9);
+        return $this;
+    }
+	
 	public function is_invoiced()
     {
         $this->filter_where('quote_status_id', 8);
@@ -356,7 +367,7 @@ class Mdl_Quotes extends Response_Model
 
     public function guest_visible()
     {
-        $this->filter_where_in('quote_status_id', array(1, 2, 3, 4, 5,6, 7,8));
+        $this->filter_where_in('quote_status_id', array(1, 2, 3, 4, 5,6, 7,8,9));
         return $this;
     }
 
