@@ -205,8 +205,17 @@ class Invoices extends Admin_Controller
         if ($this->mdl_settings->setting('mark_invoices_sent_pdf') == 1) {
             $this->mdl_invoices->mark_sent($invoice_id);
         }
-
-        generate_invoice_pdf($invoice_id, $stream, $invoice_template);
+        $this->load->model('mdl_invoices');
+        $this->load->model('clients/mdl_clients');
+        $invoice = $this->mdl_invoices->get_by_id($invoice_id);
+        $client_id = $invoice->client_id;
+        $client = $this->mdl_clients->where('ip_clients.client_id',$client_id)->get()->result();
+        $realclient = $client[0];
+        if($realclient->client_country == "LV"){
+        generate_invoice_pdf($invoice_id, $stream, 'InvoicePlane(LV)');
+        }else{
+           generate_invoice_pdf($invoice_id, $stream,$invoice_template); 
+        }
     }
 
     public function delete_invoice_tax($invoice_id, $invoice_tax_rate_id)

@@ -61,10 +61,20 @@ class Mdl_Quotes extends Response_Model
                 'class' => 'canceled',
                 'href' => 'quotes/status/canceled'
             ),
-			'9' => array(
+            '9' => array(
                 'label' => 'Shipped',
                 'class' => 'canceled',
                 'href' => 'quotes/status/shipped'
+            ),
+            '10' => array(
+                'label' => 'Printed',
+                'class' => 'canceled',
+                'href' => 'quotes/status/printed'
+            ),
+            '11' => array(
+                'label' => 'Packed',
+                'class' => 'canceled',
+                'href' => 'quotes/status/packed'
             ),
 			'8' => array(
                 'label' => 'Invoiced',
@@ -367,7 +377,13 @@ class Mdl_Quotes extends Response_Model
 
     public function guest_visible()
     {
-        $this->filter_where_in('quote_status_id', array(1, 2, 3, 4, 5,6, 7,8,9));
+        $this->filter_where_in('quote_status_id', array(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        return $this;
+    }
+    
+        public function is_workshop()
+    {
+        $this->filter_where_in('quote_status_id', array(4, 10, 11));
         return $this;
     }
 
@@ -443,7 +459,54 @@ class Mdl_Quotes extends Response_Model
         }
     }
 	
-	
+public function mark_printed($quote_id)
+    {
+        $this->db->select('quote_status_id');
+        $this->db->where('quote_id', $quote_id);
+
+        $quote = $this->db->get('ip_quotes');
+
+        if ($quote->num_rows()) {
+         
+                $this->db->where('quote_id', $quote_id);
+                $this->db->set('quote_status_id', 10);
+                $this->db->update('ip_quotes');
+            
+        }
+
+    }
+    
+    public function mark_packed($quote_id)
+    {
+        $this->db->select('quote_status_id');
+        $this->db->where('quote_id', $quote_id);
+
+        $quote = $this->db->get('ip_quotes');
+
+        if ($quote->num_rows()) {
+         
+                $this->db->where('quote_id', $quote_id);
+                $this->db->set('quote_status_id', 11);
+                $this->db->update('ip_quotes');
+            
+        }
+    }
+    
+        public function mark_shipped($quote_id)
+    {
+        $this->db->select('quote_status_id');
+        $this->db->where('quote_id', $quote_id);
+
+        $quote = $this->db->get('ip_quotes');
+
+        if ($quote->num_rows()) {
+         
+                $this->db->where('quote_id', $quote_id);
+                $this->db->set('quote_status_id', 9);
+                $this->db->update('ip_quotes');
+            
+        }
+    }
 
     public function mark_sent($quote_id, $to, $client_phone)
     {

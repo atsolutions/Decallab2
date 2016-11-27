@@ -216,6 +216,18 @@
                         <li><?php echo anchor('reports/sales_by_year', lang('sales_by_date')); ?></li>
                     </ul>
                 </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-caret-down"></i> &nbsp;<span
+                            class="hidden-sm"><?php echo 'Workshop'; ?></span><i
+                            class="visible-sm-inline fa fa-bar-chart"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><?php echo anchor('workshop/index', 'Workshop'); ?></li>
+                        
+                    </ul>
+                </li>
 
             </ul>
 

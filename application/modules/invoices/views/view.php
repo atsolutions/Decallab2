@@ -76,7 +76,7 @@
                 });
         });
 
-        $('#btn_generate_pdf').click(function () {
+        $('#btn_generate_pdf').click(function () {        
             window.open('<?php echo site_url('invoices/generate_pdf/' . $invoice_id); ?>', '_blank');
         });
 

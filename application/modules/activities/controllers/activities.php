@@ -44,7 +44,7 @@ class Activities extends Admin_Controller
             )
         );
 
-        $this->layout->buffer('content', 'dashboard/index');
+        $this->layout->buffer('content', 'activities/index');
         $this->layout->render('layout');
     }
 
