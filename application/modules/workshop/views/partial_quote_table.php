@@ -82,11 +82,13 @@
 </td> 
 <td>
 <?php
-    if($quote->quote_status_id == '4'){?>
+if($quote->quote_status_id == '4'){?>
+<button type="button" class="btn btn-default" onclick="window.location='<?php echo site_url("workshop/mark_ws_approved/" . $quote->quote_id);?>'">Approve</button>
+<?php } elseif($quote->quote_status_id== '8'){?>
 <button type="button" class="btn btn-default" onclick="window.location='<?php echo site_url("workshop/mark_printed/" . $quote->quote_id);?>'">Print</button>
-    <?php } elseif($quote->quote_status_id== '10'){?>
+    <?php } elseif($quote->quote_status_id== '9'){?>
 <button type="button" class="btn btn-default" onclick="window.location='<?php echo site_url("workshop/mark_packed/" . $quote->quote_id);?>'">Pack</button>
-    <?php }elseif($quote->quote_status_id== '11'){?>
+    <?php }elseif($quote->quote_status_id== '10'){?>
 <button type="button" class="btn btn-default" onclick="window.location='<?php echo site_url("workshop/mark_shipped/" . $quote->quote_id);?>'">Ship</button>
     <?php }?>
 </td>

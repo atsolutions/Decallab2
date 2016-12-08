@@ -25,6 +25,8 @@
                     href="<?php echo site_url('workshop/status/packed'); ?>"><?php echo 'Packed'; ?></a></li>
             <li <?php if ($status == 'approved') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('workshop/status/approved'); ?>"><?php echo lang('approved'); ?></a></li>
+            <li <?php if ($status == 'Workshop accepted') { ?>class="active"<?php } ?>><a
+                    href="<?php echo site_url('workshop/status/workshop'); ?>"><?php echo 'Workshop approved'; ?></a></li>
 
         </ul>
     </div>
@@ -40,12 +42,14 @@
 
         <div class="submenu-row">
             <ul class="nav nav-pills index-options">
-                <li <?php if ($status == 'shipped') { ?>class="active"<?php } ?>><a
+            <li <?php if ($status == 'shipped') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('workshop/status/shipped'); ?>"><?php echo 'Shipped'; ?></a></li>
             <li <?php if ($status == 'packed') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('workshop/status/packed'); ?>"><?php echo 'Packed'; ?></a></li>
             <li <?php if ($status == 'approved') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('workshop/status/approved'); ?>"><?php echo lang('approved'); ?></a></li>
+            <li <?php if ($status == 'Workshop accepted') { ?>class="active"<?php } ?>><a
+                    href="<?php echo site_url('workshop/status/workshop'); ?>"><?php echo 'Workshop approved'; ?></a></li>
             </ul>
         </div>
 

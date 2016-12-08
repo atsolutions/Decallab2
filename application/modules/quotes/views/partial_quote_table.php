@@ -139,7 +139,13 @@ function selectdesigner(element) {
             <tr>
                 <td>
                     <span
-                        class="label <?php echo $quote_statuses[$quote->quote_status_id]['class']; ?>"><?php echo $quote_statuses[$quote->quote_status_id]['label']; ?></span>
+                        class="label <?php echo $quote_statuses[$quote->quote_status_id]['class']; ?>"><?php echo $quote_statuses[$quote->quote_status_id]['label']; ?>
+                    </span>
+                    <?php if($quote->invoice_id !=0){ ?>
+                    <span 
+                         class="label <?php echo 'canceled'; ?>"><?php echo 'Invoiced'; ?>
+                    </span>
+                    <?php } ?>
                 </td>
                 <td>
                     <a href="<?php echo site_url('quotes/view/' . $quote->quote_id); ?>"

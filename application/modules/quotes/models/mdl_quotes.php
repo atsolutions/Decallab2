@@ -31,11 +31,6 @@ class Mdl_Quotes extends Response_Model
                 'class' => 'draft',
                 'href' => 'quotes/status/draft'
             ),
-			'7' => array(
-                'label' => 'Designer',
-                'class' => 'canceled',
-                'href' => 'quotes/status/designer'
-            ),
             '2' => array(
                 'label' => lang('sent'),
                 'class' => 'sent',
@@ -61,27 +56,31 @@ class Mdl_Quotes extends Response_Model
                 'class' => 'canceled',
                 'href' => 'quotes/status/canceled'
             ),
-            '9' => array(
-                'label' => 'Shipped',
+             '7' => array(
+                'label' => 'Designer',
                 'class' => 'canceled',
-                'href' => 'quotes/status/shipped'
+                'href' => 'quotes/status/designer'
             ),
-            '10' => array(
+            '8' => array(
+                'label' => 'Workshop accepted',
+                'class' => 'canceled',
+                'href' => 'quotes/status/workshop'
+            ),
+            '9' => array(
                 'label' => 'Printed',
                 'class' => 'canceled',
                 'href' => 'quotes/status/printed'
             ),
-            '11' => array(
+            '10' => array(
                 'label' => 'Packed',
                 'class' => 'canceled',
                 'href' => 'quotes/status/packed'
             ),
-			'8' => array(
-                'label' => 'Invoiced',
+            '11' => array(
+                'label' => 'Shipped',
                 'class' => 'canceled',
-                'href' => 'quotes/status/invoiced'
+                'href' => 'quotes/status/shipped'
             )
-			
         );
     }
 
@@ -173,6 +172,11 @@ class Mdl_Quotes extends Response_Model
             'quote_date_created' => array(
                 'field' => 'quote_date_created',
                 'label' => lang('date'),
+                'rules' => 'required'
+            ),
+            'rider' => array(
+                'field' => 'rider',
+                'label' => 'Rider name',
                 'rules' => 'required'
             ),
             'quote_date_expires' => array(
@@ -349,14 +353,20 @@ class Mdl_Quotes extends Response_Model
         $this->filter_where('quote_status_id', 9);
         return $this;
     }
-	
+	//Work on this
 	public function is_invoiced()
+    {
+        $this->filter_where('ip_quotes.invoice_id <>', 0);
+        return $this;
+    }
+    
+    	public function is_workshop_accepted()
     {
         $this->filter_where('quote_status_id', 8);
         return $this;
     }
 	
-		public function is_my()
+    public function is_my()
     {
         $this->filter_where('ip_quotes.responsible_id', $this->session->userdata('user_id'));
         return $this;
@@ -383,7 +393,7 @@ class Mdl_Quotes extends Response_Model
     
         public function is_workshop()
     {
-        $this->filter_where_in('quote_status_id', array(4, 10, 11));
+        $this->filter_where_in('quote_status_id', array(4, 8, 9, 10));
         return $this;
     }
 
@@ -443,7 +453,7 @@ class Mdl_Quotes extends Response_Model
         }
     }
 	
-	public function mark_invoiced($quote_id)
+	public function mark_ws_approved($quote_id)
     {
         $this->db->select('quote_status_id');
         $this->db->where('quote_id', $quote_id);
@@ -469,10 +479,14 @@ public function mark_printed($quote_id)
         if ($quote->num_rows()) {
          
                 $this->db->where('quote_id', $quote_id);
-                $this->db->set('quote_status_id', 10);
+                $this->db->set('quote_status_id', 9);
                 $this->db->update('ip_quotes');
-            
+                $date = date('Y-m-d H:i:s');
+                $this->db->where('quote_id', $quote_id);
+                $this->db->set('quote_date_printed', $date);
+                $this->db->update('ip_quotes');
         }
+               
 
     }
     
@@ -486,7 +500,7 @@ public function mark_printed($quote_id)
         if ($quote->num_rows()) {
          
                 $this->db->where('quote_id', $quote_id);
-                $this->db->set('quote_status_id', 11);
+                $this->db->set('quote_status_id', 10);
                 $this->db->update('ip_quotes');
             
         }
@@ -502,7 +516,7 @@ public function mark_printed($quote_id)
         if ($quote->num_rows()) {
          
                 $this->db->where('quote_id', $quote_id);
-                $this->db->set('quote_status_id', 9);
+                $this->db->set('quote_status_id', 11);
                 $this->db->update('ip_quotes');
             
         }

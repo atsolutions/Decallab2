@@ -22,6 +22,7 @@ span.tab{
                 client_name: "<?php echo $this->db->escape_str($quote->client_name); ?>"
             });
         });
+        
 
         <?php if (!$items) { ?>
         $('#new_row').clone().appendTo('#item_table').removeAttr('id').addClass('item').show();
@@ -53,13 +54,13 @@ span.tab{
                     quote_date_expires: $('#quote_date_expires').val(),
                     quote_status_id: $('#quote_status_id').val(),
                     quote_password: $('#quote_password').val(),
-					responsible_id: $('#quote_designer').val(),
+                    responsible_id: $('#quote_designer').val(),
                     quote_currency: $('#quote_currency').val(),
                     items: JSON.stringify(items),
-					rider: $('#quote_custom_rider').val(),
                     quote_discount_amount: $('#quote_discount_amount').val(),
                     quote_discount_percent: $('#quote_discount_percent').val(),
                     notes: $('#notes').val(),
+                    rider: $('#quote_custom_rider').val(),
                     custom: $('input[name^=custom]').serializeArray()
                 },
                 function (data) {
@@ -369,13 +370,13 @@ if($quote->invoice_id !=0){
                                                value="<?php echo $quote->quote_password; ?>">
                                     </div>
                                 </div>
-								
+                                			
 				<div class="quote-properties">
-                                    <label for="quote_status_id">
+                                    <label for="quote_designer">
                                         <?php echo 'Designer'; ?>
                                     </label>
-                                    <select name="quote_status_id" id="quote_designer"
-                                            class="form-control input-sm">
+                                    
+                                    <select  name="quote_designer" id="quote_designer" class="form-control input-sm">
                                         <?php foreach ($userlist as $user) { ?>
                                             <option value="<?php echo $user->user_id; ?>"
                                                     <?php if ($user->user_id == $quote->responsible_id) { ?>selected="selected"<?php } ?>>
@@ -385,7 +386,9 @@ if($quote->invoice_id !=0){
                                     </select>
                                 </div>
                                 
-                                 <div class="quote-properties" style="padding-top:20px;">
+                                
+                                
+                                <div class="quote-properties" style="padding-top:20px;">
                                      
                                     <input type="checkbox" name="include_VAT" id="include_VAT" onclick="calc();"> Price includes VAT<br>
                                     <div id="demo"></div>
@@ -400,12 +403,7 @@ if($quote->invoice_id !=0){
 
             </div>
 
-            <?php 
-			if($this->session->userdata('user_subtype')!=1){
-			$this->layout->load_view('quotes/partial_item_table');
-			}else{
-				$this->layout->load_view('quotes/partial_item_table_designer');
-			}			?>
+            <?php $this->layout->load_view('quotes/partial_item_table');?>
 
             <hr/>
 

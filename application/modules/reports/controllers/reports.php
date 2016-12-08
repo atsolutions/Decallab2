@@ -94,5 +94,23 @@ class Reports extends Admin_Controller
 
         $this->layout->buffer('content', 'reports/sales_by_year_index')->render();
     }
+    
+     public function sales_by_designer()
+    {
+
+        if ($this->input->post('btn_submit')) {
+            $data = array(
+                'results' => $this->mdl_reports->sales_by_designer($this->input->post('from_date'), $this->input->post('to_date'))
+            );
+
+            $html = $this->load->view('reports/sales_by_designer', $data, TRUE);
+
+            $this->load->helper('mpdf');
+
+            pdf_create($html, lang('sales_by_designer'), TRUE);
+        }
+
+        $this->layout->buffer('content', 'reports/sales_by_designer_index')->render();
+    }
 
 }

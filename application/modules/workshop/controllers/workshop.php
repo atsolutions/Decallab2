@@ -73,6 +73,10 @@ class Workshop extends Admin_Controller
         $this->mdl_quotes->mark_packed($id);
         redirect('workshop/status/all');
     }
+    public function mark_ws_approved($id){
+        $this->mdl_quotes->mark_ws_approved($id);
+        redirect('workshop/status/all');
+    }
     
         public function mark_shipped($id){
         $this->mdl_quotes->mark_shipped($id);
