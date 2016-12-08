@@ -40,7 +40,7 @@ class Quotes extends Admin_Controller
 
     public function status($status = 'all', $page = 0, $designer_id=0)
     {
-		$this->load->model('mdl_quote_items');
+        $this->load->model('mdl_quote_items');
         $this->load->model('tax_rates/mdl_tax_rates');
         $this->load->model('mdl_quote_tax_rates');
         $this->load->model('custom_fields/mdl_custom_fields');
@@ -79,6 +79,9 @@ if($designer_id !=0){
 				break;
 			case 'myquotes':
 				$this->mdl_quotes->is_my();
+				break;
+                            case 'workshop':
+				$this->mdl_quotes->is_workshop_accepted();
 				break;
 			
         }

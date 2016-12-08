@@ -38,6 +38,8 @@
 		<?php } ?>
 			<li <?php if ($status == 'draft') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('quotes/status/draft'); ?>"><?php echo lang('draft'); ?></a></li>
+                    <li <?php if ($status == "Workshop accepted") { ?>class="active"<?php } ?>><a
+                    href="<?php echo site_url('quotes/status/workshop'); ?>"><?php echo 'Workshop accepted'; ?></a></li>
 			<li><a
                     href="<?php echo site_url('quotes/status/myquotes'); ?>"><?php echo 'MyQuotes'; ?></a></li>
         </ul>
