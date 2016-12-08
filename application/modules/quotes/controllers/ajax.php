@@ -90,7 +90,9 @@ if($this->input->post('rider')!=''){
 				);
 
 		 $this->mdl_quotes->save($quote_id, $db_array);
-                 
+                 if ($this->input->post('quote_status_id')>=9){
+                     $this->mdl_quotes->set_print_date($quote_id);
+                 }
 				 // Recalculate for discounts
 				$this->load->model('quotes/mdl_quote_amounts');
 				$this->mdl_quote_amounts->calculate($quote_id);

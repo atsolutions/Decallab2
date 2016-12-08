@@ -481,6 +481,22 @@ public function mark_printed($quote_id)
                 $this->db->where('quote_id', $quote_id);
                 $this->db->set('quote_status_id', 9);
                 $this->db->update('ip_quotes');
+                $this->set_print_date($quote_id);
+                
+        }
+               
+
+    }
+    
+    public function set_print_date($quote_id)
+    {
+        $this->db->select('quote_status_id');
+        $this->db->where('quote_id', $quote_id);
+
+        $quote = $this->db->get('ip_quotes');
+
+        if ($quote->num_rows()) {
+         
                 $date = date('Y-m-d H:i:s');
                 $this->db->where('quote_id', $quote_id);
                 $this->db->set('quote_date_printed', $date);
@@ -489,6 +505,7 @@ public function mark_printed($quote_id)
                
 
     }
+    
     
     public function mark_packed($quote_id)
     {
