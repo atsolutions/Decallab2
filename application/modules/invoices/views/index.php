@@ -18,6 +18,14 @@
 
     <div class="pull-right visible-lg">
         <ul class="nav nav-pills index-options">
+            <!-- previous month -->
+            <li <?php if ($status == 'previous') { ?>class="active"<?php } ?>><a
+                    href="<?php echo site_url('invoices/status/previous'); ?>"><?php echo 'Previous month'; ?></a></li>
+                    <!--this month -->
+            <li <?php if ($status == 'this_month') { ?>class="active"<?php } ?>><a
+                    href="<?php echo site_url('invoices/status/this_month'); ?>"><?php echo 'This month'; ?></a></li>
+            
+            
             <li <?php if ($status == 'all') { ?>class="active"<?php } ?>><a
                     href="<?php echo site_url('invoices/status/all'); ?>"><?php echo lang('all'); ?></a></li>
             <li <?php if ($status == 'draft') { ?>class="active"<?php } ?>><a

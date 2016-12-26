@@ -50,6 +50,12 @@ class Invoices extends Admin_Controller
             case 'overdue':
                 $this->mdl_invoices->is_overdue();
                 break;
+            case 'previous':
+                $this->mdl_invoices->is_previous();
+                break;
+            case 'this_month':
+                $this->mdl_invoices->is_this_month();
+                break;
         }
 
         $this->mdl_invoices->paginate(site_url('invoices/status/' . $status), $page);

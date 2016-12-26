@@ -358,6 +358,25 @@ class Mdl_Invoices extends Response_Model
         $this->filter_where('invoice_status_id', 4);
         return $this;
     }
+    
+     public function is_previous()
+    {
+        $lastmonthstart = date("Y-n-j", strtotime("first day of previous month"));
+        $lastmonthend = date("Y-n-j", strtotime("last day of previous month"));
+         
+        $this->filter_where('ip_invoices.invoice_date_created >=',  $lastmonthstart);
+        $this->filter_where('ip_invoices.invoice_date_created <=', $lastmonthend);
+        return $this;
+    }
+    
+     public function is_this_month()
+    {
+         
+         $thismonth = date("Y-n-j", strtotime("first day of this month"));
+        $this->filter_where('ip_invoices.invoice_date_created >',  $thismonth);
+        
+        return $this;
+    }
 
     public function is_overdue()
     {

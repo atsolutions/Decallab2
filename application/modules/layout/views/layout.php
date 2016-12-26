@@ -242,6 +242,16 @@
             <?php } ?>
 
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                       <a href="https://github.com/atsolutions/Decallab2/issues/new" 
+                       data-original-title="Report"
+                       data-placement="bottom">
+                        <i class="fa fa-exclamation-triangle"></i>&nbsp;<span
+                            ><?php echo 'Report Problem'; ?></span>
+                    </a>
+                </li>
+                
+                
 			<li>
                        <a href="<?php echo site_url('README.md');?>" 
                        data-original-title="<?php echo lang('Version'); ?>"
