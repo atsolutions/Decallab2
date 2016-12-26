@@ -217,12 +217,20 @@ class Invoices extends Admin_Controller
         $client_id = $invoice->client_id;
         $client = $this->mdl_clients->where('ip_clients.client_id',$client_id)->get()->result();
         $realclient = $client[0];
+        if(strpos($invoice_id, '_') == false){
         if($realclient->client_country == "LV"){
         generate_invoice_pdf($invoice_id, $stream, 'InvoicePlane(LV)');
         }else{
            generate_invoice_pdf($invoice_id, $stream,$invoice_template); 
         }
+        }else{
+          $invoice_list = explode("_", $invoice_id);
+          generate_multiple_invoices($invoice_list, $stream, $invoice_template);
+        }
     }
+    
+
+    
 
     public function delete_invoice_tax($invoice_id, $invoice_tax_rate_id)
     {

@@ -1,66 +1,51 @@
 <script>
-var Checked = new Array()
-var clickedonPDF = document.getElementById("PDF");
-clickedonPDF.onclick = downloadfiles()
+var Checked = new Array();
+//var clickedonPDF = document.getElementById("PDF");
+//clickedonPDF.onclick = downloadfiles()
 function checkAll(ele) {
      var checkboxes = document.getElementsByTagName('input');
      if (ele.checked) {
          for (var i = 0; i < checkboxes.length; i++) {
-             if (checkboxes[i].type == 'checkbox') {
+             if (checkboxes[i].type === 'checkbox') {
                  checkboxes[i].checked = true;
-				 add(checkboxes[i])
+				 add(checkboxes[i]);
              }
          }
      } else {
          for (var i = 0; i < checkboxes.length; i++) {
-             console.log(i)
-             if (checkboxes[i].type == 'checkbox') {
+             if (checkboxes[i].type === 'checkbox') {
                  checkboxes[i].checked = false;
-				 add(checkboxes[i])
+				 add(checkboxes[i]);
              }
          }
      }
  }
  
 
- 
  function add(ele){
 	 if(ele.checked){
-		 if(ele.id != 0){
-		 Checked.push(ele.id)
+		 if(ele.id !== 0){
+		 Checked.push(ele.id);
 		 }
 	 }else{
-		 var index = Checked.indexOf(ele.id)
+		 var index = Checked.indexOf(ele.id);
 		 if(index >-1){
-		 Checked.splice(index,1)
+		 Checked.splice(index,1);
 		 }
 	 }
-document.getElementById("demo").innerHTML = Checked;
  }
  
 
 function downloadfiles(){
-	var origin = document.location.origin
-	var url = origin.concat("/Decallab/invoices/generate_pdf/")
-	for (var i = 0; i < Checked.length; i++) {
-		var url2 = url.concat(Checked[i])
-		window.open(url2, "_blank")
+	var origin = document.location.origin;
+        //TODO:: Very very bad stuff
+	var url = origin.concat("/DevelopDecallab/invoices/generate_pdf/");
+        var dataset = Checked.toString();
+        var finaldata = dataset.replace(new RegExp(",", "g"),'_');
+		var url2 = url.concat(finaldata);
+		window.open(url2, "_blank");
 	}
-}
 
-function deletequote(){
-	var origin = document.location.origin
-	var url = origin.concat("/Decallab/invoices/delete/")
-	var check = window.confirm("YOU ARE GOING TO DELETE SELECTED QUOTES. ARE YOU SURE?")
-	if(check ==true){
-		for (var i = 0; i < Checked.length; i++) {
-			var url2 = url.concat(Checked[i])
-			$.get(url2)
-			window.close();
-			location.reload();
-		}
-	}
-	}
 
 
 </script>
@@ -78,25 +63,12 @@ function deletequote(){
             <th><?php echo lang('client_name'); ?></th>
             <th style="text-align: right;"><?php echo lang('amount'); ?></th>
             <th style="text-align: right;"><?php echo lang('balance'); ?></th>
-			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]" id="0"> Check all 
-<div class="options btn-group">
-                        <a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i> <?php echo lang('options'); ?>
+			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]"> Check all 
+
+                        <a class="btn btn-sm btn-default"  href="#" id = "PDF" onclick="downloadfiles();">
+                            <i class="fa fa-file-pdf-o"></i> <?php echo 'Download PDF'; ?>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#" id="PDF" onclick="downloadfiles();">
-                                    <i class="fa fa-print fa-margin"></i> Download selected PDF's
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   onclick="deletequote();">
-                                    <i class="fa fa-trash-o fa-margin"></i> <?php echo lang('delete'); ?>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>			
+		
 			
 			
             <th><?php echo lang('options'); ?></th>

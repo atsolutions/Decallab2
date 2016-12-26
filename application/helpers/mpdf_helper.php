@@ -22,7 +22,7 @@ function pdf_create($html, $filename, $stream = TRUE, $password = NULL,$isInvoic
 
     $mpdf = new mPDF();
     $mpdf->useAdobeCJK = true;
-	$mpdf->SetAutoFont();
+    $mpdf->SetAutoFont();
     $mpdf->SetProtection(array('copy','print'), $password, $password);
     if(!(is_dir('./uploads/archive/') OR is_link('./uploads/archive/') ))
         mkdir ('./uploads/archive/','0777');
@@ -33,7 +33,11 @@ function pdf_create($html, $filename, $stream = TRUE, $password = NULL,$isInvoic
         $mpdf->SetHTMLFooter('<div id="footer">' . $CI->mdl_settings->settings['pdf_invoice_footer'] . '</div>');
     }
     $invoice_array = array();
-    $mpdf->WriteHTML($html);
+    foreach ($html as $html_single) {
+        $mpdf->WriteHTML($html_single);
+        $mpdf->AddPage();
+    }
+    
 
     if ($stream) {
         if (!$isInvoice) {
