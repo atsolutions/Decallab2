@@ -33,9 +33,13 @@ function pdf_create($html, $filename, $stream = TRUE, $password = NULL,$isInvoic
         $mpdf->SetHTMLFooter('<div id="footer">' . $CI->mdl_settings->settings['pdf_invoice_footer'] . '</div>');
     }
     $invoice_array = array();
+    if(is_array($html)){
     foreach ($html as $html_single) {
         $mpdf->WriteHTML($html_single);
         $mpdf->AddPage();
+    }
+    }else{
+        $mpdf->WriteHTML($html);
     }
     
 

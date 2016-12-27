@@ -63,7 +63,7 @@ function downloadfiles(){
             <th><?php echo lang('client_name'); ?></th>
             <th style="text-align: right;"><?php echo lang('amount'); ?></th>
             <th style="text-align: right;"><?php echo lang('balance'); ?></th>
-			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]"> Check all 
+			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]" id="0"> Check all 
 
                         <a class="btn btn-sm btn-default"  href="#" id = "PDF" onclick="downloadfiles();">
                             <i class="fa fa-file-pdf-o"></i> <?php echo 'Download PDF'; ?>

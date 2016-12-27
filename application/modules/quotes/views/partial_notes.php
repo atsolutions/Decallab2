@@ -1,8 +1,17 @@
-<?php foreach ($quote_notes_notes as $quote_note) : ?>
-    <div class="alert alert-default">
-        <p><strong><?php echo date_from_mysql($quote_note->note_date, TRUE); ?></strong>&nbsp;
-            <?php echo $quote_note->note_author; ?>
-			<?php echo nl2br($quote_note->note); ?>
+<div div id="" style="overflow-y:scroll; height:200px;">
+<nav>
+<ul>
+<?php foreach ($quote_notes as $quote_note) : ?>
+    <li><div class="alert alert-default">
+        <i> <?php echo $quote_note->note_author; ?></i>
+        <strong><?php echo date_from_mysql($quote_note->note_date, TRUE); ?></strong>&nbsp;
+        <p>
+	<?php echo nl2br($quote_note->note); ?>
         </p>
     </div>
+    </li>
+
 <?php endforeach; ?>
+</ul>
+</nav>
+</div>

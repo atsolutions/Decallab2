@@ -137,6 +137,45 @@ span.tab{
   }
 }
 
+    $(function () {
+        $('#save_quote_note').click(function () {
+            $.post('<?php echo site_url('quotes/ajax/save_quote_note'); ?>',
+                {
+                    quote_id: $('#quote_id').val(),
+                    quote_note: $('#quote_note').val()
+                }, function (data) {
+                    var response = JSON.parse(data);
+                    if (response.success == '1') {
+                        // The validation was successful
+                        $('.control-group').removeClass('error');
+                        $('#quote_note').val('');
+
+                        $('#notes_list').load("<?php echo site_url('quotes/ajax/load_quote_notes'); ?>",
+                            {
+                                quote_id: <?php echo $quote->quote_id; ?>
+                            });
+                    }
+                    else {
+                        // The validation was not successful
+                        $('.control-group').removeClass('error');
+                        for (var key in response.validation_errors) {
+                            $('#' + key).parent().parent().addClass('error');
+                        }
+                    }
+                });
+        });
+
+    });
+    
+    
+    window.onload = function(e) {
+                console.log("window loaded");
+                 $('#notes_list').load("<?php echo site_url('quotes/ajax/load_quote_notes'); ?>",
+                            {
+                                quote_id: <?php echo $quote->quote_id; ?>
+                            });
+            };
+    
 </script>
 
 <?php echo $modal_delete_quote; ?>
@@ -408,19 +447,36 @@ if($quote->invoice_id !=0){
             <hr/>
 
       <div class="row">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-6 col-xs-6">
 
                 <div class="form-group">
-                    <label class="control-label"><?php echo lang('notes'); ?></label>
-                    <textarea name="notes" id="notes" rows="15"
-                              class="input-sm form-control" style="font-size: 14pt"><?php echo $quote->notes; ?></textarea>
+                <div>
+                <h4><?php echo lang('notes'); ?></h4>
+                <br>
+<div class="panel panel-default panel-body">
+                        <div class="col-xs-12 col-md-10">
+                            <input type="hidden" name="quote_id" id="quote_id"
+                                   value="<?php echo $quote->quote_id; ?>">
+                            <textarea id="quote_note" class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="col-xs-12 col-md-2 text-center">
+                            <input type="button" id="save_quote_note" class="btn btn-default btn-block"
+                                   value="<?php echo lang('add_notes'); ?>">
+                        </div>
+
+                </div>
+                <div id="notes_list">
+                    <?php echo $partial_notes; ?>
+                </div>
+                
+            </div>
                 </div>
 
             </div>
-			<div class="dropzone">
-            <div class="col-xs-12 col-sm-8">
+	<div class="dropzone">
+            <div class="col-xs-6 col-xs-6" >
 
-                <div class="form-group">
+                <div class="form-group" style="padding-left: 10px">
                     <label class="control-label"><?php echo lang('attachments'); ?></label>
                     <br/>
                     <!-- The fileinput-button span is used to style the file input field as button -->
@@ -483,24 +539,8 @@ if($quote->invoice_id !=0){
                     </div>
                 </div>
             </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+      </div>
+
             <?php if ($custom_fields): ?>
                 <h4 class="no-margin"><?php echo lang('custom_fields'); ?></h4>
             <?php endif; ?>

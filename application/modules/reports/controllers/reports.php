@@ -95,22 +95,22 @@ class Reports extends Admin_Controller
         $this->layout->buffer('content', 'reports/sales_by_year_index')->render();
     }
     
-     public function sales_by_designer()
+     public function monthly_report()
     {
 
         if ($this->input->post('btn_submit')) {
             $data = array(
-                'results' => $this->mdl_reports->sales_by_designer($this->input->post('from_date'), $this->input->post('to_date'))
+                'results' => $this->mdl_reports->monthly_report()
             );
 
-            $html = $this->load->view('reports/sales_by_designer', $data, TRUE);
+            $html = $this->load->view('reports/monthly_report', $data, TRUE);
 
             $this->load->helper('mpdf');
 
-            pdf_create($html, lang('sales_by_designer'), TRUE);
+            pdf_create($html, 'monthly_report', TRUE);
         }
 
-        $this->layout->buffer('content', 'reports/sales_by_designer_index')->render();
+        $this->layout->buffer('content', 'reports/monthly_report_index')->render();
     }
 
 }

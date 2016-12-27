@@ -16,14 +16,14 @@ if (!defined('BASEPATH'))
  * 
  */
 
-class Mdl_Client_Notes extends Response_Model
+class Mdl_Quote_notes extends Response_Model
 {
     public $table = 'ip_quote_notes';
     public $primary_key = 'ip_quote_notes.note_id';
 
     public function default_order_by()
     {
-        $this->db->order_by('ip_quote_notes.note_date DESC');
+        $this->db->order_by('ip_quote_notes.note_date ASC');
     }
 
     public function validation_rules()
@@ -31,13 +31,12 @@ class Mdl_Client_Notes extends Response_Model
         return array(
             'quote_id' => array(
                 'field' => 'quote_id',
-                'label' => lang('quote'),
-                'rules' => 'required'
+                'label' => lang('quote')
             ),
             'quote_note' => array(
                 'field' => 'quote_note',
-                'label' => lang('quote'),
-                'rules' => 'required'
+                'label' => lang('quote')
+
             )
         );
     }
@@ -49,6 +48,24 @@ class Mdl_Client_Notes extends Response_Model
         $db_array['note_date'] = date('Y-m-d');
 
         return $db_array;
+    }
+    
+    public function save_note($note, $id, $author = "System") {
+        $data = array(
+            'note' =>$note,
+            'quote_id'=>$id,
+            'note_date' => date('Y-m-d H:i:s'),
+            'note_author' => $author
+        );
+            $this->db->insert('ip_quote_notes', $data);
+        
+    }
+    
+    public function get_notes($quote_id){
+        
+        $result = $this->db->order_by('note_date', 'DESC')->get_where('ip_quote_notes', array('quote_id'=>$quote_id))->result();
+        return $result;
+
     }
 
 }

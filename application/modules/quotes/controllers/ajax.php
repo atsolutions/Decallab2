@@ -457,5 +457,37 @@ if($this->input->post('rider')!=''){
         echo json_encode($response);
     }
     
+     public function save_quote_note()
+    {
+        $this->load->model('quotes/mdl_quote_notes');
+        $quote_id = $this->input->post('quote_id');
+        $quote_note = $this->input->post('quote_note');
+        $this->mdl_quote_notes->save_note($quote_note, $quote_id);
+        
+        $response = array(
+                'success' => 1
+            );
+
+        echo json_encode($response);
+
+    }
+        
+    public function load_quote_notes()
+    {
+        $this->load->model('quotes/mdl_quote_notes');
+        $query = $this->mdl_quote_notes->get_notes($this->input->post('quote_id'));
+       
+        
+        
+        
+        
+        $data = array(
+            'quote_notes' => $query
+            //'quote_notes' => $this->mdl_quote_notes->where('quote_id', $this->input->post('quote_id'))->get()->result()
+        );
+
+        $this->layout->load_view('quotes/partial_notes', $data);
+    }
+    
 
 }

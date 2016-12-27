@@ -105,7 +105,7 @@ src: url('<?php echo base_url(); ?>assets/default/fonts/KeepCalm/KeepCalm-Medium
 	font-size: 8pt;
 	color: #9B9B9B;
    width: 100%;
-   height 50px;
+   height 25px;
 }
 
 # footertext {
@@ -350,7 +350,9 @@ $desired_dir= getcwd() . "/uploads/customer_files/";
 			$comment = $_POST['my_text']; //get input text
 			echo 'You have approved it!' . $comment;
 			print_r($_POST);
-					$this->db->get('ip_quotes');
+                        $this->load->model('quotes/mdl_quote_notes');
+                        $this->mdl_quote_notes->save_note($comment, $quote->quote_id, $quote->client_name);
+					$this->db->get('ip_quote_notes');
 					$this->db->where('quote_id', $quote->quote_id);
 					$this->db->set('notes', $comment);
 					$this->db->update('ip_quotes');
@@ -409,6 +411,8 @@ $this->db->insert('ip_actions', $data);
 			
 			$comment = $_POST['my_text']; //get input text
 			echo 'You have rejected it ' . $comment;
+                         $this->load->model('quotes/mdl_quote_notes');
+                        $this->mdl_quote_notes->save_note($comment, $quote->quote_id, $quote->client_name);
 					$this->db->get('ip_quotes');
 					$this->db->where('quote_id', $quote->quote_id);
 					$this->db->set('notes', $comment);

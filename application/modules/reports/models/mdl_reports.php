@@ -165,30 +165,39 @@ class Mdl_Reports extends CI_Model
         return $this->db->get('ip_clients')->result();
     }
     
-     public function sales_by_designer($from_date = NULL, $to_date = NULL, )
+     public function monthly_report()
     {
-        $this->db->select('ip_users.user_name');
-
-        if ($from_date and $to_date) {
-            $from_date = date_to_mysql($from_date);
-            $to_date = date_to_mysql($to_date);
-
-            $this->db->select("(SELECT COUNT(*) FROM ip_quotes WHERE ip_quotes.responsible_id = ip_users.user_id and quote_date_printed >= " . $this->db->escape($from_date) . " and quote_date_printed <= " . $this->db->escape($to_date) . ") AS invoice_count");
-            $this->db->select("(SELECT SUM(invoice_item_subtotal) FROM ip_invoice_amounts WHERE ip_invoice_amounts.invoice_id IN (SELECT invoice_id FROM ip_invoices WHERE ip_invoices.client_id = ip_clients.client_id and invoice_date_created >= " . $this->db->escape($from_date) . " and invoice_date_created <= " . $this->db->escape($to_date) . ")) AS sales");
-            $this->db->select("(SELECT SUM(quote_total) FROM ip_quote_amounts WHERE ip_invoice_amounts.invoice_id IN (SELECT invoice_id FROM ip_invoices WHERE ip_invoices.client_id = ip_clients.client_id and invoice_date_created >= " . $this->db->escape($from_date) . " and invoice_date_created <= " . $this->db->escape($to_date) . ")) AS sales_with_tax");
-            $this->db->where('client_id IN (SELECT client_id FROM ip_invoices WHERE invoice_date_created >=' . $this->db->escape($from_date) . ' and invoice_date_created <= ' . $this->db->escape($to_date) . ')');
-        } else {
-            $this->db->select('(SELECT COUNT(*) FROM ip_invoices WHERE ip_invoices.client_id = ip_clients.client_id) AS invoice_count');
-            $this->db->select('(SELECT SUM(invoice_item_subtotal) FROM ip_invoice_amounts WHERE ip_invoice_amounts.invoice_id IN (SELECT invoice_id FROM ip_invoices WHERE ip_invoices.client_id = ip_clients.client_id)) AS sales');
-            $this->db->select('(SELECT SUM(invoice_total) FROM ip_invoice_amounts WHERE ip_invoice_amounts.invoice_id IN (SELECT invoice_id FROM ip_invoices WHERE ip_invoices.client_id = ip_clients.client_id)) AS sales_with_tax');
-            $this->db->where('client_id IN (SELECT client_id FROM ip_invoices)');
-        }
-
-        $this->db->order_by('client_name');
-
-        return $this->db->get('ip_clients')->result();
-
+        $prevMonthStart = date('Y-n-j', strtotime('first day of previous month'));
+        $prevMonthEnd = date('Y-n-j', strtotime('last day of previous month'));
+        $today = date('Y-n-j', strtotime('today'));
       
+         //get previous month Q's
+       $this->db->where('quote_date_created >=', $prevMonthStart);
+       $this->db->where('quote_date_created <=', $prevMonthEnd);
+       $quotesPrev = $this->db->get('ip_quotes')->result();
+        
+        $this->db->where('quote_date_created >=', $prevMonthEnd);
+       $quotesCurr = $this->db->get('ip_quotes')->result();
+        
+//get previous month Q count
+       $this->db->select('COUNT(  `quote_id` ) AS prev_count' , FALSE);
+       $this->db->where('quote_date_created >=', $prevMonthStart);
+       $this->db->where('quote_date_created <=', $prevMonthEnd);
+       $prevcount = $this->db->get('ip_quotes')->result();
+       
+//Get this month Q count
+       $this->db->select('COUNT(  `quote_id` ) AS current_count' , FALSE);
+       $this->db->where('quote_date_created >=', $prevMonthEnd);
+       $currentCount = $this->db->get('ip_quotes')->result();
+       
+      
+     
+       
+       
+        return $result;
+        
+        
+        
     }
     
     
