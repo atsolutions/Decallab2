@@ -72,6 +72,18 @@ if($this->input->post('rider')!=''){
 				} else {
 					$quote_discount_percent = $this->input->post('quote_discount_percent');
 				}
+                                
+                                if ($this->input->post('quote_other_expenses') === '') {
+					$quote_other_expenses = floatval(0);
+				} else {
+					$quote_other_expenses = str_replace(',', '.',$this->input->post('quote_other_expenses'));
+				}
+                                
+                                  if ($this->input->post('quote_material_length') === '') {
+					$quote_material_length = floatval(0);
+				} else {
+					$quote_material_length = str_replace(',', '.',$this->input->post('quote_material_length'));
+				}
 				
 				$quote_designer=$this->input->post('responsible_id');
 				$quote_currency=$this->input->post('quote_currency');
@@ -85,6 +97,8 @@ if($this->input->post('rider')!=''){
 					'notes' => $this->input->post('notes'),
 					'quote_discount_amount' => $quote_discount_amount,
 					'quote_discount_percent' => $quote_discount_percent,
+                                        'quote_other_expenses' => $quote_other_expenses,
+					'quote_material_length' => $quote_material_length,
 					'responsible_id'=> $quote_designer,
 					'quote_currency'=>$quote_currency,
 				);

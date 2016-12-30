@@ -61,6 +61,8 @@ span.tab{
                     quote_discount_percent: $('#quote_discount_percent').val(),
                     notes: $('#notes').val(),
                     rider: $('#quote_custom_rider').val(),
+                    quote_other_expenses: $('#quote_other_expenses').val(),
+                    quote_material_length: $('#quote_material_length').val(),
                     custom: $('input[name^=custom]').serializeArray()
                 },
                 function (data) {
@@ -377,6 +379,16 @@ if($quote->invoice_id !=0){
                                     </select>
                                 </div>
                                 
+                                 <div class="quote-properties">
+                                    <label for="quote_material_length">
+                                        <?php echo 'Material length:'; ?>
+                                    </label>
+
+                                    <div class="controls">
+                                        <input type="text" id="quote_material_length" class="form-control input-sm"
+                                               value="<?php echo $quote->quote_material_length; ?>">
+                                    </div>
+                                </div>
                                 
 
                             </div>
@@ -427,11 +439,26 @@ if($quote->invoice_id !=0){
                                 
                                 
                                 
+                                
+                                
                                 <div class="quote-properties" style="padding-top:20px;">
                                      
                                     <input type="checkbox" name="include_VAT" id="include_VAT" onclick="calc();"> Price includes VAT<br>
                                     <div id="demo"></div>
                                 </div>
+                                
+                                
+                                 <div class="quote-properties" style="padding-top:10px;">
+                                    <label for="quote_other_expenses">
+                                        <?php echo 'Other expenses:'; ?>
+                                    </label>
+
+                                    <div class="controls">
+                                        <input type="text" id="quote_other_expenses" class="form-control input-sm"
+                                               value="<?php echo $quote->quote_other_expenses; ?>">
+                                    </div>
+                                </div>
+                                
 
                                 
 
