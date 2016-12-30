@@ -11,9 +11,11 @@
 					client_name: $('#client_name').val(),
                     invoice_date_created: $('#invoice_date_created').val(),
                     invoice_group_id: $('#invoice_group_id').val(),
-					currency: '<?php echo $quote->quote_currency; ?>',
+		    currency: $('#currency').val(),
                     invoice_password: $('#invoice_password').val(),
+
                     user_id: $('#user_id').val()
+            
                 },
                 function (data) {
                     var response = JSON.parse(data);
@@ -46,6 +48,8 @@
 
             <input type="hidden" name="client_name" id="client_name"
                    value="<?php echo $quote->client_name; ?>">
+            <input type="hidden" name="currency" id="currency"
+                   value="<?php echo $quote->quote_currency; ?>">
             <input type="hidden" name="user_id" id="user_id"
                    value="<?php echo $quote->user_id; ?>">
 
