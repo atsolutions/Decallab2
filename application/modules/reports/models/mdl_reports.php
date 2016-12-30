@@ -178,21 +178,39 @@ class Mdl_Reports extends CI_Model
         
         $this->db->where('quote_date_created >=', $prevMonthEnd);
        $quotesCurr = $this->db->get('ip_quotes')->result();
+       
+       $PrevCount = count($quotesPrev);
+       $CurrCount = count($quotesCurr);
+       
+
+// Get finished quotes
+       $this->db->where('quote_date_printed >=', $prevMonthStart);
+       $this->db->where('quote_date_printed <=', $prevMonthEnd);
+       $quotesPrevPrint = $this->db->get('ip_quotes')->result();
         
-//get previous month Q count
-       $this->db->select('COUNT(  `quote_id` ) AS prev_count' , FALSE);
-       $this->db->where('quote_date_created >=', $prevMonthStart);
-       $this->db->where('quote_date_created <=', $prevMonthEnd);
-       $prevcount = $this->db->get('ip_quotes')->result();
+        $this->db->where('quote_date_printed >=', $prevMonthEnd);
+       $quotesCurrPrint = $this->db->get('ip_quotes')->result();
        
-//Get this month Q count
-       $this->db->select('COUNT(  `quote_id` ) AS current_count' , FALSE);
-       $this->db->where('quote_date_created >=', $prevMonthEnd);
-       $currentCount = $this->db->get('ip_quotes')->result();
+       //get users
+       $users = $this->db->get('ip_users')->result();
        
+       //get all amounts
+       //TODO: fix to get only neccesary amounts
+       $this->db->select('quote_item_subtotal');
+       $this->db->select('quote_id');
+       
+       $amounts = $this->db->get('ip_quote_items')->result();
       
-     
+       foreach ($users as $user){
        
+         //$quotesPrev
+       }
+     
+       $result = array(
+           'PrevCountTotal' => $PrevCount,
+           'CurrCountTotal' => $CurrCount,
+           
+       );
        
         return $result;
         

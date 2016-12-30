@@ -257,6 +257,9 @@
                             <div class="input-group-addon">&percnt;</div>
                         </div>
                     </div>
+                    
+                   
+                    
                 </td>
             </tr>
             <tr>

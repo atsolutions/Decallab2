@@ -4,7 +4,7 @@
 <?php foreach ($quote_notes as $quote_note) : ?>
     <li><div class="alert alert-default">
         <i> <?php echo $quote_note->note_author; ?></i>
-        <strong><?php echo date_from_mysql($quote_note->note_date, TRUE); ?></strong>&nbsp;
+        <strong><?php echo $quote_note->note_date; ?></strong>&nbsp;
         <p>
 	<?php echo nl2br($quote_note->note); ?>
         </p>

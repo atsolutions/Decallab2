@@ -462,7 +462,8 @@ if($this->input->post('rider')!=''){
         $this->load->model('quotes/mdl_quote_notes');
         $quote_id = $this->input->post('quote_id');
         $quote_note = $this->input->post('quote_note');
-        $this->mdl_quote_notes->save_note($quote_note, $quote_id);
+        $user = $this->session->userdata('user_name');
+        $this->mdl_quote_notes->save_note($quote_note, $quote_id, $user);
         
         $response = array(
                 'success' => 1
