@@ -36,7 +36,7 @@ class Issues extends Admin_Controller
             if($result['code']=='201'){
                 $this->session->set_flashdata('alert_success', 'Issue sucessfully created');
             }else{
-                $this->session->set_flashdata('alert_error', 'There was an error creating the issue');
+                //$this->session->set_flashdata('alert_error', 'There was an error creating the issue');
             }
         }
         
