@@ -244,7 +244,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                       <a href="https://github.com/atsolutions/Decallab2/issues/new" 
+                       <a href=<?php echo site_url('issues/view'); ?>
                        data-original-title="Report"
                        data-placement="bottom">
                         <i class="fa fa-exclamation-triangle"></i>&nbsp;<span
