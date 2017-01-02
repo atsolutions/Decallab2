@@ -336,6 +336,23 @@
                        type="button" class="btn btn-primary btn-sm btn-block">
             </div>
         </div>
+        
+        
+        
+    </div>
+    
+        <div class="form-group">
+        <label for="settings[git_api_key]" class="control-label">
+            <?php echo 'GITHUB key'; ?>
+        </label>
+
+        <div class="row">
+            <div class="col-xs-8 col-sm-9">
+                <input type="text" name="settings[git_api_key]" id="cron_key"
+                       class="input-sm form-control"
+                       value="<?php echo $this->mdl_settings->setting('git_api_key'); ?>">
+            </div>
+        </div>
     </div>
 
 </div>
