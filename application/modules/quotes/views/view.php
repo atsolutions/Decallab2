@@ -60,6 +60,7 @@ span.tab{
                     quote_discount_amount: $('#quote_discount_amount').val(),
                     quote_discount_percent: $('#quote_discount_percent').val(),
                     notes: $('#notes').val(),
+                    delete_tax: 'false',
                     rider: $('#quote_custom_rider').val(),
                     quote_other_expenses: $('#quote_other_expenses').val(),
                     quote_material_length: $('#quote_material_length').val(),
@@ -79,6 +80,63 @@ span.tab{
                 });
 
         });
+
+$('#btn_save_quote_delete_tax').click(function () {
+            var items = [];
+            var item_order = 1;
+			
+
+
+            $('table tbody.item').each(function () {
+                var row = {};
+                $(this).find('input,select,textarea').each(function () {
+                    if ($(this).is(':checkbox')) {
+                        row[$(this).attr('name')] = $(this).is(':checked');
+                    } else {
+                        row[$(this).attr('name')] = $(this).val();
+                    }
+                });
+                row['item_order'] = item_order;
+                item_order++;
+                items.push(row);
+            });
+            $.post("<?php echo site_url('quotes/ajax/save'); ?>", {
+                    quote_id: <?php echo $quote_id; ?>,
+                    quote_number: $('#quote_number').val(),
+                    quote_date_created: $('#quote_date_created').val(),
+                    quote_date_expires: $('#quote_date_expires').val(),
+                    quote_status_id: $('#quote_status_id').val(),
+                    quote_password: $('#quote_password').val(),
+                    responsible_id: $('#quote_designer').val(),
+                    quote_currency: $('#quote_currency').val(),
+                    items: JSON.stringify(items),
+                    quote_discount_amount: $('#quote_discount_amount').val(),
+                    quote_discount_percent: $('#quote_discount_percent').val(),
+                    notes: $('#notes').val(),
+                    rider: $('#quote_custom_rider').val(),
+                    quote_other_expenses: $('#quote_other_expenses').val(),
+                    quote_material_length: $('#quote_material_length').val(),
+                    delete_tax: 'true',
+                    custom: $('input[name^=custom]').serializeArray()
+                },
+                function (data) {
+                    var response = JSON.parse(data);
+                    if (response.success == '1') {
+                        window.location = "<?php echo site_url('quotes/view'); ?>/" + <?php echo $quote_id; ?>;
+                    }
+                    else {
+                        $('.control-group').removeClass('error');
+                        for (var key in response.validation_errors) {
+                            $('#' + key).parent().parent().addClass('error');
+                        }
+                    }
+                });
+
+        });
+
+
+
+
 
         $('#btn_generate_pdf').click(function () {
             window.open('<?php echo site_url('quotes/generate_pdf/' . $quote_id); ?>', '_blank');

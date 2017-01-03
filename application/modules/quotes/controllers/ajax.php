@@ -28,12 +28,22 @@ class Ajax extends Admin_Controller
         $this->load->library('encrypt');
 
         $quote_id = $this->input->post('quote_id');
-
+        $delete_tax = $this->input->post('delete_tax');
+        
         $this->mdl_quotes->set_id($quote_id);
-
+        $rider = $this->input->post('rider');
+        
+        
+        /*if($rider === ""){
+            //dont fuckin save it
+            $test = false;
+            $this->session->setflashdata('alert_error', 'Enter riders name');
+            return;
+        }*/
+        
         if ($this->mdl_quotes->run_validation('validation_rules_save_quote')) {
-				$items = json_decode($this->input->post('items'));
-if($this->input->post('rider')!=''){
+	$items = json_decode($this->input->post('items'));
+if($this->input->post('rider')!==''){
 			
 				foreach ($items as $item) {
 					if ($item->item_name) {
@@ -100,13 +110,22 @@ if($this->input->post('rider')!=''){
                                         'quote_other_expenses' => $quote_other_expenses,
 					'quote_material_length' => $quote_material_length,
 					'responsible_id'=> $quote_designer,
-					'quote_currency'=>$quote_currency,
+					'quote_currency'=>$quote_currency
 				);
 
 		 $this->mdl_quotes->save($quote_id, $db_array);
-                 if ($this->input->post('quote_status_id')>=9){
-                     $this->mdl_quotes->set_print_date($quote_id);
-                 }
+         if($delete_tax === 'true'){
+            
+        $this->load->model('mdl_quote_tax_rates');
+        $quote_tax_rates = $this->mdl_quote_tax_rates->where('quote_id', $quote_id)->get()->result();
+        foreach ($quote_tax_rates as $tax_rate){
+        $tax_id = $tax_rate->quote_tax_rate_id;
+        $this->mdl_quote_tax_rates->delete($tax_id);
+        }
+        $this->load->model('mdl_quote_amounts');
+        $this->mdl_quote_amounts->calculate($quote_id);
+            
+        }
 				 // Recalculate for discounts
 				$this->load->model('quotes/mdl_quote_amounts');
 				$this->mdl_quote_amounts->calculate($quote_id);
@@ -141,6 +160,7 @@ if($this->input->post('rider')!=''){
             $this->mdl_quote_custom->save_custom($quote_id, $db_array);
         }
 
+        
         echo json_encode($response);
     }
 
