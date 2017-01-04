@@ -29,7 +29,7 @@ class Ajax extends Admin_Controller
         $invoice_id = $this->input->post('invoice_id');
 
         $this->mdl_invoices->set_id($invoice_id);
-
+         $delete_tax = $this->input->post('delete_tax');
         if ($this->mdl_invoices->run_validation('validation_rules_save_invoice')) {
             $items = json_decode($this->input->post('items'));
 
@@ -82,7 +82,7 @@ class Ajax extends Admin_Controller
             } else {
                 $invoice_discount_percent = $this->input->post('invoice_discount_percent');
             }
-			$invoice_currency=$this->input->post('invoice_currency');
+		$invoice_currency=$this->input->post('invoice_currency');
 						
             $db_array = array(
                 'invoice_number' => $this->input->post('invoice_number'),
@@ -94,7 +94,7 @@ class Ajax extends Admin_Controller
                 'payment_method' => $this->input->post('payment_method'),
                 'invoice_discount_amount' => $invoice_discount_amount,
                 'invoice_discount_percent' => $invoice_discount_percent,
-				'invoice_currency'=>$invoice_currency,
+				'invoice_currency'=>$invoice_currency
             );
 
             // check if status changed to sent, the feature is enabled and settings is set to sent
@@ -114,6 +114,20 @@ class Ajax extends Admin_Controller
 
             $this->mdl_invoices->save($invoice_id, $db_array);
 
+             if($delete_tax === 'true'){
+            
+        $this->load->model('mdl_invoice_tax_rates');
+        $invoice_tax_rates = $this->mdl_invoice_tax_rates->where('invoice_id', $invoice_id)->get()->result();
+        foreach ($invoice_tax_rates as $tax_rate){
+        $tax_id = $tax_rate->invoice_tax_rate_id;
+        $this->mdl_invoice_tax_rates->delete($tax_id);
+        
+        }
+        $this->load->model('mdl_invoice_amounts');
+        $this->mdl_invoice_amounts->calculate($invoice_id);
+            
+        }
+            
             // Recalculate for discounts
             $this->load->model('invoices/mdl_invoice_amounts');
             $this->mdl_invoice_amounts->calculate($invoice_id);

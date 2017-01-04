@@ -134,6 +134,7 @@ if($this->input->post('rider')!==''){
 					'success' => 1
 				);
 }else{
+    //$this->session->set_flashdata('alert_success', 'Enter riders name');
 	$response = array(
 	'success' =>1
 	);

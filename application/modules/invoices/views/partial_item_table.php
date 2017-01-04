@@ -250,12 +250,14 @@
                     <?php if ($invoice_tax_rates) {
                         foreach ($invoice_tax_rates as $invoice_tax_rate) { ?>
                             <span class="text-muted">
-                            <?php echo anchor('invoices/delete_invoice_tax/' . $invoice->invoice_id . '/' . $invoice_tax_rate->invoice_tax_rate_id, '<i class="fa fa-trash-o"></i>');
-                            echo ' ' . $invoice_tax_rate->invoice_tax_rate_name . ' ' . $invoice_tax_rate->invoice_tax_rate_percent; ?>
+                                
+                                <a href="#" class="fa fa-trash-o ajax-loader" id="btn_save_invoice_delete_tax"> </a>
+                            <?php echo ' ' . $invoice_tax_rate->invoice_tax_rate_name . ' ' . $invoice_tax_rate->invoice_tax_rate_percent; ?>
                                 %</span>&nbsp;
                             <span class="amount">
-                                <?php echo $invoice_tax_rate->invoice_tax_rate_amount . ' ' . $invoice->invoice_currency; ?>
+                                   <?php echo $invoice_tax_rate->invoice_tax_rate_amount . ' ' . $invoice->invoice_currency; ?>
                             </span>
+
                         <?php }
                     } else {
                         echo '0' . ' ' . $invoice->invoice_currency;

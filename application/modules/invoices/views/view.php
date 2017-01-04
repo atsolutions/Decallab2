@@ -50,6 +50,7 @@
                     invoice_password: $('#invoice_password').val(),
                     invoice_currency: $('#invoice_currency').val(),
                     items: JSON.stringify(items),
+                    delete_tax: 'false',
                     invoice_discount_amount: $('#invoice_discount_amount').val(),
                     invoice_discount_percent: $('#invoice_discount_percent').val(),
                     invoice_terms: $('#invoice_terms').val(),
@@ -75,6 +76,60 @@
                     }
                 });
         });
+        
+         $('#btn_save_invoice_delete_tax').click(function () {
+            var items = [];
+            var item_order = 1;
+            $('table tbody.item').each(function () {
+                var row = {};
+                $(this).find('input,select,textarea').each(function () {
+                    if ($(this).is(':checkbox')) {
+                        row[$(this).attr('name')] = $(this).is(':checked');
+                    } else {
+                        row[$(this).attr('name')] = $(this).val();
+                    }
+                });
+                row['item_order'] = item_order;
+                item_order++;
+                items.push(row);
+            });
+            $.post("<?php echo site_url('invoices/ajax/save'); ?>", {
+                    invoice_id: <?php echo $invoice_id; ?>,
+                    invoice_number: $('#invoice_number').val(),
+                    invoice_date_created: $('#invoice_date_created').val(),
+                    invoice_date_due: $('#invoice_date_due').val(),
+                    invoice_status_id: $('#invoice_status_id').val(),
+                    invoice_password: $('#invoice_password').val(),
+                    invoice_currency: $('#invoice_currency').val(),
+                    items: JSON.stringify(items),
+                    delete_tax: 'true',
+                    invoice_discount_amount: $('#invoice_discount_amount').val(),
+                    invoice_discount_percent: $('#invoice_discount_percent').val(),
+                    invoice_terms: $('#invoice_terms').val(),
+                    custom: $('input[name^=custom]').serializeArray(),
+                    payment_method: $('#payment_method').val()
+                },
+                function (data) {
+                    var response = JSON.parse(data);
+                    if (response.success == '1') {
+                        window.location = "<?php echo site_url('invoices/view'); ?>/" + <?php echo $invoice_id; ?>;
+                    }
+                    else {
+                        $('#fullpage-loader').hide();
+                        $('.control-group').removeClass('has-error');
+                        $('div.alert[class*="alert-"]').remove();
+                        var resp_errors = response.validation_errors,
+                            all_resp_errors = '';
+                        for (var key in resp_errors) {
+                            $('#' + key).parent().addClass('has-error');
+                            all_resp_errors += resp_errors[key];
+                        }
+                        $('#invoice_form').prepend('<div class="alert alert-danger">' + all_resp_errors + '</div>');
+                    }
+                });
+        });
+        
+        
 
         $('#btn_generate_pdf').click(function () {        
             window.open('<?php echo site_url('invoices/generate_pdf/' . $invoice_id); ?>', '_blank');
@@ -359,11 +414,9 @@ if ($this->config->item('disable_read_only') == TRUE) {
                                     <select name="invoice_currency" id="invoice_currency"
                                             class="form-control input-sm">
                                              
-                                            <option value="<?php $invoice->invoice_currency; ?>">
+                                            <option value="<?php echo $invoice->invoice_currency; ?>">
                                                 Current:  <?php echo $invoice->invoice_currency; ?>
                                             </option>
-                                        
-                                        
                                             <option value="EUR">
                                                 EUR
                                             </option>
