@@ -393,7 +393,7 @@ class Mdl_Quotes extends Response_Model
     
         public function is_workshop()
     {
-        $this->filter_where_in('quote_status_id', array(4, 8, 9, 10));
+        $this->filter_where_in('quote_status_id', array(4, 8, 9));
         return $this;
     }
 
