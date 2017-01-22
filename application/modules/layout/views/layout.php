@@ -261,6 +261,15 @@
                             class="hidden-sm"><?php echo 'Version 1.0.5'; ?></span>
                     </a>
                 </li>
+                
+                <li>
+                       <a href="<?php echo site_url('api/users');?>" 
+                       data-original-title="<?php echo 'API'; ?>"
+                       data-placement="bottom">
+                        <i class="fa fa-info"></i>&nbsp;<span
+                            class="hidden-sm"><?php echo 'API'; ?></span>
+                    </a>
+                </li>
 			
 			
                 <li>

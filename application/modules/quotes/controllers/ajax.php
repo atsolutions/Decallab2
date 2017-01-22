@@ -188,7 +188,8 @@ if($this->input->post('rider')!==''){
     public function create()
     {
         $this->load->model('quotes/mdl_quotes');
-
+        
+        
         if ($this->mdl_quotes->run_validation()) {
             $quote_id = $this->mdl_quotes->create();
 

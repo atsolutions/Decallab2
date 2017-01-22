@@ -58,12 +58,12 @@ class Mdl_Quotes extends Response_Model
             ),
              '7' => array(
                 'label' => 'Designer',
-                'class' => 'canceled',
+                'class' => 'designer',
                 'href' => 'quotes/status/designer'
             ),
             '8' => array(
                 'label' => 'Workshop accepted',
-                'class' => 'canceled',
+                'class' => 'wsapproved',
                 'href' => 'quotes/status/workshop'
             ),
             '9' => array(
@@ -73,12 +73,12 @@ class Mdl_Quotes extends Response_Model
             ),
             '10' => array(
                 'label' => 'Packed',
-                'class' => 'canceled',
+                'class' => 'packed',
                 'href' => 'quotes/status/packed'
             ),
             '11' => array(
                 'label' => 'Shipped',
-                'class' => 'canceled',
+                'class' => 'shipped',
                 'href' => 'quotes/status/shipped'
             )
         );
