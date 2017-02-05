@@ -1,24 +1,28 @@
 <script type="text/javascript">
     $(function () {
         // Display the create quote modal
-        $('#modal_quotes_to_invoice').modal('show');
+        $('#modal_quote_to_invoice').modal('show');
 
         // Creates the invoice
         $('#quote_to_invoice_confirm').click(function () {
             $.post("<?php echo site_url('quotes/ajax/quotes_to_invoices'); ?>", {
-                    selected_quotes: <?php echo $selected_quotes; ?>,
-					quote_number: <?php echo $selected_quotes; ?>,
-					client_name: $('#client_name').val(),
+                    quote_id: <?php echo $quote_id; ?>,
+                   
+                    
+                    	string_list: $('#string_list').val(),	
+                    client_name: $('#client_name').val(),
                     invoice_date_created: $('#invoice_date_created').val(),
                     invoice_group_id: $('#invoice_group_id').val(),
+		    currency: $('#currency').val(),
                     invoice_password: $('#invoice_password').val(),
+
                     user_id: $('#user_id').val()
+            
                 },
                 function (data) {
                     var response = JSON.parse(data);
-                    if (response.success == '1') {
-						<?php echo "SUCESS"; ?>
-                        //window.location = "<?php echo site_url('invoices/view'); ?>/" + response.invoice_id;
+                    if (response.success == '1') {		
+                        window.location = "<?php echo site_url('invoices/view'); ?>/" + response.invoice_id;
                     }
                     else {
                         // The validation was not successful
@@ -34,22 +38,59 @@
 
 </script>
 
+
+
+
+
+
+
 <div id="modal_quote_to_invoice" class="modal col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2"
      role="dialog" aria-labelledby="modal_quote_to_invoice" aria-hidden="true">
     <form class="modal-content">
         <div class="modal-header">
             <a data-dismiss="modal" class="close"><i class="fa fa-close"></i></a>
 
-            <h3><?php echo 'TESTS'; ?></h3>
-			<?php print_r($selected_quotes); ?>
+            <h3><?php echo 'Quotes To Invoice '; ?></h3>
         </div>
         <div class="modal-body">
 
-            <input type="hidden" name="client_name" id="client_name"
-                   value="<?php echo $quote->client_name; ?>">
+          
+            <input type="hidden" name="currency" id="currency"
+                   value="<?php echo $quote->quote_currency; ?>">
             <input type="hidden" name="user_id" id="user_id"
                    value="<?php echo $quote->user_id; ?>">
 
+            <input type="hidden" name="string_list" id="string_list"
+                   value="<?php echo $string_list; ?>">
+
+           
+            
+            <div class="form-group">
+                
+                <h3><?php echo 'You will merge the following quotes: '; ?></h3>
+            
+  <?php
+  //Create different partial view!
+  $this->layout->load_view('quotes/partial_quote_table', array('quotes' => $quote_list));
+  ?>
+                
+       <label for="invoice_group_id">
+                    <?php echo 'Client name'; ?>
+                </label>         
+                
+<select name="client_name" id="client_name"
+          class="form-control input-sm">
+            <?php foreach ($clientlist as $client) { ?>
+             <option value="<?php echo $client->client_name; ?>">
+             <?php echo $client->client_name; ?>
+             </option>
+             <?php } ?>
+</select>
+            </div>
+            
+            
+            
+            
             <div class="form-group has-feedback">
                 <label for="invoice_date_created">
                     <?php echo lang('invoice_date'); ?>
@@ -91,6 +132,10 @@
 
         </div>
 
+
+        
+        
+        
         <div class="modal-footer">
             <div class="btn-group">
                 <button class="btn btn-danger" type="button" data-dismiss="modal">

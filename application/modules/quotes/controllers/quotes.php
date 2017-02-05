@@ -231,13 +231,16 @@ if($designer_id !=0){
         }
     }
 	
-	    public function quotes_to_invoice($quotes)
+public function quotes_to_invoice($quotes)
     {
 $this->load->model('mdl_quote_items');
+$this->load->model('mdl_quote_amounts');
 $this->load->model('mdl_quotes');
 $quote_ids = explode("_", $quotes);
 $quote_list=array();
 $client_list=array();
+$amounts=array();
+$items = array();
 foreach($quote_ids as $quote_id){
 $this->db->where('quote_id',$quote_id);
 $this->db->from('ip_quotes');
@@ -249,17 +252,24 @@ $this->db->from('ip_clients');
 array_push($client_list,$this->db->get()->row());
 }
 
+foreach($quote_ids as $quote_id){
+$this->db->where('quote_id',$quote_id);
+$this->db->from('ip_quote_amounts');
+array_push($amounts,$this->db->get()->row());
+}
 
+foreach($quote_ids as $quote_id){
+$this->db->where('quote_id',$quote_id);
+$this->db->from('ip_quote_items');
+array_push($items,$this->db->get()->row());
+}
 
-
-
-
-
-
-		$this->layout->set(
+        $this->layout->set(
 			array(
 			'quote_list' => $quote_list,
-			'clientlist' => $client_list,
+                        'amounts'=>$amounts,
+                        'items'=>$items,
+			'clientlist' => $client_list
 			)
 		);
         $this->layout->buffer('content', 'quotes/quotes_to_invoice');

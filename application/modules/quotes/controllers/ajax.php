@@ -343,18 +343,54 @@ if($this->input->post('rider')!==''){
         $this->load->view('quotes/modal_quote_to_invoice', $data);
     }
     
-    public function modal_quotes_to_invoices($dataset)
+    public function modal_quotes_to_invoices($quotes)
     {
         $this->load->model('invoice_groups/mdl_invoice_groups');
         $this->load->model('quotes/mdl_quotes');
-//make a list of quote ids
+        //make a list of quote ids
+        $this->load->model('mdl_quote_items');
+        $this->load->model('mdl_quote_amounts');
+        $this->load->model('mdl_quotes');
+        $quote_ids = explode("_", $quotes);
+        $quote_list=array();
+        $client_list=array();
+        $amounts=array();
+        $items = array();
+        foreach($quote_ids as $quote_id){
+            $this->db->where('quote_id',$quote_id);
+            $this->db->from('ip_quotes');
+            array_push($quote_list,$this->db->get()->row());
+        }
+        foreach($quote_list as $quote){
+            $this->db->where('client_id',$quote->client_id);
+            $this->db->from('ip_clients');
+            array_push($client_list,$this->db->get()->row());
+        }
+
+        foreach($quote_ids as $quote_id){
+            $this->db->where('quote_id',$quote_id);
+            $this->db->from('ip_quote_amounts');
+            array_push($amounts,$this->db->get()->row());
+        }
+
+        foreach($quote_ids as $quote_id){
+            $this->db->where('quote_id',$quote_id);
+            $this->db->from('ip_quote_items');
+            array_push($items,$this->db->get()->row());
+        }
         
-        $quotes = '0';
         $data = array(
             'invoice_groups' => $this->mdl_invoice_groups->get()->result(),
-            'quote_id' => $quotes,
-            'selected_quotes' => $dataset
-            //'quote' => $this->mdl_quotes->where('ip_quotes.quote_id', $quote_id)->get()->row()
+            'clientlist' => $client_list,
+            'quote_id' => $quote_list,
+            'quote' => $this->mdl_quotes->where('ip_quotes.quote_id', $quote_list[0]->quote_id)->get()->row(),
+            'quote_list' => $quote_list,
+            'item_list'=>$items,
+            'string_list' => $quotes,
+            'amount_list' =>$amounts
+            /*'clientlist'=>$client_list,
+            'items'=>$items,
+            'amounts'=>$amounts*/
         );
 
         $this->load->view('quotes/modal_quotes_to_invoices', $data);
@@ -378,12 +414,8 @@ if($this->input->post('rider')!==''){
         if ($this->mdl_invoices->run_validation()) {
             $invoice_id = $this->mdl_invoices->create(NULL, FALSE);
 
-            $this->db->where('quote_id', $this->input->post('quote_id'));
-            $this->db->set('invoice_id', $invoice_id);
-            $this->db->update('ip_quotes');
-
-            $quote_items = $this->mdl_quote_items->where('quote_id', $this->input->post('quote_id'))->get()->result();
-
+          
+           
             foreach ($quote_items as $quote_item) {
                 $db_array = array(
                     'invoice_id' => $invoice_id,
@@ -443,12 +475,20 @@ if($this->input->post('rider')!==''){
 
         if ($this->mdl_invoices->run_validation()) {
             $invoice_id = $this->mdl_invoices->create(NULL, FALSE);
-
-            $this->db->where('quote_id', $this->input->post('quote_id'));
+  
+            $quotes = $this->input->post('string_list');
+            
+            $quote_list = explode("_", $quotes);
+            foreach ($quote_list as $quote_id) {
+            $this->db->where('quote_id', $quote_id);
             $this->db->set('invoice_id', $invoice_id);
             $this->db->update('ip_quotes');
+            }
 
-            $quote_items = $this->mdl_quote_items->where('quote_id', $this->input->post('quote_id'))->get()->result();
+            
+            foreach ($quote_list as $quote_id) {
+            
+            $quote_items = $this->mdl_quote_items->where('quote_id', $quote_id)->get()->result();
 
             foreach ($quote_items as $quote_item) {
                 $db_array = array(
@@ -463,8 +503,9 @@ if($this->input->post('rider')!==''){
 
                 $this->mdl_items->save($invoice_id, NULL, $db_array);
             }
+            
 			//$this->mdl_invoices->set_notes($invoice_id, $this->input->post('quote_number'));
-			
+            }
             $quote_tax_rates = $this->mdl_quote_tax_rates->where('quote_id', $this->input->post('quote_id'))->get()->result();
 			
             foreach ($quote_tax_rates as $quote_tax_rate) {
@@ -477,6 +518,7 @@ if($this->input->post('rider')!==''){
 
                 $this->mdl_invoice_tax_rates->save($invoice_id, NULL, $db_array);
             }
+            
 
             $response = array(
                 'success' => 1,
