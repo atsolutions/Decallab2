@@ -171,45 +171,39 @@ class Mdl_Reports extends CI_Model
         $prevMonthEnd = date('Y-n-j', strtotime('last day of previous month'));
         $today = date('Y-n-j', strtotime('today'));
       
-         //get previous month Q's
-       $this->db->where('quote_date_created >=', $prevMonthStart);
-       $this->db->where('quote_date_created <=', $prevMonthEnd);
-       $quotesPrev = $this->db->get('ip_quotes')->result();
         
-        $this->db->where('quote_date_created >=', $prevMonthEnd);
-       $quotesCurr = $this->db->get('ip_quotes')->result();
-       
-       $PrevCount = count($quotesPrev);
-       $CurrCount = count($quotesCurr);
-       
+//$this->db->select('ip_quotes.quote_id,ip_quotes.quote_number,ip_quotes.quote_id,ip_quotes.invoice_group_id,ip_invoice_groups.invoice_group_name,ip_quotes.responsible_id,ip_quotes.quote_currency,ip_quotes.quote_date_printed,ip_users.user_id,ip_users.user_name, ip_quote_amounts.quote_total');
+//$this->db->from('ip_quotes');
+//$this->db->where('quote_date_printed => ' . $prevMonthStart);
+//$this->db->join('ip_users', 'ip_users.user_id = ip_quotes.responsible_id');
 
-// Get finished quotes
-       $this->db->where('quote_date_printed >=', $prevMonthStart);
-       $this->db->where('quote_date_printed <=', $prevMonthEnd);
-       $quotesPrevPrint = $this->db->get('ip_quotes')->result();
+//$query = $this->db->get();
         
-        $this->db->where('quote_date_printed >=', $prevMonthEnd);
-       $quotesCurrPrint = $this->db->get('ip_quotes')->result();
-       
-       //get users
-       $users = $this->db->get('ip_users')->result();
-       
-       //get all amounts
-       //TODO: fix to get only neccesary amounts
-       $this->db->select('quote_item_subtotal');
-       $this->db->select('quote_id');
-       
-       $amounts = $this->db->get('ip_quote_items')->result();
-      
-       foreach ($users as $user){
-       
-         //$quotesPrev
-       }
-     
+$SqlInfo = ' SELECT ip_quotes.quote_id,ip_quotes.quote_number,ip_quotes.quote_id,ip_quotes.invoice_group_id,ip_invoice_groups.invoice_group_name,ip_quotes.responsible_id,ip_quotes.quote_currency,ip_quotes.quote_date_printed,ip_users.user_id,ip_users.user_name, ip_quote_amounts.quote_total FROM ip_quotes LEFT JOIN ip_users ON ip_quotes.responsible_id = ip_users.user_id LEFT JOIN ip_quote_amounts ON ip_quotes.quote_id = ip_quote_amounts.quote_id LEFT JOIN ip_invoice_groups ON ip_quotes.invoice_group_id = ip_invoice_groups.invoice_group_id WHERE(( quote_date_printed > ' . $prevMonthStart . ' AND  quote_date_printed < '. $prevMonthEnd . '))';
+$quotes_EUR = $this->db->query($SqlInfo);
+
+$SqlInfo = ' SELECT ip_quotes.quote_id,ip_quotes.quote_number,ip_quotes.quote_id,ip_quotes.invoice_group_id,ip_invoice_groups.invoice_group_name,ip_quotes.responsible_id,ip_quotes.quote_currency,ip_quotes.quote_date_printed,ip_users.user_id,ip_users.user_name, ip_quote_amounts.quote_total FROM ip_quotes LEFT JOIN ip_users ON ip_quotes.responsible_id = ip_users.user_id LEFT JOIN ip_quote_amounts ON ip_quotes.quote_id = ip_quote_amounts.quote_id LEFT JOIN ip_invoice_groups ON ip_quotes.invoice_group_id = ip_invoice_groups.invoice_group_id WHERE(( quote_date_printed > ' . $prevMonthStart . ' AND  quote_date_printed < '. $prevMonthEnd . '))';
+$quotes_USD = $this->db->query($SqlInfo);
+
+
+$this->db->select('*');
+$this->db->from('ip_users');
+$users = $this->db->get();
+
+
+
+
+
+
+//$query_result = $this->db->get('ip_quotes')->result();
        $result = array(
-           'PrevCountTotal' => $PrevCount,
-           'CurrCountTotal' => $CurrCount,
-           
+           'start' => $prevMonthStart,
+           'end' => $prevMonthEnd,
+           'users'=>$users,
+           'quotes_EUR'=>$quotes_EUR,
+           'quotes_USD'=>$quotes_USD,
+           'today'=>$today,
+           'suds'=>'SUDS2'
        );
        
         return $result;

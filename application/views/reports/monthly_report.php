@@ -20,8 +20,23 @@
 <tr>
 <td>Number of new Quotes</td>
 <td>
-    <?php echo $results->quote_count_this_month; ?>
+    <?php echo $this->suds; ?>
+    <?php echo 'SHIT'; ?>
+    <?php echo $data->suds; ?>
+    <?php echo 'SHIT2'; ?>
+    <?php echo $result->suds; ?>
+    <?php echo 'SHIT2'; ?>
+    <?php print_r($results); ?>
+    <?php print_r($data); ?>
+    <?php print_r($result); ?>
 </td>
+
+
+
+
+
+
+
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
