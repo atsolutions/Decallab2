@@ -43,6 +43,11 @@ document.getElementById('btn_quotes_to_invoices').dataset.quote_id = finaldata;
  
 }
 
+$('#btn_quotes_to_invoices').click(function () {
+                quotes = $(this).data('quote_id');
+                $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_quotes_to_invoices'); ?>/" + quotes);
+                //window.open("<?php //echo site_url('quotes/quotes_to_invoice'); ?>/" + quotes,"_self");
+            });
  
 
 function downloadfiles(){

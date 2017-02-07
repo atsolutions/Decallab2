@@ -28,6 +28,7 @@
         });
 
     });
+
 </script>
 
 <div id="headerbar">
