@@ -99,8 +99,10 @@ class Reports extends Admin_Controller
     {
 
         if ($this->input->post('btn_submit')) {
-            $data = $this->mdl_reports->monthly_report();
-
+            $data2 = $this->mdl_reports->monthly_report();
+             $data = array(
+                'results' => $data2
+            );
 
             $html = $this->load->view('reports/monthly_report', $data, TRUE);
 

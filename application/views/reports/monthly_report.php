@@ -1,133 +1,76 @@
-<html>
-	<head>
-		<title><?php echo lang('sales_by_date'); ?></title>
-		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/reports.css" type="text/css">
-		
-	</head>
-        
-        <body>
-<h1 style="color: #5e9ca0; text-align: center;"><span style="color: #000000;">Monthly report</span></h1>
-<h2 style="color: #2e6c80; text-align: left;">Total data:</h2>
-<table style="height: 70px;" width="775">
-<tbody>
-<tr>
-<td>&nbsp;</td>
-<td>This month</td>
-<td>Previous month</td>
-<td>YTD</td>
-<td>LYTD</td>
-</tr>
-<tr>
-<td>Number of new Quotes</td>
-<td>
-    <?php echo $this->suds; ?>
-    <?php echo 'SHIT'; ?>
-    <?php echo $data->suds; ?>
-    <?php echo 'SHIT2'; ?>
-    <?php echo $result->suds; ?>
-    <?php echo 'SHIT2'; ?>
-    <?php print_r($results); ?>
-    <?php print_r($data); ?>
-    <?php print_r($result); ?>
-</td>
-
-
-
-
-
-
-
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td>Number of new Invoices</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td>Turnover (Quotes)</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td>Turnover (Invoices)</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-</tbody>
-</table>
-<h2 style="color: #2e6c80; text-align: left;">Personal data:</h2>
-<table style="height: 59px;" width="776">
-<tbody>
-<tr>
-<td>Name</td>
-<td>This month</td>
-<td>Previous month</td>
-<td>YTD</td>
-<td>LYTD</td>
-</tr>
-<tr>
-<td>Martins Klavins</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td>Aigars Berzins</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-</tbody>
-</table>
-<h2 style="color: #2e6c80; text-align: left;">Designer data:</h2>
-<table style="height: 78px;" width="777">
-<tbody>
-<tr>
-<td>Name</td>
-<td>Current Quotes</td>
-<td>Finished (this month)</td>
-<td>Finished (previous month)</td>
-<td>Turnover (this month)</td>
-<td>Turnover (previous month)</td>
-</tr>
-<tr>
-<td>Arta Jermaka</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td>Kasims</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td>Valts</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-</tbody>
-</table>
+<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
+<style>
+    .pagebreak { page-break-before: always; }
+</style>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/templates.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/custom-pdf.css">
+<h1 style="color: #5e9ca0; text-align: center;"><strong>Monthly report</strong></h1>
+<p><strong>From: <?php echo $results['start'] ?></strong></p>
+<p><strong>To: <?php echo $results['end'] ?></strong></p>
+<p><strong>Created: <?php echo $results['today'] ?></strong></p>
 <p>&nbsp;</p>
+<p><strong>Quotes Printed:<br /></strong></p>
 
-        </body>
-</html>
+<?php 
+
+foreach ($results['user_data'] as $user_data) {
+    ?>
+<strong>
+<?php
+echo 'DESIGNER:' . $user_data['user_name'];
+echo '<br>';
+?>
+</strong>
+<?php
+if(is_array($user_data)){
+    foreach($user_data as $group_data){
+        ?>
+<strong>
+    <?php
+        echo 'QUOTE TYPE:' . $group_data['group_name'];
+        echo '<br>';
+        ?>
+</strong>
+
+
+<table class="item-table">
+        <thead>
+        <tr>
+            <th class="item-name"><?php echo 'Quote number'; ?></th>
+            <th class="item-desc"><?php echo 'Quote total'; ?></th>    
+        </tr>
+        </thead>
+<tbody>
+<?php 
+if(!empty($group_data['USD'])){
+
+foreach($group_data['USD'] as $quote_USD){ ?>
+<tr>
+    <td> <?php echo $quote_USD->quote_number; ?></td>
+    <td> <?php echo $quote_USD->quote_item_subtotal; ?></td> 
+</tr>
+
+<?php }} ?>
+
+<?php
+if(!empty($group_data['EUR'])){
+foreach($group_data['EUR'] as $quote_USD){ ?>
+<tr>
+    <td> <?php echo $quote_USD->quote_number; ?></td>
+    <td> <?php echo $quote_USD->quote_item_subtotal; ?></td> 
+</tr>
+
+    <?php }} ?>
+
+</tbody>
+</table>
+
+
+
+<?php
+} 
+}
+}
+?>
+<pagebreak/>
+<div class="pagebreak"> </div>

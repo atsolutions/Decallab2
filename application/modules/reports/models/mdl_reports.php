@@ -178,18 +178,60 @@ class Mdl_Reports extends CI_Model
 //$this->db->join('ip_users', 'ip_users.user_id = ip_quotes.responsible_id');
 
 //$query = $this->db->get();
-        
-$SqlInfo = ' SELECT ip_quotes.quote_id,ip_quotes.quote_number,ip_quotes.quote_id,ip_quotes.invoice_group_id,ip_invoice_groups.invoice_group_name,ip_quotes.responsible_id,ip_quotes.quote_currency,ip_quotes.quote_date_printed,ip_users.user_id,ip_users.user_name, ip_quote_amounts.quote_total FROM ip_quotes LEFT JOIN ip_users ON ip_quotes.responsible_id = ip_users.user_id LEFT JOIN ip_quote_amounts ON ip_quotes.quote_id = ip_quote_amounts.quote_id LEFT JOIN ip_invoice_groups ON ip_quotes.invoice_group_id = ip_invoice_groups.invoice_group_id WHERE(( quote_date_printed > ' . $prevMonthStart . ' AND  quote_date_printed < '. $prevMonthEnd . '))';
-$quotes_EUR = $this->db->query($SqlInfo);
-
-$SqlInfo = ' SELECT ip_quotes.quote_id,ip_quotes.quote_number,ip_quotes.quote_id,ip_quotes.invoice_group_id,ip_invoice_groups.invoice_group_name,ip_quotes.responsible_id,ip_quotes.quote_currency,ip_quotes.quote_date_printed,ip_users.user_id,ip_users.user_name, ip_quote_amounts.quote_total FROM ip_quotes LEFT JOIN ip_users ON ip_quotes.responsible_id = ip_users.user_id LEFT JOIN ip_quote_amounts ON ip_quotes.quote_id = ip_quote_amounts.quote_id LEFT JOIN ip_invoice_groups ON ip_quotes.invoice_group_id = ip_invoice_groups.invoice_group_id WHERE(( quote_date_printed > ' . $prevMonthStart . ' AND  quote_date_printed < '. $prevMonthEnd . '))';
-$quotes_USD = $this->db->query($SqlInfo);
-
-
-$this->db->select('*');
+$this->db->select('user_name, user_id');
 $this->db->from('ip_users');
-$users = $this->db->get();
+$users = $this->db->get()->result();
 
+$this->db->select('invoice_group_name, invoice_group_id');
+$this->db->from('ip_invoice_groups');
+$invoice_groups = $this->db->get()->result();
+
+
+$user_data = array();
+$user_info = array();
+
+foreach ($users as $user) {
+    foreach ($invoice_groups as $invoice_group) {
+        
+$this->db->select('ip_quotes.quote_id, ip_quotes.invoice_group_id, ip_quotes.user_id, ip_quotes.responsible_id, ip_quotes.quote_currency,'
+        . 'ip_quotes.quote_number, ip_quotes.quote_date_printed,'
+        . 'ip_quote_amounts.quote_item_subtotal');
+$this->db->where('quote_date_printed >=', $prevMonthStart );
+$this->db->where('quote_date_printed <=', $prevMonthEnd );
+$this->db->where('quote_currency', 'EUR' );
+$this->db->where('responsible_id', $user->user_id);
+$this->db->where('invoice_group_id', $invoice_group->invoice_group_id);
+$this->db->join('ip_quote_amounts', 'ip_quote_amounts.quote_id = ip_quotes.quote_id');
+$this->db->from('ip_quotes');
+$quotes_EUR = $this->db->get()->result();
+
+
+$this->db->select('ip_quotes.quote_id, ip_quotes.invoice_group_id, ip_quotes.user_id, ip_quotes.responsible_id, ip_quotes.quote_currency,'
+        . 'ip_quotes.quote_number, ip_quotes.quote_date_printed,'
+        . 'ip_quote_amounts.quote_item_subtotal');
+$this->db->where('quote_date_printed >=', $prevMonthStart );
+$this->db->where('quote_date_printed <=', $prevMonthEnd );
+$this->db->where('quote_currency', 'USD' );
+$this->db->where('responsible_id', $user->user_id);
+$this->db->where('invoice_group_id', $invoice_group->invoice_group_id);
+$this->db->join('ip_quote_amounts', 'ip_quote_amounts.quote_id = ip_quotes.quote_id');
+$this->db->from('ip_quotes');
+
+$quotes_USD = $this->db->get()->result();
+
+$group_info = array(
+        'group_name'=>$invoice_group->invoice_group_name,
+        'EUR' => $quotes_EUR,
+        'USD' => $quotes_USD
+);
+
+array_push($user_info, $group_info);
+$group_info = array();
+}
+$user_info['user_name'] = $user->user_name;   
+array_push($user_data, $user_info);
+$user_info = array ();
+}
 
 
 
@@ -197,13 +239,11 @@ $users = $this->db->get();
 
 //$query_result = $this->db->get('ip_quotes')->result();
        $result = array(
+           'today'=>$today,
            'start' => $prevMonthStart,
            'end' => $prevMonthEnd,
-           'users'=>$users,
-           'quotes_EUR'=>$quotes_EUR,
-           'quotes_USD'=>$quotes_USD,
-           'today'=>$today,
-           'suds'=>'SUDS2'
+           'user_data'=>$user_data
+           
        );
        
         return $result;

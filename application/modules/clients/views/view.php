@@ -29,6 +29,59 @@
 
     });
 
+
+var Checked = new Array();
+
+
+function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+				 add(checkboxes[i]);
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             console.log(i)
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+				 add(checkboxes[i]);
+             }
+         }
+     }
+ }
+ 
+
+ 
+ function add(ele){
+	 if(ele.checked){
+		 if(ele.id != 0){
+		 Checked.push(ele.id);
+		 }
+	 }else{
+		 var index = Checked.indexOf(ele.id);
+		 if(index >-1){
+		 Checked.splice(index,1);
+		 }
+	 }
+document.getElementById("demo2").innerHTML = Checked;
+var dataset = Checked.toString();
+var finaldata = dataset.replace(new RegExp(",", "g"),'_');
+document.getElementById('btn_quotes_to_invoices').dataset.quote_id = finaldata;
+
+ 
+}
+
+$('#btn_quotes_to_invoices').click(function () {
+                quotes = $(this).data('quote_id');
+                $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_quotes_to_invoices'); ?>/" + quotes);
+                //window.open("<?php //echo site_url('quotes/quotes_to_invoice'); ?>/" + quotes,"_self");
+            });
+
+
+
 </script>
 
 <div id="headerbar">
@@ -63,7 +116,7 @@
     <li><a data-toggle="tab" href="#clientInvoices"><?php echo lang('invoices'); ?></a></li>
     <li><a data-toggle="tab" href="#clientPayments"><?php echo lang('payments'); ?></a></li>
 </ul>
-
+<div id="demo2"></div>
 <div class="tabbable tabs-below">
 
     <div class="tab-content">
