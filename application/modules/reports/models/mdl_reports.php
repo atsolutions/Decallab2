@@ -218,11 +218,12 @@ $this->db->join('ip_quote_amounts', 'ip_quote_amounts.quote_id = ip_quotes.quote
 $this->db->from('ip_quotes');
 
 $quotes_USD = $this->db->get()->result();
-
+$size = count($quotes_USD)+count($quotes_EUR);
 $group_info = array(
         'group_name'=>$invoice_group->invoice_group_name,
         'EUR' => $quotes_EUR,
-        'USD' => $quotes_USD
+        'USD' => $quotes_USD,
+        'size' => $size
 );
 
 array_push($user_info, $group_info);
