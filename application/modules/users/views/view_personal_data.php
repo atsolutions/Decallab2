@@ -1,9 +1,12 @@
 <div id="headerbar">
-    <h1><?php echo 'Quotes Printed this month'; ?></h1>
+    <h1><?php 
+    echo 'Quotes Printed this month'; ?></h1>
     
 </div>
 
 <div id="content" class="table-content">
+    <p>User: <?php 
+    echo $data[0]['user'][0]->user_name;?> </p>
 <p>From: <?php echo $data[0]['start'] ; ?></p>
     <p>To: <?php echo $data[0]['end'] ; ?></p>
     <p>Checked: <?php echo $data[0]['today'] ; ?></p>

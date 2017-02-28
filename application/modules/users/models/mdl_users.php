@@ -267,7 +267,10 @@ class Mdl_Users extends Response_Model
 $this->db->select('invoice_group_name, invoice_group_id');
 $this->db->from('ip_invoice_groups');
 $invoice_groups = $this->db->get()->result();
-
+$this->db->select('user_name, user_id');
+$this->db->where('user_id',$id);
+$this->db->from('ip_users');
+$users = $this->db->get()->result();
 
 $user_data = array();
 $user_info = array();
@@ -307,7 +310,8 @@ $group_info = array(
         'size' => $size,
         'start' =>$prevMonthStart,
         'end' => $prevMonthEnd,
-        'today' =>$today
+        'today' =>$today,
+        'user' =>$users
 );
 
 array_push($user_info, $group_info);
