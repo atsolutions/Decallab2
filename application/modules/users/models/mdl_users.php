@@ -256,5 +256,65 @@ class Mdl_Users extends Response_Model
         $this->load->helper('orphan');
         delete_orphans();
     }
+    
+    public function get_current($id){
+        
+ $today = date('Y-n-j', strtotime('today'));
+ $prevMonthStart = date('Y-n-j', strtotime('first day of this month'));
+        $prevMonthEnd = $today;
+       
+        
+$this->db->select('invoice_group_name, invoice_group_id');
+$this->db->from('ip_invoice_groups');
+$invoice_groups = $this->db->get()->result();
+
+
+$user_data = array();
+$user_info = array();
+
+         foreach ($invoice_groups as $invoice_group) {
+        
+$this->db->select('ip_quotes.quote_id, ip_quotes.invoice_group_id, ip_quotes.user_id, ip_quotes.responsible_id, ip_quotes.quote_currency,'
+        . 'ip_quotes.quote_number, ip_quotes.quote_date_printed,'
+        . 'ip_quote_amounts.quote_item_subtotal');
+$this->db->where('quote_date_printed >=', $prevMonthStart );
+$this->db->where('quote_date_printed <=', $prevMonthEnd );
+$this->db->where('quote_currency', 'EUR' );
+$this->db->where('invoice_group_id', $invoice_group->invoice_group_id);
+$this->db->where('responsible_id', $id);
+$this->db->join('ip_quote_amounts', 'ip_quote_amounts.quote_id = ip_quotes.quote_id');
+$this->db->from('ip_quotes');
+$quotes_EUR = $this->db->get()->result();
+
+
+$this->db->select('ip_quotes.quote_id, ip_quotes.invoice_group_id, ip_quotes.user_id, ip_quotes.responsible_id, ip_quotes.quote_currency,'
+        . 'ip_quotes.quote_number, ip_quotes.quote_date_printed,'
+        . 'ip_quote_amounts.quote_item_subtotal');
+$this->db->where('quote_date_printed >=', $prevMonthStart );
+$this->db->where('quote_date_printed <=', $prevMonthEnd );
+$this->db->where('quote_currency', 'USD' );
+$this->db->where('invoice_group_id', $invoice_group->invoice_group_id);
+$this->db->where('responsible_id', $id);
+$this->db->join('ip_quote_amounts', 'ip_quote_amounts.quote_id = ip_quotes.quote_id');
+$this->db->from('ip_quotes');
+
+$quotes_USD = $this->db->get()->result();
+$size = count($quotes_USD)+count($quotes_EUR);
+$group_info = array(
+        'group_name'=>$invoice_group->invoice_group_name,
+        'EUR' => $quotes_EUR,
+        'USD' => $quotes_USD,
+        'size' => $size,
+        'start' =>$prevMonthStart,
+        'end' => $prevMonthEnd,
+        'today' =>$today
+);
+
+array_push($user_info, $group_info);
+$group_info = array();
+}
+
+ return $user_info;
+}
 
 }

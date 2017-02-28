@@ -255,11 +255,11 @@
                 
                 
 			<li>
-                       <a href="<?php echo site_url('README.md');?>" 
-                       data-original-title="<?php echo lang('Version'); ?>"
+                       <a href="<?php echo site_url('users/view/' . $this->session->userdata('user_id'));?>" 
+                       data-original-title="<?php echo 'Quotes'; ?>"
                        data-placement="bottom">
                         <i class="fa fa-info"></i>&nbsp;<span
-                            class="hidden-sm"><?php echo 'Version 1.0.5'; ?></span>
+                            class="hidden-sm"><?php echo 'Quotes'; ?></span>
                     </a>
                 </li>
                 

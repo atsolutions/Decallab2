@@ -123,6 +123,22 @@ class Users extends Admin_Controller
         }
         redirect('users');
     }
+    
+     public function view($id)
+    {
+       
+         $data = $this->mdl_users->get_current($id);
+         
+         
+          $this->layout->set(
+            array(
+                'data' => $data		
+            )
+        );
+         $this->layout->buffer('content', 'users/view_personal_data');
+         $this->layout->render();
+    }
+    
 
     public function delete_user_client($user_id, $user_client_id)
     {
