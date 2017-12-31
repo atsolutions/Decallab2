@@ -259,7 +259,7 @@ class Mdl_Users extends Response_Model
     
     public function get_current($id){
         
- $today = date('Y-n-j', strtotime('today'));
+ $today = date('Y-n-j', strtotime('now'));
  $prevMonthStart = date('Y-n-j', strtotime('first day of this month'));
         $prevMonthEnd = $today;
        

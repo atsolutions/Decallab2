@@ -33,6 +33,7 @@ class Ajax extends Admin_Controller
         $this->mdl_quotes->set_id($quote_id);
         $rider = $this->input->post('rider');
         
+        $this->mdl_quotes->set_status_on_save($this->input->post('quote_status_id'), $quote_id);
         
         /*if($rider === ""){
             //dont fuckin save it
@@ -97,7 +98,10 @@ if($this->input->post('rider')!==''){
 				
 				$quote_designer=$this->input->post('responsible_id');
 				$quote_currency=$this->input->post('quote_currency');
-
+                                
+                                
+                                
+ $this->mdl_quotes->set_status($this->input->post('quote_status_id'), $quote_id);
 				$db_array = array(
 					'quote_number' => $this->input->post('quote_number'),
 					'quote_date_created' => date_to_mysql($this->input->post('quote_date_created')),

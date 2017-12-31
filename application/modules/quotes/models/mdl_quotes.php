@@ -22,6 +22,34 @@ class Mdl_Quotes extends Response_Model
     public $primary_key = 'ip_quotes.quote_id';
     public $date_modified_field = 'quote_date_modified';
 
+	public function set_status($status, $quote_id){
+		if($status=='9'){
+			$this->mark_printed($quote_id);
+		}
+	}
+        
+        public function set_status_on_save($status, $quote_id){
+            
+             $this->db->select('quote_date_printed');
+        $this->db->where('quote_id', $quote_id);
+        $query = $this->db->get('ip_quotes');
+        $result = $query->result();
+        $date1 =$result[0]->quote_date_printed;
+        $date2 = $result['quote_date_printed'];
+        
+        if($date1==='0000-00-00 00:00:00'){
+            
+            
+            
+		if($status=='9'||$status=='10'||$status=='11'){
+			$this->set_print_date($quote_id);
+		}
+        }
+	}
+        
+        
+	
+	
     public function statuses()
     {
         return array(
@@ -494,14 +522,19 @@ public function mark_printed($quote_id)
         $this->db->where('quote_id', $quote_id);
 
         $quote = $this->db->get('ip_quotes');
-
-        if ($quote->num_rows()) {
-         
-                $date = date('Y-m-d H:i:s');
-                $this->db->where('quote_id', $quote_id);
-                $this->db->set('quote_date_printed', $date);
-                $this->db->update('ip_quotes');
-        }
+       
+       
+    
+		//print_r($quote->quote_date_printed);
+		//die();
+			if ($quote->num_rows()) {
+			 
+					$date = date('Y-m-d H:i:s');
+					$this->db->where('quote_id', $quote_id);
+					$this->db->set('quote_date_printed', $date);
+					$this->db->update('ip_quotes');
+			}
+		
                
 
     }
@@ -514,6 +547,9 @@ public function mark_printed($quote_id)
 
         $quote = $this->db->get('ip_quotes');
 
+        $printed = $quote->quote_date_printed;
+        
+        
         if ($quote->num_rows()) {
          
                 $this->db->where('quote_id', $quote_id);

@@ -127,24 +127,15 @@ class Format {
 			// replace anything not alpha numeric
 			$key = preg_replace('/[^a-z_\-0-9]/i', '', $key);
 
-			if ($key === '_attributes' && (is_array($value) || is_object($value)))
-			{
-				$attributes = $value;
-				if (is_object($attributes)) $attributes = get_object_vars($attributes);
-				
-				foreach ($attributes as $attributeName => $attributeValue)
-				{
-					$structure->addAttribute($attributeName, $attributeValue);
-				}
-			}
 			// if there is another array found recursively call this function
-			else if (is_array($value) || is_object($value))
+			if (is_array($value) || is_object($value))
 			{
 				$node = $structure->addChild($key);
 
 				// recursive call.
 				$this->to_xml($value, $node, $key);
 			}
+
 			else
 			{
 				// add single node.
@@ -209,13 +200,8 @@ class Format {
 		$output = '"'.implode('","', $headings).'"'.PHP_EOL;
 		foreach ($data as &$row)
 		{
-            if (is_array($row)) {
-                throw new Exception('Format class does not support multi-dimensional arrays');
-            } else {
-                $row    = str_replace('"', '""', $row); // Escape dbl quotes per RFC 4180
-                $output .= '"'.implode('","', $row).'"'.PHP_EOL;                
-            }
-
+			$row = str_replace('"', '""', $row); // Escape dbl quotes per RFC 4180
+			$output .= '"'.implode('","', $row).'"'.PHP_EOL;
 		}
 
 		return $output;
@@ -224,24 +210,7 @@ class Format {
 	// Encode as JSON
 	public function to_json()
 	{
-		$callback = isset($_GET['callback']) ? $_GET['callback'] : '';
-		if ($callback === '')
-		{
-			return json_encode($this->_data);
-		}
-		// we only honour jsonp callback which are valid javascript identifiers
-		else if (preg_match('/^[a-z_\$][a-z0-9\$_]*(\.[a-z_\$][a-z0-9\$_]*)*$/i', $callback))
-		{
-			// this is a jsonp request, the content-type must be updated to be text/javascript
-			header("Content-Type: application/javascript");
-			return $callback . "(" . json_encode($this->_data) . ");";
-		}
-		else
-		{
-			// we have an invalid jsonp callback identifier, we'll return plain json with a warning field
-			$this->_data['warning'] = "invalid jsonp callback provided: ".$callback;
-			return json_encode($this->_data);
-		}
+	   	return json_encode($this->_data);
 	}
 
 	// Encode as Serialized array

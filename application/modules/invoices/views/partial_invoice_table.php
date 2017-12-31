@@ -39,7 +39,7 @@ function checkAll(ele) {
 function downloadfiles(){
 	var origin = document.location.origin;
         //TODO:: Very very bad stuff
-	var url = origin.concat("/DevelopDecallab/invoices/generate_pdf/");
+	var url = origin.concat("/invoices/generate_pdf/");
         var dataset = Checked.toString();
         var finaldata = dataset.replace(new RegExp(",", "g"),'_');
 		var url2 = url.concat(finaldata);

@@ -11,9 +11,9 @@
  * @author        	Phil Sturgeon, Chris Kacerguis
  * @license         http://philsturgeon.co.uk/code/dbad-license
  * @link			https://github.com/philsturgeon/codeigniter-restserver
- * @version         3.0.0-pre
+ * @version 		2.6.2
  */
-abstract class REST_Controller extends CI_Controller
+abstract class REST_Controller extends MX_Controller
 {
 	/**
 	 * This defines the rest format.
@@ -172,13 +172,6 @@ abstract class REST_Controller extends CI_Controller
 		'html' => 'text/html',
 		'csv' => 'application/csv'
 	);
-	
-	/**
-	 * Information about the current API user
-	 * 
-	 * @var object
-	 */
-	protected $_apiuser;
 
 	/**
 	 * Developers can extend this class and add a check in here.
@@ -475,7 +468,6 @@ abstract class REST_Controller extends CI_Controller
 
 			is_numeric($http_code) OR $http_code = 200;
 
-			// @deprecated the following statement can be deleted.
 			// If the format method exists, call and return the output in that format
 			if (method_exists($this, '_format_'.$this->response->format))
 			{
@@ -501,7 +493,8 @@ abstract class REST_Controller extends CI_Controller
 			}
 		}
 
-		set_status_header($http_code);
+		header('HTTP/1.1: ' . $http_code);
+		header('Status: ' . $http_code);
 
 		// If zlib.output_compression is enabled it will compress the output,
 		// but it will not modify the content-length header to compensate for
@@ -699,8 +692,6 @@ abstract class REST_Controller extends CI_Controller
 			isset($row->level) AND $this->rest->level = $row->level;
 			isset($row->ignore_limits) AND $this->rest->ignore_limits = $row->ignore_limits;
 
-			$this->_apiuser =  $row;
-			
 			/*
 			 * If "is private key" is enabled, compare the ip address with the list
 			 * of valid ip addresses stored in the database.
@@ -960,7 +951,6 @@ abstract class REST_Controller extends CI_Controller
 		{
 			parse_str(file_get_contents('php://input'), $this->_put_args);
 		}
-
 	}
 
 	/**
@@ -1419,7 +1409,8 @@ abstract class REST_Controller extends CI_Controller
 
 		if ($digest['response'] != $valid_response)
 		{
-			set_status_header(401);
+			header('HTTP/1.0 401 Unauthorized');
+			header('HTTP/1.1 401 Unauthorized');
 			exit;
 		}
 	}
@@ -1538,6 +1529,21 @@ abstract class REST_Controller extends CI_Controller
 		}
 
 		return FALSE;
+	}
+
+
+	// FORMATING FUNCTIONS ---------------------------------------------------------
+	// Many of these have been moved to the Format class for better separation, but these methods will be checked too
+
+	/**
+	 * Encode as JSONP
+	 *
+	 * @param array $data The input data.
+	 * @return string The JSONP data string (loadable from Javascript).
+	 */
+	protected function _format_jsonp($data = array())
+	{
+		return $this->get('callback').'('.json_encode($data).')';
 	}
 
 }

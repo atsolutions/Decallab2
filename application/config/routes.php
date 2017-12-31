@@ -22,6 +22,10 @@
 */
 
 $route['quotes/status/(:any)/(:num)/(:num)'] = 'quotes/status/$1/$2/$3';
+$route['api/quotes/(:num)'] = "api/quotes/$1";
+
+
+
 /*
 
 

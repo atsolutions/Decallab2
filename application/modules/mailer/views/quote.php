@@ -111,7 +111,7 @@
             </div>
             <div class="col-xs-12 col-sm-6">
                 <input type="text" name="subject" id="subject" class="form-control"
-                       value="<?php echo lang('quote'); ?> #<?php echo $quote->quote_number; ?>">
+                       value="<?php echo 'Decallab order for: '.$quote->client_name .' #'. $quote->quote_number; ?>">
             </div>
         </div>
 

@@ -90,7 +90,7 @@ class Mailer extends Admin_Controller
 			
 		} 
 		$from_email = $this->session->userdata('user_email');
-		$from_name = $this->session->userdata('user_name');
+		$from_name = 'DECALLAB MX GRAPHICS';
 		
         if ($email_template_id) {
             $email_template = $this->mdl_email_templates->where('email_template_id', $email_template_id)->get();
