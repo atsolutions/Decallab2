@@ -4,11 +4,32 @@
     
 </div>
 
+        <?php 
+     $XML=simplexml_load_file("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"); 
+        foreach($XML->Cube->Cube->Cube as $rate){ 
+                    
+      if($rate["currency"]=='USD'){
+    $exchange = (string)$rate["rate"];
+    $USDrate = floatval($exchange);
+    break;
+      }
+
+  } 
+        
+        
+        ?>
+
+
+
 <div id="content" class="table-content">
     <p>
         <a href="<?php echo base_url(). 'users/view/'. $data[0]['user'][0]->user_id.'/P' ?>"> Previous Month </a>
+    </p>
+    <p>
         <a href="<?php echo base_url(). 'users/view/'. $data[0]['user'][0]->user_id.'/T' ?>"> This Month </a>
-
+    </p>
+    <p>
+        Exchange Rate: <?php echo $USDrate ?>
         
     </p>
     <p>User: <?php 
@@ -43,27 +64,31 @@
 <tr>
     <td> <a href="<?php echo site_url('quotes/view/' . $quote_USD->quote_id); ?> "> <?php echo $quote_USD->quote_number; ?> </a></td>
     <td> <?php echo $quote_USD->quote_date_printed; ?></td>
-    <td> <?php echo $quote_USD->quote_item_subtotal . ' USD' ; ?></td>
+    <td> <?php echo round($quote_USD->quote_item_subtotal/$USDrate,2) . ' EUR ('. $quote_USD->quote_item_subtotal . ' USD)'  ; ?></td>
     <td> <?php echo $group['group_name']; ?></td>
     
     
         <td> <?php 
         
         if (strpos($group['group_name'], 'Hard') !== false) {
-    echo $quote_USD->quote_item_subtotal*0.1;
-    $TOTAL_USD=$TOTAL_USD+$quote_USD->quote_item_subtotal*0.1;
+            $value = round($quote_USD->quote_item_subtotal*0.1/$USDrate,2);
+    echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Standard') !== false) {
-    echo $quote_USD->quote_item_subtotal*0.08;
-    $TOTAL_USD=$TOTAL_USD+$quote_USD->quote_item_subtotal*0.08;
+    $value = round($quote_USD->quote_item_subtotal*0.08/$USDrate,2);
+    echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Print')!== false){
-     echo $quote_USD->quote_item_subtotal*0.02;
-    $TOTAL_USD=$TOTAL_USD+$quote_USD->quote_item_subtotal*0.02;
+    $value = round($quote_USD->quote_item_subtotal*0.02/$USDrate,2);
+     echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }else{
-    echo $quote_USD->quote_item_subtotal*0.06;
-    $TOTAL_USD=$TOTAL_USD+$quote_USD->quote_item_subtotal*0.06;
+    $value = round($quote_USD->quote_item_subtotal*0.06/$USDrate,2);
+    echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }
 
-echo ' USD';
+echo ' EUR';
         
         ?></td>
     
@@ -95,14 +120,6 @@ echo ' USD';
 </tr>
             
             <?php }}?>
-<tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>TOTAL USD: </td>
-    <td><?php echo $TOTAL_USD . ' USD'; ?></td>
-</tr>
-
 <tr>
     <td></td>
     <td></td>
