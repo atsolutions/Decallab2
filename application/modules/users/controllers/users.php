@@ -128,7 +128,7 @@ class Users extends Admin_Controller
     {
          
          if($month==='T'){
-          $today = date('Y-n-j', strtotime('now'));
+          $today = date('Y-n-j H:i:s', strtotime('now'));
           $prevMonthStart = date('Y-n-j', strtotime('first day of this month'));
           $prevMonthEnd = $today;
          }

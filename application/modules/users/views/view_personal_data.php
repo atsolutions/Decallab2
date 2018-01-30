@@ -5,7 +5,10 @@
 </div>
 
         <?php 
-     $XML=simplexml_load_file("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"); 
+     $XML=simplexml_load_file("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+     if($XML==null){
+         $XML=simplexml_load_file("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+     }
         foreach($XML->Cube->Cube->Cube as $rate){ 
                     
       if($rate["currency"]=='USD'){

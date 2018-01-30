@@ -267,6 +267,7 @@ $this->db->from('ip_invoice_groups');
 $invoice_groups = $this->db->get()->result();
 $this->db->select('user_name, user_id');
 $this->db->where('user_id',$id);
+
 $this->db->from('ip_users');
 $users = $this->db->get()->result();
 
