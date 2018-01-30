@@ -14,13 +14,41 @@
     break;
       }
 
-  } 
-        
-        
+  }  
+  
+
+/*
+
+
+        1. MInimums kas katru meenesi ir jaaizpilda ir 3800 eur apgroziijums un liidz shim slieksnim paliek vienaadi % Easy standart Hard attieciigi 6 8 10
+
+        2. Naakamais slieksnis ir 
+ * 5200 eur, kuru sasniedzot automaatiski reekjinaas 7 9 11 %
+
+        3 peedeejais slieksnis ir 6200 eur kur reekjinaas jau 8 10 11 %
+
+           UN tad varbuut var ielikt 7500 kaa peedeejo slieksni 9 11 12%
+           
+           */
+              $TURNOVER_EUR = 0;
+                      foreach ($data as $group) {
+                    foreach($group['USD'] as $quote_USD){ 
+                         if (strpos($group['group_name'], 'Print') === false) {
+                        $TURNOVER_EUR = $TURNOVER_EUR+ $quote_USD->quote_item_subtotal/$USDrate;
+                        }
+                    }
+                       foreach($group['EUR'] as $quote_EUR){
+                          if (strpos($group['group_name'], 'Print') === false) {
+                           $TURNOVER_EUR = $TURNOVER_EUR+ $quote_EUR->quote_item_subtotal;
+                           }
+                    }
+                      }
+                      
+                      $TURNOVER_EUR = round($TURNOVER_EUR,2);
+  
+  
+  
         ?>
-
-
-
 <div id="content" class="table-content">
     <p>
         <a href="<?php echo base_url(). 'users/view/'. $data[0]['user'][0]->user_id.'/P' ?>"> Previous Month </a>
@@ -37,7 +65,7 @@
 <p>From: <?php echo $data[0]['start'] ; ?></p>
     <p>To: <?php echo $data[0]['end'] ; ?></p>
     <p>Checked: <?php echo $data[0]['today'] ; ?></p>
-    
+    <p>Turnover: <?php echo $TURNOVER_EUR; ?> </p>
     <?php echo $this->layout->load_view('layout/alerts'); ?>
 
     <div class="table-responsive">
@@ -55,10 +83,38 @@
 
             <tbody>
             <?php 
-            $TOTAL_USD = 0;
             $TOTAL_EUR = 0;
-            
-            
+
+                      
+                      $percentPrint = 0.02;
+                      $percentHard = 0.1;
+                      $percentStandard = 0.08;
+                      $percentEasy = 0.06;
+                      
+                      if($TURNOVER_EUR>3800){
+                          $percentHard = 0.11;
+                          $percentStandard = 0.09;
+                          $percentEasy = 0.07;
+                      }
+                      
+                      if($TURNOVER_EUR>5200){
+                          $percentHard = 0.12;
+                          $percentStandard = 0.1;
+                          $percentEasy = 0.08;
+                      }
+                      
+                       if($TURNOVER_EUR>6200){
+                          $percentHard = 0.13;
+                          $percentStandard = 0.11;
+                          $percentEasy = 0.09;
+                      }
+                      
+                      if($TURNOVER_EUR>7500){
+                          $percentHard = 0.14;
+                          $percentStandard = 0.12;
+                          $percentEasy = 0.10;
+                      }
+                      
             foreach ($data as $group) {
                     foreach($group['USD'] as $quote_USD){ ?>
 <tr>
@@ -71,19 +127,19 @@
         <td> <?php 
         
         if (strpos($group['group_name'], 'Hard') !== false) {
-            $value = round($quote_USD->quote_item_subtotal*0.1/$USDrate,2);
+            $value = round($quote_USD->quote_item_subtotal*$percentHard/$USDrate,2);
     echo $value;
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Standard') !== false) {
-    $value = round($quote_USD->quote_item_subtotal*0.08/$USDrate,2);
+    $value = round($quote_USD->quote_item_subtotal*$percentStandard/$USDrate,2);
     echo $value;
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Print')!== false){
-    $value = round($quote_USD->quote_item_subtotal*0.02/$USDrate,2);
+    $value = round($quote_USD->quote_item_subtotal*$percentPrint/$USDrate,2);
      echo $value;
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else{
-    $value = round($quote_USD->quote_item_subtotal*0.06/$USDrate,2);
+    $value = round($quote_USD->quote_item_subtotal*$percentEasy/$USDrate,2);
     echo $value;
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }
@@ -103,17 +159,21 @@ echo ' EUR';
     <td> <?php 
         
         if (strpos($group['group_name'], 'Hard') !== false) {
-    echo $quote_USD->quote_item_subtotal*0.1;
-    $TOTAL_EUR=$TOTAL_EUR+$quote_USD->quote_item_subtotal*0.1;
+            $value = round($quote_USD->quote_item_subtotal*$percentHard,2);
+    echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Standard') !== false) {
-    echo $quote_USD->quote_item_subtotal*0.08;
-    $TOTAL_EUR=$TOTAL_EUR+$quote_USD->quote_item_subtotal*0.08;
+    $value = round($quote_USD->quote_item_subtotal*$percentStandard,2);
+    echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Print')!== false){
-     echo $quote_USD->quote_item_subtotal*0.02;
-    $TOTAL_EUR=$TOTAL_EUR+$quote_USD->quote_item_subtotal*0.02;
+    $value = round($quote_USD->quote_item_subtotal*$percentPrint,2);
+    echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }else{
-    echo $quote_USD->quote_item_subtotal*0.06;
-    $TOTAL_EUR=$TOTAL_EUR+$quote_USD->quote_item_subtotal*0.06;
+    $value = round($quote_USD->quote_item_subtotal*$percentEasy,2);
+    echo $value;
+    $TOTAL_EUR=$TOTAL_EUR+$value;
 }
         echo ' EUR';
         ?></td>
