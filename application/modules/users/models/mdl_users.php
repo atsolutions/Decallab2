@@ -257,11 +257,9 @@ class Mdl_Users extends Response_Model
         delete_orphans();
     }
     
-    public function get_current($id){
+    public function get_current($id, $today, $prevMonthStart, $prevMonthEnd){
         
- $today = date('Y-n-j', strtotime('now'));
- $prevMonthStart = date('Y-n-j', strtotime('first day of this month'));
-        $prevMonthEnd = $today;
+
        
         
 $this->db->select('invoice_group_name, invoice_group_id');

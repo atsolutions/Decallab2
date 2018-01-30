@@ -1,10 +1,16 @@
 <div id="headerbar">
     <h1><?php 
-    echo 'Quotes Printed this month'; ?></h1>
+    echo 'Quotes Printed'; ?></h1>
     
 </div>
 
 <div id="content" class="table-content">
+    <p>
+        <a href="<?php echo base_url(). 'users/view/'. $data[0]['user'][0]->user_id.'/P' ?>"> Previous Month </a>
+        <a href="<?php echo base_url(). 'users/view/'. $data[0]['user'][0]->user_id.'/T' ?>"> This Month </a>
+
+        
+    </p>
     <p>User: <?php 
     echo $data[0]['user'][0]->user_name;?> </p>
 <p>From: <?php echo $data[0]['start'] ; ?></p>
@@ -49,6 +55,9 @@
 }else if (strpos($group['group_name'], 'Standard') !== false) {
     echo $quote_USD->quote_item_subtotal*0.08;
     $TOTAL_USD=$TOTAL_USD+$quote_USD->quote_item_subtotal*0.08;
+}else if (strpos($group['group_name'], 'Print')!== false){
+     echo $quote_USD->quote_item_subtotal*0.02;
+    $TOTAL_USD=$TOTAL_USD+$quote_USD->quote_item_subtotal*0.02;
 }else{
     echo $quote_USD->quote_item_subtotal*0.06;
     $TOTAL_USD=$TOTAL_USD+$quote_USD->quote_item_subtotal*0.06;
@@ -74,6 +83,9 @@ echo ' USD';
 }else if (strpos($group['group_name'], 'Standard') !== false) {
     echo $quote_USD->quote_item_subtotal*0.08;
     $TOTAL_EUR=$TOTAL_EUR+$quote_USD->quote_item_subtotal*0.08;
+}else if (strpos($group['group_name'], 'Print')!== false){
+     echo $quote_USD->quote_item_subtotal*0.02;
+    $TOTAL_EUR=$TOTAL_EUR+$quote_USD->quote_item_subtotal*0.02;
 }else{
     echo $quote_USD->quote_item_subtotal*0.06;
     $TOTAL_EUR=$TOTAL_EUR+$quote_USD->quote_item_subtotal*0.06;

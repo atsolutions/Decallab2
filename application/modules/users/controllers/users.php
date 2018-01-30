@@ -124,10 +124,20 @@ class Users extends Admin_Controller
         redirect('users');
     }
     
-     public function view($id)
+     public function view($id, $month = 'T')
     {
-       
-         $data = $this->mdl_users->get_current($id);
+         
+         if($month==='T'){
+          $today = date('Y-n-j', strtotime('now'));
+          $prevMonthStart = date('Y-n-j', strtotime('first day of this month'));
+          $prevMonthEnd = $today;
+         }
+         else{
+          $today = date('Y-n-j', strtotime('now'));
+          $prevMonthStart = date('Y-n-j', strtotime('first day of previous month'));
+          $prevMonthEnd = date('Y-n-j', strtotime('last day of previous month'));
+         }
+         $data = $this->mdl_users->get_current($id, $today, $prevMonthStart, $prevMonthEnd);
          
          
           $this->layout->set(
