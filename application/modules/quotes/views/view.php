@@ -601,7 +601,7 @@ if($quote->invoice_id !=0){
                                         <div class="progress progress-striped active" role="progressbar"
                                              aria-valuemin="0"
                                              aria-valuemax="100" aria-valuenow="0">
-                                            <div class="progress-bar progress-bar-success" style="..."
+                                            <div class="progress-bar progress-bar-success" style=""
                                                  data-dz-uploadprogress></div>
                                         </div>
                                     </div>
