@@ -52,6 +52,7 @@ span.tab{
                     quote_number: $('#quote_number').val(),
                     quote_date_created: $('#quote_date_created').val(),
                     quote_date_expires: $('#quote_date_expires').val(),
+                    quote_shipping_amount: $('#quote_shipping_amount').val(),
                     quote_status_id: $('#quote_status_id').val(),
                     quote_password: $('#quote_password').val(),
                     responsible_id: $('#quote_designer').val(),

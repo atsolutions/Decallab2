@@ -217,6 +217,23 @@
                 <td><?php echo lang('item_tax'); ?></td>
                 <td class="amount"><?php echo $quote->quote_item_tax_total . ' ' . $quote->quote_currency; ?></td>
             </tr>
+                                    <tr>
+                <td><?php echo 'Shipping'; ?></td>
+                <td>
+                <div class="discount-field">
+                        <div class="input-group input-group-sm">
+                            <input id="quote_shipping_amount" name="quote_shipping_amount"
+                                   class="form-control input-sm amount"
+                                   value="<?php echo($quote->quote_shipping_amount != 0 ? $quote->quote_shipping_amount : '0'); ?>">
+
+                            <div
+                                class="input-group-addon"><?php echo $quote->quote_currency; ?>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            
             <tr>
                 <td><?php echo lang('quote_tax'); ?></td>
                 <td>
@@ -262,22 +279,7 @@
                     
                 </td>
             </tr>
-                        <tr>
-                <td><?php echo 'Shipping'; ?></td>
-                <td>
-                <div class="discount-field">
-                        <div class="input-group input-group-sm">
-                            <input id="quote_shipping_amount" name="quote_shipping_amount"
-                                   class="form-control input-sm amount"
-                                   value="<?php echo($quote->quote_shipping_amount != 0 ? $quote->quote_shipping_amount : '0'); ?>">
 
-                            <div
-                                class="input-group-addon"><?php echo $quote->quote_currency; ?>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
             
             
             <tr>

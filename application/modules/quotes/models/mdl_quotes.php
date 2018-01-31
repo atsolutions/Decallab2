@@ -38,18 +38,12 @@ class Mdl_Quotes extends Response_Model
         $date2 = $result['quote_date_printed'];
         
         if($date1==='0000-00-00 00:00:00'){
-            
-            
-            
 		if($status=='9'||$status=='10'||$status=='11'){
 			$this->set_print_date($quote_id);
 		}
         }
 	}
-        
-        
-	
-	
+
     public function statuses()
     {
         return array(
