@@ -101,6 +101,7 @@
                     invoice_status_id: $('#invoice_status_id').val(),
                     invoice_password: $('#invoice_password').val(),
                     invoice_currency: $('#invoice_currency').val(),
+                    invoice_shipping_amount: &('#invoice_shipping_amount').val(),
                     items: JSON.stringify(items),
                     delete_tax: 'true',
                     invoice_discount_amount: $('#invoice_discount_amount').val(),
@@ -555,7 +556,7 @@ if ($this->config->item('disable_read_only') == TRUE) {
                                         <div class="progress progress-striped active" role="progressbar"
                                              aria-valuemin="0"
                                              aria-valuemax="100" aria-valuenow="0">
-                                            <div class="progress-bar progress-bar-success" style="..."
+                                            <div class="progress-bar progress-bar-success" style=""
                                                  data-dz-uploadprogress></div>
                                         </div>
                                     </div>

@@ -245,6 +245,23 @@
                 <td class="amount"><?php echo $invoice->invoice_item_tax_total . ' ' . $invoice->invoice_currency; ?></td>
             </tr>
             <tr>
+                <td><?php echo 'Shipping'; ?></td>
+                <td>
+                <div class="discount-field">
+                        <div class="input-group input-group-sm">
+                            <input id="invoice_shipping_amount" name="invoice_shipping_amount"
+                                   class="form-control input-sm amount"
+                                   value="<?php echo($invoice->invoice_shipping_amount != 0 ? $invoice->invoice_shipping_amount : '0'); ?>">
+
+                            <div
+                                class="input-group-addon"><?php echo $invoice->invoice_currency; ?>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
                 <td><?php echo lang('invoice_tax'); ?></td>
                 <td>
                     <?php if ($invoice_tax_rates) {

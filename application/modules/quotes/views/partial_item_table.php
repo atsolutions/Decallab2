@@ -217,7 +217,7 @@
                 <td><?php echo lang('item_tax'); ?></td>
                 <td class="amount"><?php echo $quote->quote_item_tax_total . ' ' . $quote->quote_currency; ?></td>
             </tr>
-                                    <tr>
+            <tr>
                 <td><?php echo 'Shipping'; ?></td>
                 <td>
                 <div class="discount-field">
