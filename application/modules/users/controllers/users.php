@@ -129,13 +129,13 @@ class Users extends Admin_Controller
          
          if($month==='T'){
           $today = date('Y-n-j H:i:s', strtotime('now'));
-          $prevMonthStart = date('Y-n-j', strtotime('first day of this month'));
+          $prevMonthStart = date('Y-n-j 00:00:00', strtotime('first day of this month'));
           $prevMonthEnd = $today;
          }
          else{
           $today = date('Y-n-j', strtotime('now'));
-          $prevMonthStart = date('Y-n-j', strtotime('first day of previous month'));
-          $prevMonthEnd = date('Y-n-j', strtotime('last day of previous month'));
+          $prevMonthStart = date('Y-n-j 00:00:00', strtotime('first day of previous month'));
+          $prevMonthEnd = date('Y-n-j 23:59:59', strtotime('last day of previous month'));
          }
          $data = $this->mdl_users->get_current($id, $today, $prevMonthStart, $prevMonthEnd);
          
