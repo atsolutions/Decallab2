@@ -128,6 +128,12 @@
     <?php
     $CURRENT_TOTAL = $CURRENT_TOTAL + round($quote_USD->quote_item_subtotal/$USDrate,2);
     
+          if($CURRENT_TOTAL<=3800){
+                            $percentHard = 0.1;
+                      $percentStandard = 0.08;
+                      $percentEasy = 0.06;
+                      }
+    
       if($CURRENT_TOTAL>3800){
                           $percentHard = 0.105;
                           $percentStandard = 0.085;
@@ -189,6 +195,12 @@ echo ' EUR';
     <td> <?php 
 
     $CURRENT_TOTAL = $CURRENT_TOTAL + $quote_USD->quote_item_subtotal;
+    
+              if($CURRENT_TOTAL<=3800){
+                            $percentHard = 0.1;
+                      $percentStandard = 0.08;
+                      $percentEasy = 0.06;
+                      }
     
       if($CURRENT_TOTAL>3800){
                           $percentHard = 0.105;
