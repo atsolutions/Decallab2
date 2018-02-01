@@ -117,7 +117,7 @@
                           $percentStandard = 0.1;
                           $percentEasy = 0.075;
                       }
-                      
+                      $CURRENT_TOTAL = 0;
             foreach ($data as $group) {
                     foreach($group['USD'] as $quote_USD){ ?>
 <tr>
@@ -125,8 +125,35 @@
     <td> <?php echo $quote_USD->quote_date_printed; ?></td>
     <td> <?php echo round($quote_USD->quote_item_subtotal/$USDrate,2) . ' EUR ('. $quote_USD->quote_item_subtotal . ' USD)'  ; ?></td>
     <td> <?php echo $group['group_name']; ?></td>
+    <?php
+    $CURRENT_TOTAL = $CURRENT_TOTAL + round($quote_USD->quote_item_subtotal/$USDrate,2);
+    
+      if($CURRENT_TOTAL>3800){
+                          $percentHard = 0.105;
+                          $percentStandard = 0.085;
+                          $percentEasy = 0.065;
+                      }
+                      
+                      if($CURRENT_TOTAL>5200){
+                          $percentHard = 0.11;
+                          $percentStandard = 0.09;
+                          $percentEasy = 0.07;
+                      }
+                      
+                       if($CURRENT_TOTAL>6200){
+                          $percentHard = 0.115;
+                          $percentStandard = 0.095;
+                          $percentEasy = 0.075;
+                      }
+                      
+                      if($CURRENT_TOTAL>7500){
+                          $percentHard = 0.12;
+                          $percentStandard = 0.1;
+                          $percentEasy = 0.075;
+                      }
     
     
+    ?>
         <td> <?php 
         
         if (strpos($group['group_name'], 'Hard') !== false) {
@@ -160,6 +187,33 @@ echo ' EUR';
     <td> <?php echo $quote_USD->quote_item_subtotal . ' EUR' ; ?></td>
     <td> <?php echo $group['group_name']; ?></td>
     <td> <?php 
+
+    $CURRENT_TOTAL = $CURRENT_TOTAL + $quote_USD->quote_item_subtotal;
+    
+      if($CURRENT_TOTAL>3800){
+                          $percentHard = 0.105;
+                          $percentStandard = 0.085;
+                          $percentEasy = 0.065;
+                      }
+                      
+                      if($CURRENT_TOTAL>5200){
+                          $percentHard = 0.11;
+                          $percentStandard = 0.09;
+                          $percentEasy = 0.07;
+                      }
+                      
+                       if($CURRENT_TOTAL>6200){
+                          $percentHard = 0.115;
+                          $percentStandard = 0.095;
+                          $percentEasy = 0.075;
+                      }
+                      
+                      if($CURRENT_TOTAL>7500){
+                          $percentHard = 0.12;
+                          $percentStandard = 0.1;
+                          $percentEasy = 0.075;
+                      }
+ 
         
         if (strpos($group['group_name'], 'Hard') !== false) {
             $value = round($quote_USD->quote_item_subtotal*$percentHard,2);
