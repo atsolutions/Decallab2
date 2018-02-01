@@ -124,7 +124,7 @@ class Users extends Admin_Controller
         redirect('users');
     }
     
-     public function view($id, $month = 'T')
+     public function salary($id, $month = 'T')
     {
          
          if($month==='T'){
