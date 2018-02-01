@@ -126,8 +126,9 @@
     <td> <?php echo round($quote_USD->quote_item_subtotal/$USDrate,2) . ' EUR ('. $quote_USD->quote_item_subtotal . ' USD)'  ; ?></td>
     <td> <?php echo $group['group_name']; ?></td>
     <?php
+     if (strpos($group['group_name'], 'Print') === false) {
     $CURRENT_TOTAL = $CURRENT_TOTAL + round($quote_USD->quote_item_subtotal/$USDrate,2);
-    
+     }
           if($CURRENT_TOTAL<=3800){
                             $percentHard = 0.1;
                       $percentStandard = 0.08;
@@ -193,9 +194,9 @@ echo ' EUR';
     <td> <?php echo $quote_USD->quote_item_subtotal . ' EUR' ; ?></td>
     <td> <?php echo $group['group_name']; ?></td>
     <td> <?php 
-
+ if (strpos($group['group_name'], 'Print') === false) {
     $CURRENT_TOTAL = $CURRENT_TOTAL + $quote_USD->quote_item_subtotal;
-    
+ }
               if($CURRENT_TOTAL<=3800){
                             $percentHard = 0.1;
                       $percentStandard = 0.08;
