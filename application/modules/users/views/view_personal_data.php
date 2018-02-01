@@ -158,19 +158,19 @@
         
         if (strpos($group['group_name'], 'Hard') !== false) {
             $value = round($quote_USD->quote_item_subtotal*$percentHard/$USDrate,2);
-    echo $value;
+    echo $value. " (". $percentHard*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Standard') !== false) {
     $value = round($quote_USD->quote_item_subtotal*$percentStandard/$USDrate,2);
-    echo $value;
+    echo $value . " (". $percentStandard*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Print')!== false){
     $value = round($quote_USD->quote_item_subtotal*$percentPrint/$USDrate,2);
-     echo $value;
+     echo $value. " (". $percentPrint*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else{
     $value = round($quote_USD->quote_item_subtotal*$percentEasy/$USDrate,2);
-    echo $value;
+    echo $value. " (". $percentEasy*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }
 
@@ -217,19 +217,19 @@ echo ' EUR';
         
         if (strpos($group['group_name'], 'Hard') !== false) {
             $value = round($quote_USD->quote_item_subtotal*$percentHard,2);
-    echo $value;
+    echo $value. " (". $percentHard*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Standard') !== false) {
     $value = round($quote_USD->quote_item_subtotal*$percentStandard,2);
-    echo $value;
+    echo $value. " (". $percentStandard*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else if (strpos($group['group_name'], 'Print')!== false){
     $value = round($quote_USD->quote_item_subtotal*$percentPrint,2);
-    echo $value;
+    echo $value. " (". $percentPrint*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }else{
     $value = round($quote_USD->quote_item_subtotal*$percentEasy,2);
-    echo $value;
+    echo $value. " (". $percentEasy*100 . "%)";
     $TOTAL_EUR=$TOTAL_EUR+$value;
 }
         echo ' EUR';
