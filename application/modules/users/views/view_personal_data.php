@@ -95,27 +95,27 @@
                       $percentEasy = 0.06;
                       
                       if($TURNOVER_EUR>3800){
+                          $percentHard = 0.105;
+                          $percentStandard = 0.085;
+                          $percentEasy = 0.065;
+                      }
+                      
+                      if($TURNOVER_EUR>5200){
                           $percentHard = 0.11;
                           $percentStandard = 0.09;
                           $percentEasy = 0.07;
                       }
                       
-                      if($TURNOVER_EUR>5200){
-                          $percentHard = 0.12;
-                          $percentStandard = 0.1;
-                          $percentEasy = 0.08;
-                      }
-                      
                        if($TURNOVER_EUR>6200){
-                          $percentHard = 0.13;
-                          $percentStandard = 0.11;
-                          $percentEasy = 0.09;
+                          $percentHard = 0.115;
+                          $percentStandard = 0.095;
+                          $percentEasy = 0.075;
                       }
                       
                       if($TURNOVER_EUR>7500){
-                          $percentHard = 0.14;
-                          $percentStandard = 0.12;
-                          $percentEasy = 0.10;
+                          $percentHard = 0.12;
+                          $percentStandard = 0.1;
+                          $percentEasy = 0.075;
                       }
                       
             foreach ($data as $group) {
