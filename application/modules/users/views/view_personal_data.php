@@ -94,29 +94,7 @@
                       $percentStandard = 0.08;
                       $percentEasy = 0.06;
                       
-                      if($TURNOVER_EUR>3800){
-                          $percentHard = 0.105;
-                          $percentStandard = 0.085;
-                          $percentEasy = 0.065;
-                      }
-                      
-                      if($TURNOVER_EUR>5200){
-                          $percentHard = 0.11;
-                          $percentStandard = 0.09;
-                          $percentEasy = 0.07;
-                      }
-                      
-                       if($TURNOVER_EUR>6200){
-                          $percentHard = 0.115;
-                          $percentStandard = 0.095;
-                          $percentEasy = 0.075;
-                      }
-                      
-                      if($TURNOVER_EUR>7500){
-                          $percentHard = 0.12;
-                          $percentStandard = 0.1;
-                          $percentEasy = 0.075;
-                      }
+                   
                       $CURRENT_TOTAL = 0;
                       $allQuotes = array();
                       
@@ -185,7 +163,7 @@ $result = usort($allQuotes, 'compareOrder');
      if (strpos($groupName, 'Print') === false) {
     $CURRENT_TOTAL = $CURRENT_TOTAL + $subtotal;
      }
-     
+     $increase = 0.01;
        if($CURRENT_TOTAL<=3800){
           $percentHard = 0.1;
           $percentStandard = 0.08;
@@ -193,27 +171,27 @@ $result = usort($allQuotes, 'compareOrder');
           }
     
       if($CURRENT_TOTAL>3800){
-          $percentHard = 0.105;
-          $percentStandard = 0.085;
-          $percentEasy = 0.065;
-      }
-
-      if($CURRENT_TOTAL>5200){
           $percentHard = 0.11;
           $percentStandard = 0.09;
           $percentEasy = 0.07;
       }
 
+      if($CURRENT_TOTAL>5200){
+          $percentHard = 0.11 + $increase;
+          $percentStandard = 0.09+ $increase;
+          $percentEasy = 0.07+ $increase;
+      }
+
        if($CURRENT_TOTAL>6200){
-          $percentHard = 0.115;
-          $percentStandard = 0.095;
-          $percentEasy = 0.075;
+          $percentHard = 0.11+ $increase*2;
+          $percentStandard = 0.09+ $increase*2;
+          $percentEasy = 0.07+ $increase*2;
       }
 
       if($CURRENT_TOTAL>7500){
-          $percentHard = 0.12;
-          $percentStandard = 0.1;
-          $percentEasy = 0.075;
+          $percentHard = 0.11+ $increase*3;
+          $percentStandard = 0.09+ $increase*3;
+          $percentEasy = 0.07+ $increase*3;
       }
         ?>
     <td>
@@ -251,12 +229,29 @@ echo ' EUR';
      </tr>
             
             <?php }?>
+
 <tr>
     <td></td>
     <td></td>
     <td></td>
     <td>TOTAL EUR: </td>
     <td><?php echo $TOTAL_EUR . ' EUR'; ?></td>
+</tr>
+
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>TOTAL TURNOVER: </td>
+    <td><?php echo $CURRENT_TOTAL . ' EUR'; ?></td>
+</tr>
+
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>QUOTE COUNT: </td>
+    <td><?php echo sizeof($allQuotes); ?></td>
 </tr>
             </tbody>
 
