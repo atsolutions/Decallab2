@@ -244,7 +244,13 @@ class Mdl_Quotes extends Response_Model
         $this->load->helper('string');
         return random_string('alnum', 15);
     }
+    
+    public function set_shipping_value($quote_id, $value){
 
+        $this->db->where('quote_id', $quote_id);
+        $this->db->set('quote_shipping_amount', $value);
+        $this->db->update('ip_quotes');
+    }
     /**
      * Copies quote items, tax rates, etc from source to target
      * @param int $source_id
@@ -253,9 +259,19 @@ class Mdl_Quotes extends Response_Model
     public function copy_quote($source_id, $target_id)
     {
         $this->load->model('quotes/mdl_quote_items');
+        $this->load->model('mdl_quotes');
+        
+        
+        $this->db->select('*');
+        $this->db->where('quote_id', $source_id);
 
+        $query = $this->db->get('ip_quotes');
+        $quote = $query->row();
+        $value = $quote->quote_shipping_amount;
+        
+        $this->set_shipping_value($target_id, $value);
         $quote_items = $this->mdl_quote_items->where('quote_id', $source_id)->get()->result();
-
+        
         foreach ($quote_items as $quote_item) {
             $db_array = array(
                 'quote_id' => $target_id,

@@ -191,7 +191,7 @@ $result = usort($allQuotes, 'compareOrder');
       if($CURRENT_TOTAL>7500){
           $percentHard = 0.11+ $increase*3;
           $percentStandard = 0.09+ $increase*3;
-          $percentEasy = 0.07+ $increase*3;
+          $percentEasy = 0.07+ $increase*3522;
       }
         ?>
     <td>
