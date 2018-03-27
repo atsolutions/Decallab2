@@ -54,10 +54,10 @@
         ?>
 <div id="content" class="table-content">
     <p>
-        <a href="<?php echo base_url(). 'users/view/'. $data[0]['user'][0]->user_id.'/P' ?>"> Previous Month </a>
+        <a href="<?php echo base_url(). 'users/salary/'. $data[0]['user'][0]->user_id.'/P' ?>"> Previous Month </a>
     </p>
     <p>
-        <a href="<?php echo base_url(). 'users/view/'. $data[0]['user'][0]->user_id.'/T' ?>"> This Month </a>
+        <a href="<?php echo base_url(). 'users/salary/'. $data[0]['user'][0]->user_id.'/T' ?>"> This Month </a>
     </p>
     <p>
         Exchange Rate: <?php echo $USDrate ?>
@@ -191,7 +191,7 @@ $result = usort($allQuotes, 'compareOrder');
       if($CURRENT_TOTAL>7500){
           $percentHard = 0.11+ $increase*3;
           $percentStandard = 0.09+ $increase*3;
-          $percentEasy = 0.07+ $increase*3522;
+          $percentEasy = 0.07+ $increase*3;
       }
         ?>
     <td>

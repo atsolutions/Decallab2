@@ -255,7 +255,7 @@
                 
                 
 			<li>
-                       <a href="<?php echo site_url('users/view/' . $this->session->userdata('user_id'));?>" 
+                       <a href="<?php echo site_url('users/salary/' . $this->session->userdata('user_id'));?>" 
                        data-original-title="<?php echo 'Quotes'; ?>"
                        data-placement="bottom">
                         <i class="fa fa-info"></i>&nbsp;<span
