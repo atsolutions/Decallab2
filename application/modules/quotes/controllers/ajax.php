@@ -34,14 +34,7 @@ class Ajax extends Admin_Controller
         $rider = $this->input->post('rider');
         
         $this->mdl_quotes->set_status_on_save($this->input->post('quote_status_id'), $quote_id);
-        
-        /*if($rider === ""){
-            //dont fuckin save it
-            $test = false;
-            $this->session->setflashdata('alert_error', 'Enter riders name');
-            return;
-        }*/
-        
+           
         if ($this->mdl_quotes->run_validation('validation_rules_save_quote')) {
 	$items = json_decode($this->input->post('items'));
 if($this->input->post('rider')!==''){
@@ -89,12 +82,8 @@ if($this->input->post('rider')!==''){
         } else {
                 $quote_other_expenses = str_replace(',', '.',$this->input->post('quote_other_expenses'));
         }
-
-        if ($this->input->post('quote_material_length') === '') {
-                $quote_material_length = floatval(0);
-        } else {
-                $quote_material_length = str_replace(',', '.',$this->input->post('quote_material_length'));
-        }
+$quote_material_length = $this->input->post('quote_material_length');
+        
         
         if ($this->input->post('quote_shipping_amount') === '') {
                 $quote_shipping_amount = floatval(0);

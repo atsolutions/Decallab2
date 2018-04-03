@@ -21,21 +21,18 @@ class Quotes extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-
         $this->load->model('mdl_quotes');
+        
     }
-
+    
     public function index()
     {
         // Display all quotes by default
 		if($this->session->userdata('user_subtype')!=1){
         redirect('quotes/status/all');
 		}else{
-			redirect('quotes/status/draft');
-			
-		}
-		
-		
+			redirect('quotes/status/draft');	
+		}	
     }
 
     public function status($status = 'all', $page = 0, $designer_id=0)
@@ -93,12 +90,12 @@ if($designer_id !=0){
             array(
                 'quotes' => $quotes,
                 'status' => $status,
-				'userlist' => $this->db->get('ip_users')->result(),
+		'userlist' => $this->db->get('ip_users')->result(),
                 'filter_display' => TRUE,
                 'filter_placeholder' => lang('filter_quotes'),
                 'filter_method' => 'filter_quotes',
                 'quote_statuses' => $this->mdl_quotes->statuses(),
-				'custom_fields' => $this->mdl_custom_fields->by_table('ip_quote_custom')->get()->result()
+		'custom_fields' => $this->mdl_custom_fields->by_table('ip_quote_custom')->get()->result()
             )
         );
 
@@ -142,14 +139,14 @@ if($designer_id !=0){
                 'items'=>$items,
 				'items' => $this->mdl_quote_items->where('quote_id', $quote_id)->get()->result(),
                 'quote_id' => $quote_id,
-				'userlist' => $this->db->get('ip_users')->result(),
+                'userlist' => $this->db->get('ip_users')->result(),
                 'tax_rates' => $this->mdl_tax_rates->get()->result(),
                 'quote_tax_rates' => $this->mdl_quote_tax_rates->where('quote_id', $quote_id)->get()->result(),
                 'custom_fields' => $this->mdl_custom_fields->by_table('ip_quote_custom')->get()->result(),
                 'custom_js_vars' => array(
-                    'currency_symbol' => $this->mdl_settings->setting('currency_symbol'),
-                    'currency_symbol_placement' => $this->mdl_settings->setting('currency_symbol_placement'),
-                    'decimal_point' => $this->mdl_settings->setting('decimal_point')
+                'currency_symbol' => $this->mdl_settings->setting('currency_symbol'),
+                'currency_symbol_placement' => $this->mdl_settings->setting('currency_symbol_placement'),
+                'decimal_point' => $this->mdl_settings->setting('decimal_point')
                 ),
                 'quote_statuses' => $this->mdl_quotes->statuses(),
             )

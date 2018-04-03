@@ -173,13 +173,18 @@ class Mdl_Quotes extends Response_Model
             ),
             'quote_password' => array(
                 'field' => 'quote_password',
-                'label' => lang('quote_password')
+                'label' => lang('quote_password'),
             ),
             'user_id' => array(
                 'field' => 'user_id',
                 'label' => lang('user'),
                 'rule' => 'required'
-            )
+            ),
+			'material_length' => array(
+				'field' => 'quote_material_length',
+                'label' => 'Material length',
+                'rule' => 'required'
+				)
         );
     }
 
@@ -196,6 +201,11 @@ class Mdl_Quotes extends Response_Model
                 'label' => lang('date'),
                 'rules' => 'required'
             ),
+            'quote_material_length' => array(
+                'field' => 'quote_material_length',
+                'label' => 'Material length',
+                'rules' => 'required|tests'
+                ),
             'rider' => array(
                 'field' => 'rider',
                 'label' => 'Rider name',
@@ -209,7 +219,8 @@ class Mdl_Quotes extends Response_Model
             'quote_password' => array(
                 'field' => 'quote_password',
                 'label' => lang('quote_password')
-            )
+            ),
+           
         );
     }
 

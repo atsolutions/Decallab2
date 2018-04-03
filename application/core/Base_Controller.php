@@ -45,6 +45,7 @@ class Base_Controller extends MX_Controller
         } else {
 
             $this->load->library('form_validation');
+            $this->form_validation->CI =& $this;
             $this->load->helper('number');
             $this->load->helper('pager');
             $this->load->helper('invoice');

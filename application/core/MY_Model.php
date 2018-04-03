@@ -340,8 +340,10 @@ class MY_Model extends CI_Model
             $this->validation_rules = $validation_rules;
 
             $this->load->library('form_validation');
+            
+            $rules = $this->$validation_rules();
 
-            $this->form_validation->set_rules($this->$validation_rules());
+            $this->form_validation->set_rules($rules);
 
             $run = $this->form_validation->run();
 

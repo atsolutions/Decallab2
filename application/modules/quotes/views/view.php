@@ -69,15 +69,25 @@ span.tab{
                 },
                 function (data) {
                     var response = JSON.parse(data);
-                    if (response.success == '1') {
+                    if (response.success === 1) {
                         window.location = "<?php echo site_url('quotes/view'); ?>/" + <?php echo $quote_id; ?>;
-                    }
-                    else {
-                        $('.control-group').removeClass('error');
-                        for (var key in response.validation_errors) {
-                            $('#' + key).parent().parent().addClass('error');
+                    } else {
+                        $('#fullpage-loader').hide();
+                        $('.control-group').removeClass('has-error');
+                        $('div.alert[class*="alert-"]').remove();
+                        var resp_errors = response.validation_errors,
+                            all_resp_errors = '';
+                        if (typeof(resp_errors) == 'string') {
+                            all_resp_errors = resp_errors;
+                        } else {
+                            for (var key in resp_errors) {
+                                $('#' + key).parent().addClass('has-error');
+                                all_resp_errors += resp_errors[key];
+                            }
                         }
+                        $('#quote_form').prepend('<div class="alert alert-danger">' + all_resp_errors + '</div>');
                     }
+                    
                 });
 
         });
@@ -444,7 +454,7 @@ if($quote->invoice_id !=0){
                                     </label>
 
                                     <div class="controls">
-                                        <input type="text" id="quote_material_length" class="form-control input-sm"
+                                        <input type="text" id="quote_material_length" class="form-control input-sm" name="quote_material_length"
                                                value="<?php echo $quote->quote_material_length; ?>">
                                     </div>
                                 </div>

@@ -7,6 +7,24 @@ class MY_Form_validation extends CI_Form_validation
 {
     public $CI;
 
+    public function tests($str, $field){
+     if(!isset($_POST['custom'])){
+         return true;
+     }else{
+         $customArray = $_POST['custom'];
+         $key = array_search('custom[quote_custom_print_file]', array_column($customArray, 'name'));
+         $printFile = $customArray[4]['value'];
+     }
+     if($str==='' || $str==0){
+         if($printFile!==''){
+             return false;
+         }
+     }
+     
+     return true;
+     
+    }
+    
     public function is_unique($str, $field)
     {
         if (substr_count($field, '.') == 3) {
