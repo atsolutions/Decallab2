@@ -115,7 +115,7 @@
         </table>
     </div>
 
-    <h1 class="invoice-title"><?php echo lang('quote') . ' ' . $quote->quote_number; ?></h1>
+    <h1 class="invoice-title"><?php echo 'Pre order form' . ' ' . $quote->quote_number; ?></h1>
 
     <table class="item-table">
         <thead>
