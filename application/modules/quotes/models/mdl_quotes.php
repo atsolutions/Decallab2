@@ -537,6 +537,23 @@ public function mark_printed($quote_id)
 
     }
     
+    public function mark_paid($quote_id)
+    {
+        $this->db->select('quote_status_id');
+        $this->db->where('quote_id', $quote_id);
+
+        $quote = $this->db->get('ip_quotes');
+
+        if ($quote->num_rows()) {
+         
+                $this->db->where('quote_id', $quote_id);
+                $this->db->set('quote_payment_done', 1);
+                $this->db->update('ip_quotes');
+                $this->set_print_date($quote_id);     
+        }
+    }
+    
+    
     public function set_print_date($quote_id)
     {
         $this->db->select('quote_status_id');

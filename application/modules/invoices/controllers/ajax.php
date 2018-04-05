@@ -20,6 +20,24 @@ class Ajax extends Admin_Controller
 {
     public $ajax_controller = TRUE;
 
+        public function mark_paid(){
+        $this->load->model('invoices/mdl_invoices');
+        $invoices = $this->input->post('invoices');
+        $invoiceIDs = explode(',', $invoices);
+        foreach($invoiceIDs as $invoice){
+            $this->mdl_invoices->mark_paid($invoice);
+        }
+        
+        $response = array(
+	'success' =>1
+	);
+        
+        echo json_encode($response);
+    }
+    
+    
+    
+    
     public function save()
     {
         $this->load->model('invoices/mdl_items');

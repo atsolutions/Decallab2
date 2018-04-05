@@ -2,6 +2,33 @@
 var Checked = new Array();
 //var clickedonPDF = document.getElementById("PDF");
 //clickedonPDF.onclick = downloadfiles()
+
+$(function () {
+
+$('#btn_mark_paid').click(function () {
+        
+    var invoiceIDs = Checked.toString();
+        
+        
+            $.post("<?php echo site_url('invoices/ajax/mark_paid'); ?>", {
+                    invoices: invoiceIDs
+
+                },
+                function (data) {
+                    var response = JSON.parse(data);
+                    if (response.success == '1') {
+                        window.location = "<?php echo site_url('invoices/status/all'); ?>/";
+                    }
+                });
+
+        });
+
+
+    });
+
+
+
+
 function checkAll(ele) {
      var checkboxes = document.getElementsByTagName('input');
      if (ele.checked) {
@@ -45,9 +72,6 @@ function downloadfiles(){
 		var url2 = url.concat(finaldata);
 		window.open(url2, "_blank");
 	}
-
-
-
 </script>
 
 
@@ -64,10 +88,24 @@ function downloadfiles(){
             <th style="text-align: right;"><?php echo lang('amount'); ?></th>
             <th style="text-align: right;"><?php echo lang('balance'); ?></th>
 			<th> <input type="checkbox" onchange="checkAll(this)" name="chk[]" id="0"> Check all 
-
-                        <a class="btn btn-sm btn-default"  href="#" id = "PDF" onclick="downloadfiles();">
+<div class="options btn-group">
+                        <a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-cog"></i> <?php echo lang('options'); ?>
+                        </a>
+                        <ul class="dropdown-menu">
+        <li>
+                        <a  href="#" id = "PDF" onclick="downloadfiles();">
                             <i class="fa fa-file-pdf-o"></i> <?php echo 'Download PDF'; ?>
                         </a>
+        </li>
+                            
+                             <li>
+                                <a href="#" id="btn_mark_paid" data-quote_id="">
+                                    <i class="fa fa-money fa-margin"></i> <?php echo 'Mark Paid'; ?>
+                                </a>
+                            </li>
+                        </ul>
+</div>
 		
 			
 			

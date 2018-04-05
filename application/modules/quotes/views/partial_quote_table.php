@@ -1,6 +1,27 @@
 <script>
 var Checked = new Array();
+  $(function () {
 
+$('#btn_mark_paid').click(function () {
+        
+    var quoteIDs = $('#demo').text();
+        
+        
+            $.post("<?php echo site_url('quotes/ajax/mark_paid'); ?>", {
+                    quotes: quoteIDs
+
+                },
+                function (data) {
+                    var response = JSON.parse(data);
+                    if (response.success == '1') {
+                        window.location = "<?php echo site_url('quotes/status/all'); ?>/";
+                    }
+                });
+
+        });
+
+
+    });
 
 function checkAll(ele) {
      var checkboxes = document.getElementsByTagName('input');
@@ -48,6 +69,7 @@ $('#btn_quotes_to_invoices').click(function () {
                 $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_quotes_to_invoices'); ?>/" + quotes);
                 //window.open("<?php //echo site_url('quotes/quotes_to_invoice'); ?>/" + quotes,"_self");
             });
+           
  
 
 function downloadfiles(){
@@ -61,13 +83,26 @@ function downloadfiles(){
 }
 
 function deletequote(){
-	var origin = document.location.origin
-	var url = origin.concat("/quotes/delete/")
-	var check = window.confirm("YOU ARE GOING TO DELETE SELECTED QUOTES. ARE YOU SURE?")
+	var origin = document.location.origin;
+	var url = origin.concat("/quotes/delete/");
+	var check = window.confirm("YOU ARE GOING TO DELETE SELECTED QUOTES. ARE YOU SURE?");
 	if(check ==true){
 		for (var i = 0; i < Checked.length; i++) {
-			var url2 = url.concat(Checked[i])
-			$.get(url2)
+			var url2 = url.concat(Checked[i]);
+			$.get(url2);
+			window.close();
+			location.reload();
+		}
+	}
+	}
+        
+        function mark_paid(){
+	var origin = document.location.origin;
+	var url = origin.concat("/quotes/mark_paid/");
+	if(check ==true){
+		for (var i = 0; i < Checked.length; i++) {
+			var url2 = url.concat(Checked[i]);
+			$.get(url2);
 			window.close();
 			location.reload();
 		}
@@ -125,12 +160,19 @@ function selectdesigner(element) {
                                     <i class="fa fa-trash-o fa-margin"></i> <?php echo lang('delete'); ?>
                                 </a>
                             </li>
+                            
                             <li>
-                    <a href="#" id="btn_quotes_to_invoices" data-quote_id="">
-                        <i class="fa fa-refresh fa-margin"></i>
-                        <?php echo lang('quote_to_invoice'); ?>
-                    </a>
-                </li>
+                                <a href="#" id="btn_mark_paid" data-quote_id="">
+                                    <i class="fa fa-money fa-margin"></i> <?php echo 'Mark Paid'; ?>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="" id="btn_quotes_to_invoices" data-quote_id="">
+                                    <i class="fa fa-refresh fa-margin"></i>
+                                    <?php echo lang('quote_to_invoice'); ?>
+                                </a>
+                            </li>
                         </ul>
                     </div>
 

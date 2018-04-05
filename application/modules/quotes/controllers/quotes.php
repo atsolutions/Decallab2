@@ -173,6 +173,15 @@ if($designer_id !=0){
         // Redirect to quote index
         redirect('quotes/index');
     }
+    
+        public function mark_paid($quote_id)
+    {
+        // Delete the quote
+        $this->mdl_quotes->mark_paid($quote_id);
+
+        // Redirect to quote index
+        redirect('quotes/index');
+    }
 
     public function delete_item($quote_id, $item_id)
     {

@@ -47,6 +47,23 @@ class Mdl_Invoices extends Response_Model
             )
         );
     }
+    
+        public function mark_paid($invoice_id)
+    {
+        $this->db->select('invoice_status_id');
+        $this->db->where('invoice_id', $invoice_id);
+
+        $quote = $this->db->get('ip_invoices');
+
+        if ($quote->num_rows()) {
+         
+                $this->db->where('invoice_id', $invoice_id);
+                $this->db->set('invoice_status_id', 4);
+                $this->db->update('ip_invoices');
+                $this->set_print_date($invoice_id);     
+        }
+    }
+    
 
     public function default_select()
     {

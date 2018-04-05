@@ -39,7 +39,6 @@ span.tab{
     payment = 0;
     }
 
-
             $('table tbody.item').each(function () {
                 var row = {};
                 $(this).find('input,select,textarea').each(function () {
@@ -53,6 +52,7 @@ span.tab{
                 item_order++;
                 items.push(row);
             });
+            
             $.post("<?php echo site_url('quotes/ajax/save'); ?>", {
                     quote_id: <?php echo $quote_id; ?>,
                     quote_number: $('#quote_number').val(),

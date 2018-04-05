@@ -20,6 +20,21 @@ class Ajax extends Admin_Controller
 {
     public $ajax_controller = TRUE;
 
+    public function mark_paid(){
+        $this->load->model('quotes/mdl_quotes');
+        $quotes = $this->input->post('quotes');
+        $quoteIDs = explode(',', $quotes);
+        foreach($quoteIDs as $quote){
+            $this->mdl_quotes->mark_paid($quote);
+        }
+        
+        $response = array(
+	'success' =>1
+	);
+        
+        echo json_encode($response);
+    }
+    
     public function save()
     {
         $this->load->model('quotes/mdl_quote_items');
