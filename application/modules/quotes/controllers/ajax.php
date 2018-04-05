@@ -116,7 +116,7 @@ $quote_material_length = $this->input->post('quote_material_length');
 
         $quote_designer=$this->input->post('responsible_id');
         $quote_currency=$this->input->post('quote_currency');
-
+        $quote_material=$this->input->post('quote_material');
                                 
                                 
  $this->mdl_quotes->set_status($this->input->post('quote_status_id'), $quote_id);
@@ -134,7 +134,8 @@ $quote_material_length = $this->input->post('quote_material_length');
                 'responsible_id'=> $quote_designer,
                 'quote_currency'=>$quote_currency,
                 'quote_shipping_amount'=>$quote_shipping_amount,
-                'quote_payment_done'=>$quote_payment_done
+                'quote_payment_done'=>$quote_payment_done,
+                'quote_material_id'=>$quote_material
                 
         );
 

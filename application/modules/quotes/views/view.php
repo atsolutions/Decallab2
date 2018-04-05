@@ -72,6 +72,7 @@ span.tab{
                     quote_other_expenses: $('#quote_other_expenses').val(),
                     quote_material_length: $('#quote_material_length').val(),
                     quote_payment_done: payment,
+                    quote_material: $('#quote_material').val(),
                     custom: $('input[name^=custom]').serializeArray()
                 },
                 function (data) {
@@ -481,6 +482,27 @@ if($quote->invoice_id !=0){
                                         <input type="text" id="quote_material_length" class="form-control input-sm" name="quote_material_length"
                                                value="<?php echo $quote->quote_material_length; ?>">
                                     </div>
+                                </div>
+                                
+                                 <div class="quote-properties">
+                                    <label for="quote_material">
+                                        <?php echo 'Select material:'; ?>
+                                    </label>
+                                   
+                                    <select name="quote_material" id="quote_material"
+                                            class="form-control input-sm">                                            
+                                            <?php foreach ($materials as $material) { ?>
+                                        <option value="<?php echo $material->material_id; ?>"
+                                                <?php 
+                                                if($material->material_id==$quote->quote_material_id){
+                                                    echo ' selected="selected"';
+                                                }?>>
+                                                    
+                                            <?php echo $material->material_name; ?>                                            
+                                        </option>
+                                   <?php } ?>     
+                                    </select>
+                                     
                                 </div>
                                 
 

@@ -106,6 +106,7 @@ if($designer_id !=0){
     public function view($quote_id)
     {
         $this->load->model('mdl_quote_items');
+        $this->load->model('materials/mdl_materials');
         $this->load->model('invoices/mdl_invoices');
         $this->load->model('tax_rates/mdl_tax_rates');
         $this->load->model('mdl_quote_tax_rates');
@@ -125,7 +126,7 @@ if($designer_id !=0){
                 $this->mdl_quotes->set_form_value('custom[' . $key . ']', $val);
             }
         }
-
+        $materials = $this->mdl_materials->get()->result();
         $quote = $this->mdl_quotes->get_by_id($quote_id);
         $invoiceid = $quote->invoice_id;
         $invoice = $this->mdl_invoices->get_by_id($invoiceid);
@@ -143,6 +144,7 @@ if($designer_id !=0){
                 'quote_id' => $quote_id,
                 'userlist' => $this->db->get('ip_users')->result(),
                 'tax_rates' => $this->mdl_tax_rates->get()->result(),
+                'materials'=>$materials,
                 'quote_tax_rates' => $this->mdl_quote_tax_rates->where('quote_id', $quote_id)->get()->result(),
                 'custom_fields' => $this->mdl_custom_fields->by_table('ip_quote_custom')->get()->result(),
                 'custom_js_vars' => array(
