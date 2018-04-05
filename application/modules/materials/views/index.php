@@ -35,6 +35,14 @@
                     <td><?php echo nl2br($material->material_description); ?></td>
                     <td><?php echo $material->material_price; ?></td>
                     <td><?php echo $material->material_quantity; ?></td>
+                     <td>
+                        <a href="<?php echo site_url('materials/form/' . $material->material_id); ?>"
+                           title="<?php echo lang('edit'); ?>"><i class="fa fa-edit fa-margin"></i></a>
+                        <a href="<?php echo site_url('materials/delete/' . $material->material_id); ?>"
+                           title="<?php echo lang('delete'); ?>"
+                           onclick="return confirm('<?php echo lang('delete_record_warning'); ?>');"><i
+                                class="fa fa-trash-o fa-margin"></i></a>
+                    </td>
                 </tr>
             <?php } ?>
             </tbody>
