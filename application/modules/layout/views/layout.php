@@ -195,12 +195,12 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-caret-down"></i> &nbsp;<span
-                            class="hidden-sm"><?php echo lang('payments'); ?></span><i
+                            class="hidden-sm"><?php echo 'Materials'; ?></span><i
                             class="visible-sm-inline fa fa-credit-card"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><?php echo anchor('payments/form', lang('enter_payment')); ?></li>
-                        <li><?php echo anchor('payments/index', lang('view_payments')); ?></li>
+                        <li><?php echo anchor('materials/form', 'Add material'); ?></li>
+                        <li><?php echo anchor('materials/index', 'View materials'); ?></li>
                     </ul>
                 </li>
 
