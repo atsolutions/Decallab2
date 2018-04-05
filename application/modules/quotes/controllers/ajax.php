@@ -76,6 +76,12 @@ if($this->input->post('rider')!==''){
         } else {
                 $quote_discount_percent = $this->input->post('quote_discount_percent');
         }
+        
+         if ($this->input->post('quote_payment_done')) {
+                $quote_payment_done = 1;
+        } else {
+                $quote_payment_done = 0;
+        }
 
         if ($this->input->post('quote_other_expenses') === '') {
                 $quote_other_expenses = floatval(0);
@@ -112,7 +118,9 @@ $quote_material_length = $this->input->post('quote_material_length');
                 'quote_material_length' => $quote_material_length,
                 'responsible_id'=> $quote_designer,
                 'quote_currency'=>$quote_currency,
-                'quote_shipping_amount'=>$quote_shipping_amount
+                'quote_shipping_amount'=>$quote_shipping_amount,
+                'quote_payment_done'=>$quote_payment_done
+                
         );
 
 		 $this->mdl_quotes->save($quote_id, $db_array);

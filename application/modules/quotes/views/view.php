@@ -31,7 +31,13 @@ span.tab{
         $('#btn_save_quote').click(function () {
             var items = [];
             var item_order = 1;
-			
+            var payment = 0;
+            
+            if ($("#quote_payment_done").is(":checked")) {  
+    payment = 1;
+} else {
+    payment = 0;
+    }
 
 
             $('table tbody.item').each(function () {
@@ -65,6 +71,7 @@ span.tab{
                     rider: $('#quote_custom_rider').val(),
                     quote_other_expenses: $('#quote_other_expenses').val(),
                     quote_material_length: $('#quote_material_length').val(),
+                    quote_payment_done: payment,
                     custom: $('input[name^=custom]').serializeArray()
                 },
                 function (data) {
@@ -96,7 +103,13 @@ $('#btn_save_quote_delete_tax').click(function () {
             var items = [];
             var item_order = 1;
 			
-
+            var payment = 0;
+            
+            if ($("#quote_payment_done").is(":checked")) {  
+    payment = 1;
+} else {
+    payment = 0;
+    }
 
             $('table tbody.item').each(function () {
                 var row = {};
@@ -127,6 +140,7 @@ $('#btn_save_quote_delete_tax').click(function () {
                     rider: $('#quote_custom_rider').val(),
                     quote_other_expenses: $('#quote_other_expenses').val(),
                     quote_material_length: $('#quote_material_length').val(),
+                    quote_payment_done: payment,
                     delete_tax: 'true',
                     custom: $('input[name^=custom]').serializeArray()
                 },
@@ -255,20 +269,22 @@ $('#btn_save_quote_delete_tax').click(function () {
 
 
 <div id="headerbar">
-    <h1><?php echo lang('quote'); ?> #<?php echo $quote->quote_number; ?></h1> &emsp;
-	
+    <div class="pull-left">
+<h1><?php echo lang('quote'); ?> #<?php echo $quote->quote_number; ?></h1> &emsp;	
 <h1>
-<span class="tab"></span>
-	<?php
+    <span class="tab"></span>
+<?php
 if($quote->invoice_id !=0){
 	echo '<a href=" ' . site_url('invoices/view/') . '/' . $quote->invoice_id . ' ">  INVOICE </a>';
 }
-	?>
-</h1>
-<?php 
-//print_r($items);
-
 ?>
+
+
+
+</h1>
+
+    </div>
+
     <div class="pull-right btn-group">
 
         <div class="options btn-group pull-left">
@@ -349,6 +365,14 @@ if($quote->invoice_id !=0){
                     <div class="pull-left">
 
                          <h2>
+                             
+                              <?php if($quote->quote_payment_done){ ?>
+                    <span 
+                         class="label <?php echo 'approved'; ?>"><?php echo 'Paid'; ?>
+                    </span>
+                    
+                    <?php } ?>
+                             
                             <a href="<?php echo site_url('clients/view/' . $quote->client_id); ?>"><?php echo $quote->client_name; ?></a>
                             <?php if ($quote->quote_status_id == 1) { ?>
                                 <span id="quote_change_client" class="fa fa-edit cursor-pointer small"
@@ -526,6 +550,12 @@ if($quote->invoice_id !=0){
                                         <input type="text" id="quote_other_expenses" class="form-control input-sm"
                                                value="<?php echo $quote->quote_other_expenses; ?>">
                                     </div>
+                                </div>
+                                
+                                <div class="quote-properties" style="padding-top:20px;">
+                                    
+                                    <input type="checkbox" name="quote_payment_done" id="quote_payment_done" <?php if($quote->quote_payment_done){echo 'checked';} ?>> Quote paid<br>
+                                    
                                 </div>
                                 
 

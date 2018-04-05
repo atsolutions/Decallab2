@@ -151,7 +151,16 @@ function selectdesigner(element) {
                     <span 
                          class="label <?php echo 'canceled'; ?>"><?php echo 'Invoiced'; ?>
                     </span>
+                    
                     <?php } ?>
+                    <?php if($quote->quote_payment_done){ ?>
+                    <span 
+                         class="label <?php echo 'approved'; ?>"><?php echo 'Paid'; ?>
+                    </span>
+                    
+                    <?php } ?>
+                    
+                    
                 </td>
                 <td>
                     <a href="<?php echo site_url('quotes/view/' . $quote->quote_id); ?>"
