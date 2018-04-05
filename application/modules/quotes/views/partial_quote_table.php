@@ -137,6 +137,10 @@ function selectdesigner(element) {
 
 
  </th>
+
+ 
+ 
+ 
             <th><?php echo lang('options'); ?></th>
         </tr>
         </thead>
@@ -144,6 +148,18 @@ function selectdesigner(element) {
         <?php foreach ($quotes as $quote) { ?>
             <tr>
                 <td>
+                     <?php
+  $this->load->model('invoices/mdl_invoices');
+  $invoiceID = $quote->invoice_id;
+  $invoice = $this->mdl_invoices->get_by_id($invoiceID);
+  $paid = false;
+  if($invoice->invoice_status_id==="4"){
+      $paid = true;
+  }
+ 
+ ?>
+                    
+                    
                     <span
                         class="label <?php echo $quote_statuses[$quote->quote_status_id]['class']; ?>"><?php echo $quote_statuses[$quote->quote_status_id]['label']; ?>
                     </span>
@@ -153,7 +169,7 @@ function selectdesigner(element) {
                     </span>
                     
                     <?php } ?>
-                    <?php if($quote->quote_payment_done){ ?>
+                    <?php if($quote->quote_payment_done||$paid){ ?>
                     <span 
                          class="label <?php echo 'approved'; ?>"><?php echo 'Paid'; ?>
                     </span>

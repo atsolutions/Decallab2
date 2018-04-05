@@ -275,7 +275,7 @@ $('#btn_save_quote_delete_tax').click(function () {
     <span class="tab"></span>
 <?php
 if($quote->invoice_id !=0){
-	echo '<a href=" ' . site_url('invoices/view/') . '/' . $quote->invoice_id . ' ">  INVOICE </a>';
+	echo '<a href=" ' . site_url('invoices/view/') . '/' . $invoice->invoice_id . ' ">  INVOICE </a>';
 }
 ?>
 
@@ -366,7 +366,7 @@ if($quote->invoice_id !=0){
 
                          <h2>
                              
-                              <?php if($quote->quote_payment_done){ ?>
+                              <?php if($quote->quote_payment_done||$invoice->invoice_status_id==='4'){ ?>
                     <span 
                          class="label <?php echo 'approved'; ?>"><?php echo 'Paid'; ?>
                     </span>

@@ -106,6 +106,7 @@ if($designer_id !=0){
     public function view($quote_id)
     {
         $this->load->model('mdl_quote_items');
+        $this->load->model('invoices/mdl_invoices');
         $this->load->model('tax_rates/mdl_tax_rates');
         $this->load->model('mdl_quote_tax_rates');
         $this->load->model('custom_fields/mdl_custom_fields');
@@ -126,18 +127,19 @@ if($designer_id !=0){
         }
 
         $quote = $this->mdl_quotes->get_by_id($quote_id);
-
+        $invoiceid = $quote->invoice_id;
+        $invoice = $this->mdl_invoices->get_by_id($invoiceid);
 
         if (!$quote) {
             show_404();
         }
 
-
         $this->layout->set(
             array(
                 'quote' => $quote,
+                'invoice'=>$invoice,
                 'items'=>$items,
-				'items' => $this->mdl_quote_items->where('quote_id', $quote_id)->get()->result(),
+		'items' => $this->mdl_quote_items->where('quote_id', $quote_id)->get()->result(),
                 'quote_id' => $quote_id,
                 'userlist' => $this->db->get('ip_users')->result(),
                 'tax_rates' => $this->mdl_tax_rates->get()->result(),
