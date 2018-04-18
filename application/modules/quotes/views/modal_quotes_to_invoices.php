@@ -7,15 +7,13 @@
         $('#quote_to_invoice_confirm').click(function () {
             $.post("<?php echo site_url('quotes/ajax/quotes_to_invoices'); ?>", {
                     quote_id: <?php echo $quote_id; ?>,
-                   
-                    
-                    	string_list: $('#string_list').val(),	
+                    string_list: $('#string_list').val(),	
                     client_name: $('#client_name').val(),
                     invoice_date_created: $('#invoice_date_created').val(),
                     invoice_group_id: $('#invoice_group_id').val(),
 		    currency: $('#currency').val(),
+                    shipping_amount: $('#invoice_shipping_amount').val(),
                     invoice_password: $('#invoice_password').val(),
-
                     user_id: $('#user_id').val()
             
                 },
@@ -73,6 +71,15 @@
   //Create different partial view!
   $this->layout->load_view('quotes/partial_quote_table', array('quotes' => $quote_list));
   ?>
+          
+           <div class="form-group">
+                <label for="invoice_shipping_amount"><?php echo 'Shipping'; ?></label>
+                <input type="text" name="invoice_shipping_amount" id="invoice_shipping_amount" class="form-control"
+                       value="" style="margin: 0 auto;" autocomplete="off">
+            </div>
+            
+                
+                
                 
        <label for="invoice_group_id">
                     <?php echo 'Client name'; ?>
@@ -87,10 +94,7 @@
              <?php } ?>
 </select>
             </div>
-            
-            
-            
-            
+
             <div class="form-group has-feedback">
                 <label for="invoice_date_created">
                     <?php echo lang('invoice_date'); ?>
@@ -115,6 +119,10 @@
                            echo $this->mdl_settings->setting('invoice_pre_password');
                        } ?>" style="margin: 0 auto;" autocomplete="off">
             </div>
+            
+            
+            
+            
 
             <div class="form-group">
                 <label for="invoice_group_id">

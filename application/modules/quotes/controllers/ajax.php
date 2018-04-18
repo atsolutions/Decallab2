@@ -515,6 +515,9 @@ $quote_material_length = $this->input->post('quote_material_length');
             $invoice_id = $this->mdl_invoices->create(NULL, FALSE);
   
             $quotes = $this->input->post('string_list');
+            $shipping_amount = $this->input->post('shipping_amount');
+            
+            $this->mdl_invoices->save_shipping($shipping_amount, $invoice_id);
             
             $quote_list = explode("_", $quotes);
             foreach ($quote_list as $quote_id) {

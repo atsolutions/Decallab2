@@ -53,11 +53,19 @@ class Mdl_Invoice_Amounts extends CI_Model
         ");
 
         $invoice_amounts = $query->row();
+        
+        $query2 = $this->db->query("
+            SELECT invoice_shipping_amount FROM ip_invoices WHERE invoice_id =" . $this->db->escape($invoice_id));
+        
+        $shipping_cost = $query2->row();
 
         $invoice_item_subtotal = $invoice_amounts->invoice_item_subtotal - $invoice_amounts->invoice_item_discount;
-        $invoice_subtotal = $invoice_item_subtotal + $invoice_amounts->invoice_item_tax_total;
+        $invoice_subtotal = $invoice_item_subtotal + $invoice_amounts->invoice_item_tax_total + $shipping_cost->invoice_shipping_amount;
         $invoice_total = $this->calculate_discount($invoice_id, $invoice_subtotal);
-
+     
+           
+        
+        
         // Get the amount already paid
         $query = $this->db->query("SELECT SUM(payment_amount) AS invoice_paid FROM ip_payments WHERE invoice_id = " . $this->db->escape($invoice_id));
 
