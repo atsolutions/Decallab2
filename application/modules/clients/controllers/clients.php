@@ -175,7 +175,7 @@ class Clients extends Admin_Controller
 
     public function delete($client_id)
     {
-        $this->mdl_clients->delete($client_id);
+        //$this->mdl_clients->delete($client_id);
         redirect('clients');
     }
 

@@ -5,8 +5,6 @@ var Checked = new Array();
 $('#btn_mark_paid').click(function () {
         
     var quoteIDs = $('#demo').text();
-        
-        
             $.post("<?php echo site_url('quotes/ajax/mark_paid'); ?>", {
                     quotes: quoteIDs
 
@@ -168,9 +166,9 @@ function selectdesigner(element) {
                             </li>
                             
                             <li>
-                                <a href="" id="btn_quotes_to_invoices" data-quote_id="">
+                                <a href="#" id="btn_quotes_to_invoices" data-quote_id="">
                                     <i class="fa fa-refresh fa-margin"></i>
-                                    <?php echo lang('quote_to_invoice'); ?>
+                                    <?php echo 'Quotes to invoice'; ?>
                                 </a>
                             </li>
                         </ul>
