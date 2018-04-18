@@ -444,6 +444,7 @@ $quote_material_length = $this->input->post('quote_material_length');
             $this->db->where('invoice_id', $invoice_id);
             $this->db->set('invoice_discount_amount', $quote->quote_discount_amount);
             $this->db->set('invoice_discount_percent', $quote->quote_discount_percent);
+            $this->db->set('invoice_shipping_amount', $quote->quote_shipping_amount);
             $this->db->update('ip_invoices');
             // Save the invoice id to the quote
             $this->db->where('quote_id', $this->input->post('quote_id'));

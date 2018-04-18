@@ -94,6 +94,12 @@ class Ajax extends Admin_Controller
             } else {
                 $invoice_discount_amount = $this->input->post('invoice_discount_amount');
             }
+            
+            if ($this->input->post('invoice_shipping_amount') === '') {
+                $invoice_shipping_amount = floatval(0);
+            } else {
+                $invoice_shipping_amount = $this->input->post('invoice_shipping_amount');
+            }
 
             if ($this->input->post('invoice_discount_percent') === '') {
                 $invoice_discount_percent = floatval(0);
@@ -112,6 +118,7 @@ class Ajax extends Admin_Controller
                 'payment_method' => $this->input->post('payment_method'),
                 'invoice_discount_amount' => $invoice_discount_amount,
                 'invoice_discount_percent' => $invoice_discount_percent,
+                'invoice_shipping_amount'=>$invoice_shipping_amount,
 				'invoice_currency'=>$invoice_currency
             );
 
