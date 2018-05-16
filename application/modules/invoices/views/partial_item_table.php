@@ -312,7 +312,9 @@
             </tr>
             <tr>
                 <td><?php echo lang('total'); ?></td>
-                <td class="amount"><b><?php echo $invoice->invoice_total . ' ' . $invoice->invoice_currency; ?></b></td>
+                <td class="amount"><b>
+                    <?php echo $invoice->invoice_total . ' ' . $invoice->invoice_currency; ?>
+                    </b></td>
             </tr>
             <tr>
                 <td><?php echo lang('paid'); ?></td>

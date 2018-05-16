@@ -57,10 +57,10 @@ class Mdl_Invoice_Amounts extends CI_Model
         $query2 = $this->db->query("
             SELECT invoice_shipping_amount FROM ip_invoices WHERE invoice_id =" . $this->db->escape($invoice_id));
         
-        $shipping_cost = $query2->row();
+        $shipping_cost = $query2->row()->invoice_shipping_amount;
 
         $invoice_item_subtotal = $invoice_amounts->invoice_item_subtotal - $invoice_amounts->invoice_item_discount;
-        $invoice_subtotal = $invoice_item_subtotal + $invoice_amounts->invoice_item_tax_total + $shipping_cost->invoice_shipping_amount;
+        $invoice_subtotal = $invoice_item_subtotal + $invoice_amounts->invoice_item_tax_total + $shipping_cost;
         $invoice_total = $this->calculate_discount($invoice_id, $invoice_subtotal);
      
            
@@ -78,7 +78,8 @@ class Mdl_Invoice_Amounts extends CI_Model
             'invoice_item_tax_total' => $invoice_amounts->invoice_item_tax_total,
             'invoice_total' => $invoice_total,
             'invoice_paid' => ($invoice_paid) ? $invoice_paid : 0,
-            'invoice_balance' => $invoice_total - $invoice_paid
+            'invoice_balance' => $invoice_total - $invoice_paid,
+            'invoice_shipping'=>$shipping_cost
         );
 
         $this->db->where('invoice_id', $invoice_id);
@@ -124,15 +125,17 @@ class Mdl_Invoice_Amounts extends CI_Model
             // There are invoice taxes applied
             // Get the current invoice amount record
             $invoice_amount = $this->db->where('invoice_id', $invoice_id)->get('ip_invoice_amounts')->row();
+//$invoice = $this->db->where('invoice_id', $invoice_id)->get->row();
+//$shipping = $invoice->invoice_shipping_amount;
 
             // Loop through the invoice taxes and update the amount for each of the applied invoice taxes
             foreach ($invoice_tax_rates as $invoice_tax_rate) {
                 if ($invoice_tax_rate->include_item_tax) {
                     // The invoice tax rate should include the applied item tax
-                    $invoice_tax_rate_amount = ($invoice_amount->invoice_item_subtotal + $invoice_amount->invoice_item_tax_total) * ($invoice_tax_rate->invoice_tax_rate_percent / 100);
+                    $invoice_tax_rate_amount = ($invoice_amount->invoice_item_subtotal + $invoice_amount->invoice_item_tax_total+$invoice_amount->invoice_shipping) * ($invoice_tax_rate->invoice_tax_rate_percent / 100);
                 } else {
                     // The invoice tax rate should not include the applied item tax
-                    $invoice_tax_rate_amount = $invoice_amount->invoice_item_subtotal * ($invoice_tax_rate->invoice_tax_rate_percent / 100);
+                    $invoice_tax_rate_amount = ($invoice_amount->invoice_item_subtotal+$invoice_amount->invoice_shipping) * ($invoice_tax_rate->invoice_tax_rate_percent / 100);
                 }
 
                 // Update the invoice tax rate record
@@ -150,7 +153,7 @@ class Mdl_Invoice_Amounts extends CI_Model
             $invoice_amount = $this->db->where('invoice_id', $invoice_id)->get('ip_invoice_amounts')->row();
 
             // Recalculate the invoice total and balance
-            $invoice_total = $invoice_amount->invoice_item_subtotal + $invoice_amount->invoice_item_tax_total + $invoice_amount->invoice_tax_total;
+            $invoice_total = $invoice_amount->invoice_item_subtotal + $invoice_amount->invoice_item_tax_total + $invoice_amount->invoice_tax_total + $invoice_amount->invoice_shipping;
             $invoice_total = $this->calculate_discount($invoice_id, $invoice_total);
             $invoice_balance = $invoice_total - $invoice_amount->invoice_paid;
 
