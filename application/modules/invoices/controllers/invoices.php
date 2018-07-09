@@ -219,7 +219,7 @@ class Invoices extends Admin_Controller
         $realclient = $client[0];
         if(strpos($invoice_id, '_') == false){
         if($realclient->client_country == "LV"){
-        generate_invoice_pdf($invoice_id, $stream, 'InvoicePlane(LV)');
+        generate_invoice_pdf($invoice_id, $stream, 'Pavadzime');
         }else{
            generate_invoice_pdf($invoice_id, $stream,$invoice_template); 
         }

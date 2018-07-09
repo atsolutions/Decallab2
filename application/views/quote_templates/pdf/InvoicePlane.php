@@ -188,18 +188,23 @@
                 <b><?php echo $quote->quote_total . ' ' . $quote->quote_currency; ?></b>
             </td>
         </tr>
+		
         </tbody>
     </table>
 
 </main>
 
 <footer>
-    <?php if ($quote->notes) : ?>
+    
+	
         <div class="notes">
             <b><?php echo lang('notes'); ?></b><br/>
+			 <?php echo 'This is not an Invoice! No payments are neccesary at the moment.'; ?>
+			<?php if ($quote->notes) : ?>
             <?php echo nl2br($quote->notes); ?>
+			<?php endif; ?>
         </div>
-    <?php endif; ?>
+    
 </footer>
 
 </body>

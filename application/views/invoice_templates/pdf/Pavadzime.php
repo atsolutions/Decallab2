@@ -1,7 +1,7 @@
 <html lang="<?php echo lang('cldr'); ?>">
 <head>
     <meta charset="utf-8">
-    <title><?php echo 'Pavadzime'; ?></title>
+    <title><?php echo lang('invoice'); ?></title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/templates.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/custom-pdf.css">
 </head>
@@ -127,8 +127,8 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
             </tr>
             <?php if ($payment_method): ?>
                 <tr>
-                    <td><?php echo 'Apmaksas metode: '; ?></td>
-                    <td><?php echo 'Pārskaitījums'; ?></td>
+                    <td><?php echo lang('payment_method') . ': '; ?></td>
+                    <td><?php echo $payment_method->payment_method_name; ?></td>
                 </tr>
             <?php endif; ?>
         </table>
@@ -210,7 +210,7 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
         
         </tbody>
     </table>
-<!--<?php echo 'Rēķins ir sagatavots elektroniski un ir derīgs bez paraksta saskaņā ar grāmatvedības likuma 7.1.1 pantu. Rēķinu sastādīja: ' . $invoice->user_name; ?> -->
+<?php echo 'Pavadzīme ir sagatavota elektroniski un ir derīga bez paraksta. Pavadzīmi sastādīja: ' . $invoice->user_name; ?>
 
 </main>
 
