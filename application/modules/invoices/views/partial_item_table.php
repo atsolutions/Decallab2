@@ -251,7 +251,7 @@
                         <div class="input-group input-group-sm">
                             <input id="invoice_shipping_amount" name="invoice_shipping_amount"
                                    class="form-control input-sm amount"
-                                   value="<?php echo($invoice->invoice_shipping_amount != 0 ? $invoice->invoice_shipping_amount : '0'); ?>">
+                                   value="<?php echo format_amount($invoice->invoice_shipping_amount != 0 ? $invoice->invoice_shipping_amount : '0'); ?>">
 
                             <div
                                 class="input-group-addon"><?php echo $invoice->invoice_currency; ?>

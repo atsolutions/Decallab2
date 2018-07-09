@@ -398,7 +398,46 @@ if($quote->invoice_id !=0){
                             <span><strong><?php echo lang('email'); ?>
                                     :</strong> <?php echo $quote->client_email; ?></span>
                         <?php } ?>
-
+                                    
+                            <br><br>
+                            <strong> SHIPPING ADDRESS: </strong>
+                            <br>
+                            <input type="checkbox" value="same_address"> Same as billing address<br>
+                        <span>
+                             <label for="quote_number">
+                                        Shipping address line 1:
+                                    </label>
+                             <input type="text" id="shipping_address_1" class="form-control input-sm"
+                                               value="<?php echo $quote->client_address_1; ?>">
+                             <label for="quote_number">
+                                        Shipping address line 2:
+                                    </label>
+                              <input type="text" id="shipping_address_2" class="form-control input-sm"
+                                               value="<?php echo $quote->client_address_2; ?>">
+                              <label for="quote_number">
+                                        City:
+                                    </label>
+                             <input type="text" id="shipping_city" class="form-control input-sm"
+                                               value="<?php echo $quote->client_city; ?>">
+                             <label for="quote_number">
+                                        State:
+                                    </label>
+                              <input type="text" id="shipping_state" class="form-control input-sm"
+                                               value="<?php echo $quote->client_state; ?>">
+                              <label for="quote_number">
+                                        ZIP code:
+                                    </label>
+                             <input type="text" id="shipping_zip" class="form-control input-sm"
+                                               value="<?php echo $quote->client_zip; ?>">
+                             <label for="quote_number">
+                                        Country:
+                                    </label>
+                             <input type="text" id="shipping_country" class="form-control input-sm"
+                                               value="<?php echo $quote->client_country; ?>">
+                           
+                        </span>
+                            
+                        <br><br>
                     </div>
                 </div>
 

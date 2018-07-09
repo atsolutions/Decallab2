@@ -187,6 +187,19 @@ echo '<div>' . 'Banka: ', $invoice->user_custom_banka . '</div>';
                 </td>
             </tr>
         <?php } ?>
+            
+                        <?php if($invoice->invoice_shipping_amount){ ?>
+            
+             <tr>
+                <td colspan="5" class="text-right">
+                    <?php echo 'Sūtīšana'; ?>
+                </td>
+                <td class="text-right">
+                    <?php echo format_amount($invoice->invoice_shipping_amount) . ' ' . $invoice->invoice_currency; ?>
+                </td>
+            </tr>
+            
+            <?php } ?>
 
         <?php foreach ($invoice_tax_rates as $invoice_tax_rate) : ?>
             <tr>
